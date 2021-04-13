@@ -1,0 +1,123 @@
+@media screen and (min-width: 420px) {
+
+.logo {
+    display: inline-block;
+    vertical-align: top;
+    width: 90px;
+    height: 60px;
+    margin-right: 50px;
+    margin-top: -3px;
+  }
+  .topnav {
+    overflow: hidden;
+    background-color: lightblue;
+    position: fixed; /* Set the navbar to fixed position */
+    z-index: 1;
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
+    height: 8%;
+    border-bottom: solid 1px lightblue;
+  
+  }
+
+  .topnav a {
+    float: right;
+    color:whitesmoke;
+    text-align: center;
+    padding: 10px 10px;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: initial;
+  }
+
+  .topnav-right {
+    float: right;
+  }
+
+
+  
+
+  .topnav-right {
+    float: right;
+  }
+
+ .openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #111;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    visibility: hidden;
+  }
+
+}
+  @media screen and (max-width: 420px) {
+
+
+.logo1 {
+    display: inline-block;
+
+    position: absolute;
+    vertical-align: top;
+    width: 60px;
+    height: 50px;
+    margin-left: -15px;
+    margin-top: -61px;
+    left: 15px;
+  }
+.topnav .openbtn {
+    float: right;
+    color: white;
+    background-color: transparent;
+    text-align: center;
+    text-decoration: none;
+    font-size: 19px;
+    font-family: initial;
+    border: none;
+
+    padding: 15px 20px;
+  }
+
+  .topnav {
+    overflow: hidden;
+    background-color: #111;
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
+    margin-left: -10px;
+    height: 48px;
+  }
+
+  .topnav a {
+    color: white;
+    text-align: center;
+    padding: 15px 8px;
+    text-decoration: none;
+    font-size: 15px;
+    font-family: initial;
+    visibility: hidden;
+  }
+
+  .topnav-right {
+    float: right;
+  }
+
+  .logo {
+    display: inline-block;
+    vertical-align: top;
+    width: 60px;
+    height: 50px;
+    margin-right: 50px;
+    margin-top: -2px;
+  }
+.topnav a {
+    color: white;
+    text-align: center;
+    padding: 15px 8px;
+    text-decoration: none;
+    font-size: 15px;
+    font-family: initial;
+    visibility: hidden;
+  }
+}
