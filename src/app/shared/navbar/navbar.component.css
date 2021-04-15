@@ -51,6 +51,27 @@
     visibility: hidden;
   }
 
+
+
+  .material-icons,
+  .icon-text {
+    vertical-align: middle;
+    color:whitesmoke;
+    font-size: 20px;
+   letter-spacing: 1px;
+   font-family: 'Roboto', sans-serif;
+    
+  }
+
+  .material-icons,
+  .icon-text:hover {
+color:rgb(2, 117, 216);
+  }
+
+
+
+ 
+
 }
   @media screen and (max-width: 420px) {
 

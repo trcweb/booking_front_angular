@@ -9,12 +9,14 @@ import { AcceuilComponent } from './acceuil/acceuil.component';
 
 
 
+
 @NgModule({
   declarations: [HotelComponent, OffreComponent, DetailoffreComponent, AcceuilComponent],
   imports: [
     CommonModule,
     HotelRoutingModule,
-    SharedModule
+    SharedModule,
+ 
   ]
 })
 export class HotelModule { }
