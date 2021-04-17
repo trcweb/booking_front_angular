@@ -6,6 +6,7 @@ import { HotelComponent } from './hotel/hotel.component';
 import { OffreComponent } from './offre/offre.component';
 import { DetailoffreComponent } from './detailoffre/detailoffre.component';
 import { AcceuilComponent } from './acceuil/acceuil.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -16,6 +17,7 @@ import { AcceuilComponent } from './acceuil/acceuil.component';
     CommonModule,
     HotelRoutingModule,
     SharedModule,
+    FormsModule
  
   ]
 })

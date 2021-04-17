@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Chambre } from './../../models/Chambre';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { read } from 'fs';
+import { Script } from 'vm';
 
 @Component({
   selector: 'app-acceuil',
@@ -8,12 +11,83 @@ import { Component, OnInit } from '@angular/core';
 export class AcceuilComponent implements OnInit {
 
  
+  
+  isReadonly = true;
 
-
-  constructor() { }
-
-  ngOnInit(): void {
+  listechambre: Chambre[] = [new Chambre(1,0)];
+  disabled = false;
+   
+ 
+   
+  constructor() {
+    
+   
   }
+ 
+  ngOnInit(): void {
+ 
+  
+  }
+
+  plus(index: number, type: string) {
+    if (type == "adult") {
+      if (this.listechambre[index].adult < 9) {
+        this.listechambre[index].adult++;
+      }
+    } else {
+      if (this.listechambre[index].enfant < 9) {
+        this.listechambre[index].enfant++;
+      }
+    }
+    
+  }
+
+  moin(index: number, type: string) {
+    if (type == "adult") {
+      if (index == 0) {
+        if (this.listechambre[index].adult > 1) {
+          this.listechambre[index].adult--;
+        }
+      }else {
+        if (this.listechambre[index].adult > 0) {
+          this.listechambre[index].adult--;
+        }
+      }
+    }else {
+      if (this.listechambre[index].enfant > 0) {
+        this.listechambre[index].enfant--;
+      }
+    }
+  }
+   /* if (index == 0) {
+      if (this.listechambre[index] > 1) {
+        this.listechambre[index]--;
+      }
+    } else {
+      if (this.listechambre[index] > 0) {
+        this.listechambre[index]--;
+      }
+    }*/
+    
+  
+
+  addChamber() {
+    if (this.listechambre.length < 9) {
+      this.listechambre.push(new Chambre(0,0));
+      if (this.listechambre.length == 9) {
+        this.disabled = true;
+      }
+    } 
+  }
+
+  
+ 
+  removeChamber(index: number) {
+    this.listechambre.splice(index, 1);    
+  }
+  
+
+  
 
 
  
@@ -24,7 +98,7 @@ export class AcceuilComponent implements OnInit {
   
 
   openmodal() {
-    console.log('hhhhh');
+    
     
     // Get the button that opens the modal
     let btn = document.getElementById("myBtn") as HTMLElement;
@@ -45,9 +119,5 @@ export class AcceuilComponent implements OnInit {
 
   }
   
-
-
-
-
-
+ 
 }

@@ -13,11 +13,12 @@
                                     <div class="form-group">
                                         <h6 class="form-label text-primary">Destination</h6>
                                         <div class="form-control">
-                                        <p style="margin-top: 9px;"> Addresse ,Ville ou Airport <span class="material-icons">
-                                            location_on
-                                        </span> </p>
+                                            <p style="margin-top: 9px;"> Addresse ,Ville ou Airport <span
+                                                    class="material-icons">
+                                                    location_on
+                                                </span> </p>
+                                        </div>
                                     </div>
-                                </div>
                                 </div>
 
 
@@ -47,7 +48,9 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-btn">
-                                        <button class="submit-btn "><h5>Recherche</h5></button>
+                                        <button class="submit-btn ">
+                                            <h5>Recherche</h5>
+                                        </button>
                                     </div>
 
 
@@ -177,50 +180,65 @@
             <span class="close" (click)="closemodal()">&times;</span>
 
         </div>
-        <div class="modal-body">
-            <h6 class="text-primary">chambre 1</h6>
+
+        <div class="modal-body" *ngFor="let chambre of listechambre; let index = index;">
+            <hr *ngIf="index != 0">
+            <h6 class="text-primary">chambre {{index + 1}}</h6>
             <span class="counter"><strong> Adultes</strong></span>
             <ul class="btn-group">
                 <li>
-                    <span class="material-icons">
-                    remove_circle_outlined
-                </span>
+                    <a (click)="moin(index,'adult')"> <span class="material-icons">
+                            remove_circle_outlined
+                        </span></a>
                 </li>
                 <li>
-                <p style="margin-right: 28px;"> 1</p>
+                    <input matInput type="text" size="1%" [value]="chambre.adult" readonly="isReadonly"
+                        class="inputcounter">
                 </li>
                 <li>
-                <span class="material-icons">
-                    add_circle_outlined
-                </span>
+                    <a (click)="plus(index,'adult')"><span class="material-icons">
+                            add_circle_outlined
+                        </span></a>
                 </li>
             </ul> <br>
             <br>
             <br>
-            <span class="counter"> <strong> Enfants </strong></span> 
-          
+            <span class="counter"> <strong> Enfants </strong></span>
+
             <ul class="btn-group">
                 <li>
-                    <span class="material-icons">
-                        remove_circle_outlined
-                    </span>
+                    <a (click)="moin(index,'enfant')">
+                        <span class="material-icons">
+                            remove_circle_outlined
+                        </span></a>
                 </li>
                 <li>
-                    <p style="margin-right: 28px;"> 1 </p>
+                    <input type="text" size="1%" [value]="chambre.enfant" readonly="isReadonly" class="inputcounter">
                 </li>
                 <li>
-                    <span class="material-icons">
-                        add_circle_outlined
-                    </span>
+                    <a (click)="plus(index,'enfant')">
+                        <span class="material-icons">
+                            add_circle_outlined
+                        </span></a>
                 </li>
             </ul>
+            <div *ngIf="index != 0">
+                <button (click)="removeChamber(index)" class="pstyle float-right text-danger">Supprimer la chambre</button>
+                <br>
+            </div>
         </div>
-        <p class="pstyle text-right"><strong> Ajouter une autre chambre</strong></p>
+
+
+        <button id="btnforme" (click)="addChamber()" [disabled]="disabled" class="pstyle">Ajouter une autre
+                chambre</button>
+
         <div class="modal-footer">
             <button class="btn btn-primary">Confirmer</button>
         </div>
     </div>
 </div>
+
+
 <!--modal-->
 <div class="about-section">
     <h1>About Us footer</h1>
