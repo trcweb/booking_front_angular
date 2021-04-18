@@ -14,17 +14,12 @@ const routes: Routes = [
       { path: '', component: AcceuilComponent },
       { path: 'offre', component: OffreComponent },
       { path: 'detailoffre/:id', component: DetailoffreComponent }
-       
     ]
-  },
-    
-  
-
-
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class HotelRoutingModule { }
+export class HotelRoutingModule {}
