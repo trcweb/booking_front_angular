@@ -11,12 +11,34 @@
 
                                 <div class="col-md-8">
                                     <div class="form-group">
-                                        <h6 class="form-label text-primary">Destination</h6>
+                                        <h6 class="form-label text-primary">Destination </h6>
                                         <div class="form-control">
-                                            <p style="margin-top: 9px;"> Addresse ,Ville ou Airport <span
-                                                    class="material-icons">
-                                                    location_on
-                                                </span> </p>
+                                            <div class="ng-autocomplete">
+                                                <ng-autocomplete 
+                                                  [data]="locations"
+                                                  [formControl]="ctl"
+                                                  [searchKeyword]="key"
+                                                  (selected)='select($event)'
+                                                  (inputChanged)='onChangeSearch($event)'
+                                                  (inputFocused)='onFocused($event)'
+                                                  [itemTemplate]="itemTemplate"
+                                                  >                                 
+                                                </ng-autocomplete>
+                                                
+                                                <ng-template #itemTemplate let-loc>
+                                                   <div>
+                                                       <p [innerHTML]="loc.name + ' (' + loc.iataCode + ')'"> </p> <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName | lowercase}}</span>
+                                                       <span class="material-icons"> location_on </span>
+                                                    </div>
+                                                </ng-template>
+                                                
+                                            </div>                                               
+                                                
+                                            <p style="margin-top: 9px;">
+                                                Ville..
+                                                
+                                                <span class="material-icons"> location_on </span>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -27,8 +49,10 @@
                                         <h6 class="form-label text-primary">Voyageurs</h6>
                                         <div class="form-control" id="myBtn" (click)="openmodal()">
 
-                                            <p style="margin-top: 9px;">1 chambre, 2 voyageurs
-                                                <span class="material-icons">people</span></p>
+                                            <p style="margin-top: 9px;">{{listechambre.length}} chambre, {{listechambre
+                                                | sum}} voyageurs
+                                                <span class="material-icons">people</span>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -112,7 +136,8 @@
                     <p class="title">★★★★ (Mahdia)</p>
                     <p style="font-size: small; color:grey"> a partir de * <br>
                         <strong style="color: orange; font-size: 30px;">43
-                            dt</strong> <br> prix du 05/5/2021</p>
+                            dt</strong> <br> prix du 05/5/2021
+                    </p>
                     <p><button class="button">Plus de details</button></p>
                 </div>
             </div>
@@ -223,14 +248,15 @@
                 </li>
             </ul>
             <div *ngIf="index != 0">
-                <button (click)="removeChamber(index)" class="pstyle float-right text-danger">Supprimer la chambre</button>
+                <button (click)="removeChamber(index)" class="pstyle float-right text-danger">Supprimer la
+                    chambre</button>
                 <br>
             </div>
         </div>
 
 
         <button id="btnforme" (click)="addChamber()" [disabled]="disabled" class="pstyle">Ajouter une autre
-                chambre</button>
+            chambre</button>
 
         <div class="modal-footer">
             <button class="btn btn-primary">Confirmer</button>
