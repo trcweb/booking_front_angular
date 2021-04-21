@@ -2,7 +2,7 @@ import { LocationService } from './../../service/location.service';
 import { Location } from './../../models/Location';
 import { Chambre } from './../../models/Chambre';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {Observable} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter, finalize, map, startWith, switchMap, tap} from 'rxjs/operators';
 
@@ -14,20 +14,26 @@ import {debounceTime, distinctUntilChanged, filter, finalize, map, startWith, sw
 export class AcceuilComponent implements OnInit {
 
   isReadonly = true;
-  key = 'name';
+  key = 'detailedName';
   listechambre: Chambre[] = [new Chambre(1, 0)];
   disabled = false;
   isLoading = false;
   picked = false;
   location: Location = new Location();
   locations: Location[] = [];
-  ctl = new FormControl();
+  searchControl: FormGroup;
 
-  constructor(private locationService: LocationService) {
+  constructor(private locationService: LocationService,
+              private fb: FormBuilder) {
+    this.searchControl = this.fb.group({
+      autoComplete: ['', [Validators.required]],
+      dateStart: ['', [Validators.required]],
+      dateEnd: ['', [Validators.required]]
+    });
   }
 
   ngOnInit(): void {
-    this.ctl.valueChanges.pipe(
+    this.searchControl.get('autoComplete')?.valueChanges.pipe(
       debounceTime(500),
       filter(value => !(value instanceof Object) && value !== ''),
       distinctUntilChanged(),
@@ -39,35 +45,39 @@ export class AcceuilComponent implements OnInit {
       switchMap(
         value => this.locationService.searchLocation(value, 'CITY').pipe(
         finalize(() => {
-          console.log('....', value);
           this.isLoading = false;
         }),
        )
       )
     )
-    .subscribe(
-      data => {
+    .subscribe({
+      next: data => {
         this.locations = data;
         console.log(this.locations);
       },
-      err => {
+      error: err => {
         console.log('error has occured while searching');
-      }
+      }}
     );
   }
 
-
-  select($event: string){
+  submitForm(): void {
+    console.log('validated');
   }
 
-  onChangeSearch($event: string){
 
-  }
-  onFocused($event: any){
-
+  select($loc: Location): void{
+    console.log($loc);
   }
 
-  plus(index: number, type: string) {
+  onChangeSearch($event: string): void{
+
+  }
+  onFocused($event: any): void{
+
+  }
+
+  plus(index: number, type: string): void {
     if (type === 'adult') {
       if (this.listechambre[index].adult < 9) {
         this.listechambre[index].adult++;
@@ -79,7 +89,7 @@ export class AcceuilComponent implements OnInit {
     }
   }
 
-  moin(index: number, type: string) {
+  moin(index: number, type: string): void {
     if (type === 'adult') {
         if (this.listechambre[index].adult > 1) {
           this.listechambre[index].adult--;
@@ -90,19 +100,11 @@ export class AcceuilComponent implements OnInit {
       }
     }
   }
-   /* if (index == 0) {
-      if (this.listechambre[index] > 1) {
-        this.listechambre[index]--;
-      }
-    } else {
-      if (this.listechambre[index] > 0) {
-        this.listechambre[index]--;
-      }
-    }*/
 
 
 
-  addChamber() {
+
+  addChamber(): void {
     if (this.listechambre.length < 9) {
       this.listechambre.push(new Chambre(1, 0));
       if (this.listechambre.length === 9) {
@@ -113,7 +115,7 @@ export class AcceuilComponent implements OnInit {
 
 
 
-  removeChamber(index: number) {
+  removeChamber(index: number): void {
     this.listechambre.splice(index, 1);
   }
 
@@ -125,8 +127,7 @@ export class AcceuilComponent implements OnInit {
 
 
 
-  openmodal() {
-
+  openmodal(): void {
 
     // Get the button that opens the modal
     const btn = document.getElementById('myBtn') as HTMLElement;
@@ -138,7 +139,7 @@ export class AcceuilComponent implements OnInit {
     body.setAttribute('style', 'overflow:hidden');
   }
 
-  closemodal() {
+  closemodal(): void {
     // Get the <span> element that closes the modal
     const span = document.getElementsByClassName('close')[0] as HTMLElement;
     const modal = document.getElementById('myModal') as HTMLElement;

@@ -6,7 +6,7 @@
             <div class="container">
                 <div class="row" style="justify-content: center;">
                     <div class="booking-form">
-                        <form>
+                        <form [formGroup]="searchControl" (ngSubmit)="submitForm()" >
                             <div class="row no-margin">
 
                                 <div class="col-md-8">
@@ -16,20 +16,23 @@
                                             <div class="ng-autocomplete">
                                                 <ng-autocomplete 
                                                   [data]="locations"
-                                                  [formControl]="ctl"
+                                                  formControlName="autoComplete"
+                                                  [isLoading]="isLoading"
                                                   [searchKeyword]="key"
                                                   (selected)='select($event)'
                                                   (inputChanged)='onChangeSearch($event)'
                                                   (inputFocused)='onFocused($event)'
                                                   [itemTemplate]="itemTemplate"
+                                                  [ngClass]="{'is-invalid': searchControl.controls.autoComplete.invalid && (searchControl.controls.autoComplete.dirty || searchControl.controls.autoComplete.touched)}"
                                                   >                                 
                                                 </ng-autocomplete>
                                                 
                                                 <ng-template #itemTemplate let-loc>
-                                                   <div>
-                                                       <p [innerHTML]="loc.name + ' (' + loc.iataCode + ')'"> </p> <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName | lowercase}}</span>
-                                                       <span class="material-icons"> location_on </span>
+                                                    <span class="material-icons"> location_on </span>
+                                                    <div style="margin-left: 5px;">
+                                                       <p [innerHTML]="'<b>' + loc.name + ' (' + loc.iataCode + ')</b>'"> </p> <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName | lowercase}}</span>
                                                     </div>
+                                                    <hr>
                                                 </ng-template>
                                                 
                                             </div>                                               
@@ -61,18 +64,20 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <h6 class="form-label text-primary">Check in</h6>
-                                        <input class="form-control" type="date" required>
+                                        <input class="form-control" type="date" formControlName="dateStart" 
+                                        [ngClass]="{'is-invalid': searchControl.controls.dateStart.invalid && (searchControl.controls.dateStart.dirty || searchControl.controls.dateStart.touched)}"
+                                        >
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <h6 class="form-label text-primary">Check out</h6>
-                                        <input class="form-control" type="date" required>
+                                        <input class="form-control" type="date" formControlName="dateStart">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-btn">
-                                        <button class="submit-btn ">
+                                        <button class="submit-btn" type="submit">
                                             <h5>Recherche</h5>
                                         </button>
                                     </div>

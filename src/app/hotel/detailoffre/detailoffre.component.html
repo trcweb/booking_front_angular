@@ -1,1 +1,45 @@
-<p>detailoffre works!</p>
+<form [formGroup]="searchControl" (ngSubmit)="submitForm()" novalidate>
+    <div class="row no-margin">
+
+        <div class="col-md-8">
+            <div class="form-group">
+                <h6 class="form-label text-primary">Destination </h6>
+                <div class="form-control">
+                   
+                    <p style="margin-top: 9px;">
+                        Ville..
+                        
+                        <span class="material-icons"> location_on </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <h6 class="form-label text-primary">Check in</h6>
+                <input class="form-control" type="date" formControlName="dateStart"
+                [ngClass]="{'is-invalid': searchControl.controls.dateStart.invalid && (searchControl.controls.dateStart.dirty || searchControl.controls.dateStart.touched)}"
+                >
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <h6 class="form-label text-primary">Check out</h6>
+                <input class="form-control" type="date" formControlName="dateStart">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-btn">
+                <button class="submit-btn" type="submit">
+                    <h5>Recherche</h5>
+                </button>
+            </div>
+
+
+        </div>
+    </div>
+
+</form>
