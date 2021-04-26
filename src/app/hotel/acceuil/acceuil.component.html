@@ -13,6 +13,20 @@
                                     <div class="form-group">
                                         <h6 class="form-label text-primary">Destination</h6>
                                         <div class="form-control">
+                                            <div class="ng-autocomplete">
+                                                <ng-autocomplete  [data]="locations"  (selected)='selectEvent($event)' class="ngauto"
+                                                    (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"
+                                                    [notFoundTemplate]="notFoundTemplate">
+                                                </ng-autocomplete>
+                                            
+                                                <ng-template #itemTemplate let-item>
+                                                    <a [innerHTML]="item"></a>
+                                                </ng-template>
+                                            
+                                                <ng-template #notFoundTemplate let-notFound>
+                                                    <div [innerHTML]="notFound"></div>
+                                                </ng-template>
+                                            </div>
                                             <p style="margin-top: 9px;"> Addresse ,Ville ou Airport <span
                                                     class="material-icons">
                                                     location_on

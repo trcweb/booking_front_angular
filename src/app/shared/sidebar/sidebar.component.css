@@ -4,9 +4,9 @@
     width: 50px;
     position: fixed;
     z-index: 1;
-    top: 52px;
+    top: 54px;
     left: 0;
-    background-color: lightblue;
+    background-color: #0275d8;
     overflow-x: hidden;
     padding-top: 60px;
     white-space: nowrap;

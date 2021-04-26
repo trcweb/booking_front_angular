@@ -1,3 +1,4 @@
+import { LocationService } from './../../service/location.service';
 import { Chambre } from './../../models/Chambre';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { read } from 'fs';
@@ -10,22 +11,30 @@ import { Script } from 'vm';
 })
 export class AcceuilComponent implements OnInit {
 
- 
+  locations = ['hyt', 'klo', 'klj'];
   
   isReadonly = true;
 
   listechambre: Chambre[] = [new Chambre(1,0)];
   disabled = false;
    
- 
+  searchTerm: string = '';
    
-  constructor() {
+  constructor( private ser : LocationService) {
     
    
   }
  
   ngOnInit(): void {
- 
+    this.ser.searchAutoComplete(this.searchTerm, 'CITY').subscribe(
+      data => {
+        console.log(data)
+      },
+      error => {
+                console.log('errorLocation')
+
+      }
+    );
   
   }
 
@@ -59,15 +68,7 @@ export class AcceuilComponent implements OnInit {
       }
     }
   }
-   /* if (index == 0) {
-      if (this.listechambre[index] > 1) {
-        this.listechambre[index]--;
-      }
-    } else {
-      if (this.listechambre[index] > 0) {
-        this.listechambre[index]--;
-      }
-    }*/
+   
     
   
 
@@ -119,5 +120,18 @@ export class AcceuilComponent implements OnInit {
 
   }
   
+
+  selectEvent(item: any) {
+    // do something with selected item
+  }
+
+  onChangeSearch(val: string) {
+    // fetch remote data from here
+    // And reassign the 'data' which is binded to 'data' property.
+  }
+  
+  onFocused(e: any){
+    // do something when input is focused
+  }
  
 }
