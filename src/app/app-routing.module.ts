@@ -1,5 +1,3 @@
-import { OffreComponent } from './hotel/offre/offre.component';
-
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 

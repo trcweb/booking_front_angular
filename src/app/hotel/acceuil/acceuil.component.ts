@@ -1,7 +1,10 @@
+import { LocationService } from './../../service/location.service';
+import { Location } from './../../models/Location';
 import { Chambre } from './../../models/Chambre';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { read } from 'fs';
-import { Script } from 'vm';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Observable} from 'rxjs';
+import {debounceTime, distinctUntilChanged, filter, finalize, map, startWith, switchMap, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-acceuil',
@@ -10,27 +13,72 @@ import { Script } from 'vm';
 })
 export class AcceuilComponent implements OnInit {
 
- 
-  
   isReadonly = true;
-
-  listechambre: Chambre[] = [new Chambre(1,0)];
+  key = 'detailedName';
+  listechambre: Chambre[] = [new Chambre(1, 0)];
   disabled = false;
-   
- 
-   
-  constructor() {
-    
-   
-  }
- 
-  ngOnInit(): void {
- 
-  
+  isLoading = false;
+  picked = false;
+  location: Location = new Location();
+  locations: Location[] = [];
+  searchControl: FormGroup;
+
+  constructor(private locationService: LocationService,
+              private fb: FormBuilder) {
+    this.searchControl = this.fb.group({
+      autoComplete: ['', [Validators.required]],
+      dateStart: ['', [Validators.required]],
+      dateEnd: ['', [Validators.required]]
+    });
   }
 
-  plus(index: number, type: string) {
-    if (type == "adult") {
+  ngOnInit(): void {
+    this.searchControl.get('autoComplete')?.valueChanges.pipe(
+      debounceTime(500),
+      filter(value => !(value instanceof Object) && value !== ''),
+      distinctUntilChanged(),
+      tap(() => {
+        this.locations = [];
+        this.isLoading = true;
+        this.location = new Location();
+      }),
+      switchMap(
+        value => this.locationService.searchLocation(value, 'CITY').pipe(
+        finalize(() => {
+          this.isLoading = false;
+        }),
+       )
+      )
+    )
+    .subscribe({
+      next: data => {
+        this.locations = data;
+        console.log(this.locations);
+      },
+      error: err => {
+        console.log('error has occured while searching');
+      }}
+    );
+  }
+
+  submitForm(): void {
+    console.log('validated');
+  }
+
+
+  select($loc: Location): void{
+    console.log($loc);
+  }
+
+  onChangeSearch($event: string): void{
+
+  }
+  onFocused($event: any): void{
+
+  }
+
+  plus(index: number, type: string): void {
+    if (type === 'adult') {
       if (this.listechambre[index].adult < 9) {
         this.listechambre[index].adult++;
       }
@@ -39,19 +87,12 @@ export class AcceuilComponent implements OnInit {
         this.listechambre[index].enfant++;
       }
     }
-    
   }
 
-  moin(index: number, type: string) {
-    if (type == "adult") {
-      if (index == 0) {
+  moin(index: number, type: string): void {
+    if (type === 'adult') {
         if (this.listechambre[index].adult > 1) {
           this.listechambre[index].adult--;
-        }
-      }else {
-        if (this.listechambre[index].adult > 0) {
-          this.listechambre[index].adult--;
-        }
       }
     }else {
       if (this.listechambre[index].enfant > 0) {
@@ -59,65 +100,53 @@ export class AcceuilComponent implements OnInit {
       }
     }
   }
-   /* if (index == 0) {
-      if (this.listechambre[index] > 1) {
-        this.listechambre[index]--;
-      }
-    } else {
-      if (this.listechambre[index] > 0) {
-        this.listechambre[index]--;
-      }
-    }*/
-    
-  
 
-  addChamber() {
+
+
+
+  addChamber(): void {
     if (this.listechambre.length < 9) {
-      this.listechambre.push(new Chambre(0,0));
-      if (this.listechambre.length == 9) {
+      this.listechambre.push(new Chambre(1, 0));
+      if (this.listechambre.length === 9) {
         this.disabled = true;
       }
-    } 
+    }
   }
 
-  
- 
-  removeChamber(index: number) {
-    this.listechambre.splice(index, 1);    
+
+
+  removeChamber(index: number): void {
+    this.listechambre.splice(index, 1);
   }
-  
-
-  
 
 
- 
-  
- 
 
 
-  
 
-  openmodal() {
-    
-    
+
+
+
+
+  openmodal(): void {
+
     // Get the button that opens the modal
-    let btn = document.getElementById("myBtn") as HTMLElement;
-    let modal = document.getElementById("myModal") as HTMLElement;
-     let body = document.querySelector("body") as HTMLElement;
+    const btn = document.getElementById('myBtn') as HTMLElement;
+    const modal = document.getElementById('myModal') as HTMLElement;
+    const body = document.querySelector('body') as HTMLElement;
     // When the user clicks on the button, open the modal
-    modal.setAttribute("style", "display:block");
-   
-    body.setAttribute("style", "overflow:hidden");
+    modal.setAttribute('style', 'display:block');
+
+    body.setAttribute('style', 'overflow:hidden');
   }
 
-  closemodal() {
+  closemodal(): void {
     // Get the <span> element that closes the modal
-    let span = document.getElementsByClassName("close")[0] as HTMLElement;
-    let modal = document.getElementById("myModal") as HTMLElement;
+    const span = document.getElementsByClassName('close')[0] as HTMLElement;
+    const modal = document.getElementById('myModal') as HTMLElement;
     // When the user clicks on <span> (x), close the modal
-    modal.setAttribute("style", "display:none;");
+    modal.setAttribute('style', 'display:none;');
 
   }
-  
- 
+
+
 }

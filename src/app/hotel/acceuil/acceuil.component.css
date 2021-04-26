@@ -329,6 +329,10 @@
     animation-duration: 0.2s;
   }
 
+  .ng-invalid.ng-touched , .ng-invalid.ng-dirty{ 
+    border-bottom: 3px solid red;
+  }  
+
   @keyframes animation {
     from {
       transform: scale(0);
@@ -349,3 +353,5 @@
     display: block;
   }
 }
+
+

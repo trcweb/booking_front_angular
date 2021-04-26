@@ -1,3 +1,5 @@
+import { LocationService } from './../../service/location.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailoffreComponent implements OnInit {
 
-  constructor() { }
+  searchControl: FormGroup ;
+
+  constructor(private locationService: LocationService,
+              private fb: FormBuilder) {
+   this.searchControl = this.fb.group({});
+    
+  }
 
   ngOnInit(): void {
+    this.searchControl = this.fb.group({
+      autoComplete: ['', [Validators.required]],
+      dateStart: ['', [Validators.required]],
+      dateEnd: ['', [Validators.required]]
+    });
   }
+
+  submitForm(): void {
+    console.log('validated');
+    
+  }
+
 
 }

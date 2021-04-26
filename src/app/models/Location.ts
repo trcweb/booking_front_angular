@@ -1,36 +1,29 @@
 
 export class Location {
-    type: string;
-    subType: string;
-    name: string;
-    detailedName: string;
-    iataCode: string;
+    type: string | null;
+    subType: string | null;
+    name: string | null;
+    detailedName: string | null;
+    iataCode: string | null;
     address: Address;
 
-    constructor(type: string,
-                subType: string,
-                name: string,
-                detailedName: string,
-                iataCode: string,
-                address: Address) {
-        this.type = type;
-        this.subType = subType;
-        this.name = name;
-        this.detailedName = detailedName;
-        this.iataCode = iataCode;
-        this.address = address;
-    
+    constructor() {
+        this.type = null;
+        this.subType = null;
+        this.name = null;
+        this.detailedName = null;
+        this.iataCode = null;
+        this.address = new Address();
     }
 
 }
 
 export class Address {
-    cityName: string;
-    countryName: string;
+    cityName: string | null;
+    countryName: string | null;
 
-
-    constructor(cityName: string, countryName: string){
-        this.cityName = cityName;
-        this.countryName = countryName;
+    constructor(){
+        this.cityName = null;
+        this.countryName = null;
     }
 }

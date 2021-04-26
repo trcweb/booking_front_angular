@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './../shared/shared.module';
 import { HotelRoutingModule } from './hotel-routing.module';
 import { NgModule } from '@angular/core';
@@ -9,13 +10,13 @@ import { AcceuilComponent } from './acceuil/acceuil.component';
 
 
 
-
 @NgModule({
   declarations: [HotelComponent, OffreComponent, DetailoffreComponent, AcceuilComponent],
   imports: [
     CommonModule,
     HotelRoutingModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ]
 })
 export class HotelModule { }
