@@ -10,13 +10,13 @@
   }
   .topnav {
     overflow: hidden;
-    background-color: lightblue;
+    background-color: #0275d8;
     position: fixed; /* Set the navbar to fixed position */
     z-index: 1;
     top: 0; /* Position the navbar at the top of the page */
     width: 100%; /* Full width */
     height: 8%;
-    border-bottom: solid 1px lightblue;
+    
   
   }
 
