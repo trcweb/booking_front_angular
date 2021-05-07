@@ -6,14 +6,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { OffreComponent } from './offre/offre.component';
 
+
 const routes: Routes = [
   {
     path: '',
     component: HotelComponent,
     children: [
       { path: '', component: AcceuilComponent },
-      { path: 'offre', component: OffreComponent },
-      { path: 'detailoffre/:id', component: DetailoffreComponent }
+      { path: 'searchresult', component: OffreComponent },
+      { path: 'detailresult/:id', component: DetailoffreComponent }
     ]
   }
 ];

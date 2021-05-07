@@ -1,0 +1,215 @@
+@media screen and (min-width: 420px) {
+  .section-center {
+    position: absolute;
+    top: 13%;
+    left: 0px;
+    right: 0px;
+    background-color: rgb(238, 233, 233);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    height: 80px;
+  }
+  ::ng-deep.example-form-field {
+    margin-right: 20px;
+    margin-top: 10px;
+  }
+
+  ::ng-deep.mat-form-field-flex {
+    height: 58px;
+  }
+
+  ::ng-deep.autocomplete-container .input-container input {
+    height: 55px !important;
+    border-radius: 4px;
+    box-shadow: none;
+    border: 1px solid rgb(206, 206, 206);
+    
+  }
+
+  ::ng-deep.mat-form-field-outline {
+    background-color: white;
+    border-radius: 4px;
+  }
+
+  ::ng-deep.mat-form-field-underline {
+    /*change color of underline*/
+    background-color: #0275d8 !important;
+  }
+
+  ::ng-deep.mat-form-field-ripple {
+    /*change color of underline when focused*/
+    background-color: #0275d8 !important;
+  }
+
+  ::ng-deep .mat-form-field-label {
+    /*change color of label*/
+    color: black !important;
+  }
+
+  mat-datepicker-toggle {
+    color: black !important;
+  }
+
+  .ng-autocomplete {
+    width: 500px !important;
+    margin-top: -82px;
+    margin-right: 20px !important;
+    height: 18px;
+
+    margin-left: 80px;
+  }
+
+  #myBtn {
+    margin-top: -8px;
+    margin-right: 20px !important;
+    height: 55px;
+    font-size: 14px;
+    display: inline;
+  }
+  .iconstyle {
+    margin-left: 13px;
+    display: inline;
+    margin-top: -3px;
+  }
+  .submit-btn {
+    border: none;
+    letter-spacing: 0.6px;
+    height: 40px;
+
+    font-size: 15px;
+    color: white;
+  }
+
+  .form-btn {
+    height: 5px;
+    margin-right: 0px;
+    margin-left: 7px;
+    margin-top: -40px;
+  }
+
+  .label {
+    float: left;
+    font-size: 13px;
+    color: black;
+  }
+  .material-icons {
+    vertical-align: middle;
+    float: right;
+    padding-right: 8px;
+    color: black;
+    height: 2rem;
+  }
+  .card {
+    margin-top: 10rem;
+    margin-left: 6rem;
+    margin-right: 2rem;
+    position: unset;
+   
+    
+  }
+  .autocomplete-container .suggestions-container ul {
+    padding: 0;
+    margin: 0;
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+
+  .navb {
+    margin-left: 15px;
+  }
+
+  .navbar .navbar-nav .nav-link {
+    color: black;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.29;
+  }
+
+  @media only screen and (min-width: 960px) {
+    .navbar .navbar-nav .nav-link {
+      padding: 1em 0.7em;
+    }
+    .navbar {
+      padding: 0;
+    }
+    .navbar .navbar-brand {
+      padding: 0 0.7em;
+    }
+  }
+
+  .navbar .navbar-nav .nav-link {
+    position: relative;
+  }
+
+  .navbar .navbar-nav .nav-link::after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background-color: #000000;
+    color: transparent;
+    width: 0%;
+    content: ".";
+    height: 3px;
+    transition: all 0.5s;
+  }
+
+  .navbar .navbar-nav .nav-link:hover::after {
+    width: 100%;
+  }
+  .navbar {
+    margin-top: -25px;
+  }
+  .hr {
+    width: 83.5rem;
+    margin-top: -2px;
+  }
+  h2 {
+    line-height: calc(36 / 32);
+    color: #141d38;
+    font-size: 2rem;
+    font-weight: 500;
+    display: inline;
+  }
+  .card-title .btn {
+    float: right !important;
+    margin-top: -25px;
+    width: 210px;
+    height: 45px;
+  }
+  h3 {
+    margin-left: 10px;
+    line-height: calc(24 / 20);
+    color: #141d38;
+    font-size: 1.23rem;
+    font-weight: 500;
+  }
+
+  .equipement {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-gap: 1.5rem;
+    display: grid;
+    grid-auto-columns: minmax(0, 3fr);
+    list-style: none;
+    width: 45rem;
+    padding-left: 2rem;
+  }
+  .mat {
+    float: left;
+    height: 1.5rem;
+    overflow: hidden;
+  }
+  .location{
+    display: inline !important;
+    margin-left: 42.5rem;
+    margin-top: 4.5rem;
+  }
+  .plocation{
+     margin-left: 65rem;
+    margin-top: -15.5rem; 
+    margin-right: 30px;
+
+  }
+}

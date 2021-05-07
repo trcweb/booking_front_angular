@@ -1,35 +1,262 @@
- @media screen and (min-width: 420px) {
- 
- #main {
-    transition: margin-left 0.5s;
-    padding: 16px;
-    margin-left: 80px;
-    padding-top: 0px;
-    
+@media screen and (min-width: 420px) {
+  .section-center {
+    position: absolute;
+    top: 13%;
+    left: 0px;
+    right: 0px;
+    background-color: rgb(238, 233, 233);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    height: 80px;
   }
 
-
   
-  .section .section-center {
-	position: absolute;
-	top: 50%;
-	left: 0px;
-	right: 0px;
-	-webkit-transform: translateY(-50%);
-	transform: translateY(-50%);
+.material-icons {
+    vertical-align: middle;
+    float: right;
+    padding-right: 8px;
+    color: black;
+    height: 2rem;
+  }
+  
+
+  .form-btn {
+    height: 5px;
+    margin-right: 0px;
+    margin-left: 7px;
+    margin-top: -40px;
+  }
+
+  .submit-btn {
+    background: rgb(52, 166, 204);
+    border: none;
+    letter-spacing: 0.6px;
+    height: 40px;
+    border-radius: 2px;
+    font-size: 15px;
+    color: white;
+  }
+
+  ::ng-deep.example-form-field {
+    margin-right: 20px;
+    margin-top: 10px;
+  }
+
+  ::ng-deep.mat-form-field-flex {
+    height: 58px;
+  }
+
+  ::ng-deep.autocomplete-container .input-container input {
+    height: 55px !important;
+    border-radius: 4px;
+    box-shadow: none;
+    border: 1px solid rgb(206, 206, 206);
+  }
+
+  ::ng-deep.mat-form-field-outline {
+    background-color: white;
+    border-radius: 4px;
+  }
+
+  ::ng-deep.mat-form-field-underline {
+    /*change color of underline*/
+    background-color: #0275d8 !important;
+  }
+
+  ::ng-deep.mat-form-field-ripple {
+    /*change color of underline when focused*/
+    background-color: #0275d8 !important;
+  }
+
+  ::ng-deep .mat-form-field-label {
+    /*change color of label*/
+    color: black !important;
+  }
+
+  mat-datepicker-toggle {
+    color: black !important;
+  }
+
+  .ng-autocomplete {
+    width: 500px !important;
+    margin-top: -82px;
+    margin-right: 20px !important;
+    height: 18px;
+
+    margin-left: 80px;
+  }
+
+  #myBtn {
+    margin-top: -8px;
+    margin-right: 20px !important;
+    height: 55px;
+    font-size: 14px;
+  }
+  .iconstyle {
+    margin-left: 13px;
+    display: inline;
+    margin-top: -3px;
+  }
+
+  .label {
+    float: left;
+    font-size: 13px;
+    color: black;
+  }
+  .sidecontainer {
+    margin-top: 180px;
+    padding-left: 110px;
+    width: 400px;
+  }
+  h3 {
+    color: #141d38;
+    font-size: 1.4rem;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    margin-bottom: 20px;
+  }
+  h4 {
+    color: #141d38;
+    font-size: 0.958rem;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    line-height: calc(18 / 14);
+  }
+
+  ul {
+    list-style-type: none;
+    margin-top: 4px;
+    margin-left: -39px;
+  }
+  .example-margin {
+    font-size: 0.875rem;
+    line-height: 1.42857;
+    padding: 0.5rem 0;
+  }
+
+  .example-button-row {
+    display: table-cell;
+    width: 490px;
+  }
+
+  .content {
+    margin-left: 30%;
+    margin-top: -117rem;
+  }
+  .imgstyle {
+    width: 100%;
+    height: auto;
+  }
+  .container {
+    position: relative;
+    width: 100%;
+  }
+  .container .btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #0275d8;
+    color: white;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  .container .material-icons {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    color: #0275d8;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    font-size: 3em;
+  }
+
+  .container .btn:hover {
+    background-color: rgb(25, 9, 172);
+  }
+
+  .road {
+    margin-top: 150px;
+    margin-left: 95px;
+    margin-bottom: -130px;
+  }
+  .w-container {
+    float: right;
+    padding-right: 90px;
+    margin-top: -70px;
+  }
+
+  .card {
+    flex-direction: row;
+    height: 15rem;
+    width: 60rem;
+  }
+  .card img {
+    width: 30%;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: calc(0.25rem - 1px);
+  }
+  .card-title {
+    font-weight: 300px;
+  }
+
+  ::ng-deep.card-body {
+    width: 500px !important;
+  }
+  .card-text {
+    font-size: 13px;
+  }
 }
 
-
-#booking {
-	font-family: 'Imprima', sans-serif;
-	background-color: black;
-	background-size: cover;
-    background-position: center;
-   margin-right: 0px;
+@media only screen and (max-width: 1200px) {
+  .card img {
+    width: 40%;
+  }
+}
+.plit {
+  margin-top: -10px;
+  font-size: 14px;
+}
+.h6 {
+  color: #2e9277;
+  font-size: 13px;
+  margin-bottom: -2px;
+}
+.butt {
+  display: inline;
+  float: right;
+  margin-top: -40px;
+  margin-right: -8px;
+}
+.spann {
+  font-size: 12px;
+  color: #2e9277;
+}
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #474e5d;
+  color: white;
 }
 
-
-
- 
-
+@media only screen and (max-width: 768px) {
+  a {
+    display: none;
+  }
+  .card-body {
+    padding: 0.5em 1.2em;
+  }
+  .card-body .card-text {
+    margin: 0;
+  }
+  .card img {
+    width: 50%;
+  }
 }

@@ -1,3 +1,5 @@
+
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './../shared/shared.module';
 import { HotelRoutingModule } from './hotel-routing.module';
@@ -10,13 +12,19 @@ import { AcceuilComponent } from './acceuil/acceuil.component';
 
 
 
+
+
 @NgModule({
   declarations: [HotelComponent, OffreComponent, DetailoffreComponent, AcceuilComponent],
   imports: [
     CommonModule,
     HotelRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    
   ]
+
+  
 })
 export class HotelModule { }
