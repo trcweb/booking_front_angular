@@ -110,11 +110,12 @@
   ::ng-deep.autocomplete-container .suggestions-container ul {
     padding: 0;
     margin: 0;
-    max-height:240px;
+    max-height:260px;
     overflow-y: auto;
   
    
 }
+
 
 
   .navb {
@@ -214,4 +215,26 @@
     margin-right: 30px;
 
   }
+
+
+
+
+  .cardtitle {
+    margin-left: -13px;
+  }
+  
+
+  .cardtext li{
+    margin-left: -38px;
+    margin-bottom: 13px;
+    list-style: none;
+  }
+
+  h4{
+    font-weight: 500;
+  }
+
+  ::ng-deep.ng-invalid.ng-touched, .ng-invalid.ng-dirty {
+    border-bottom:transparent;
+}
 }

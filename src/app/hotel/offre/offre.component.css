@@ -77,6 +77,10 @@
     color: black !important;
   }
 
+  ::ng-deep.ng-invalid.ng-touched, .ng-invalid.ng-dirty {
+    border-bottom:transparent;
+}
+
   .ng-autocomplete {
     width: 500px !important;
     margin-top: -82px;
