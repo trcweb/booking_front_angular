@@ -1,3 +1,4 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { LocationService } from './../../service/location.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -23,6 +24,8 @@ export class DetailoffreComponent implements OnInit {
   todaydate: Date = new Date();
   searchControl: FormGroup;
   constructor(private locationService: LocationService,
+              private router: Router,
+              private activeRoute: ActivatedRoute,
               private fb: FormBuilder) {
     this.searchControl = this.fb.group({
       autoComplete: ['', [Validators.required]],
@@ -122,14 +125,12 @@ export class DetailoffreComponent implements OnInit {
 
 
   openmodal(): void {
-
     // Get the button that opens the modal
     const btn = document.getElementById('myBtn') as HTMLElement;
     const modal = document.getElementById('myModal') as HTMLElement;
     const body = document.querySelector('body') as HTMLElement;
     // When the user clicks on the button, open the modal
     modal.setAttribute('style', 'display:block');
-
     body.setAttribute('style', 'overflow:hidden');
   }
 
@@ -137,8 +138,9 @@ export class DetailoffreComponent implements OnInit {
     // Get the <span> element that closes the modal
     const span = document.getElementsByClassName('close')[0] as HTMLElement;
     const modal = document.getElementById('myModal') as HTMLElement;
+    const body = document.querySelector('body') as HTMLElement;
     // When the user clicks on <span> (x), close the modal
     modal.setAttribute('style', 'display:none;');
-
+    body.setAttribute('style', 'overflow:auto;');
   }
 }

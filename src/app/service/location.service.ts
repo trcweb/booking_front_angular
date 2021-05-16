@@ -10,15 +10,12 @@ import { Observable } from 'rxjs';
 export class LocationService {
 
   apiUrl: string;
-  headers = new HttpHeaders()
-                            .set('content-type', 'application/json')
-                            .set('Access-Control-Allow-Origin', '*');
 
   constructor(private http: HttpClient ) {
     this.apiUrl = environment.apiUrl;
   }
 
   searchLocation(searchTearm: string, subType: string): Observable<Location[]> {
-    return this.http.get<Location[]>(`${this.apiUrl}/hotels/airport-cities-search/${searchTearm}/${subType}`, { headers: this.headers });
+    return this.http.get<Location[]>(`${this.apiUrl}/hotels/airport-cities-search/${searchTearm}/${subType}`);
   }
 }

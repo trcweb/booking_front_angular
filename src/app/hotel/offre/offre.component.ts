@@ -1,9 +1,19 @@
-import {debounceTime, distinctUntilChanged, filter, finalize, map, startWith, switchMap, tap} from 'rxjs/operators';
+import { HotelOfferResponse } from './../../models/HotelOfferResponse';
+import { HotelSearchResponse } from './../../models/HotelSearchResponse';
+import { NextPage } from './../../models/NextPage';
+import { HotelsService } from './../../service/hotels.service';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { Router, ActivatedRoute } from '@angular/router';
+import { debounceTime, distinctUntilChanged, filter, finalize, map, startWith, switchMap, take, tap } from 'rxjs/operators';
 import { LocationService } from '../../service/location.service';
 import { Location } from '../../models/Location';
 import { Chambre } from '../../models/Chambre';
 import { Component, OnInit, } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import * as moment from 'moment';
+import { ChangeContext, Options } from '@angular-slider/ngx-slider';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -14,25 +24,56 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class OffreComponent implements OnInit {
 
   isReadonly = true;
-  key = 'detailedName';
+  key = 'name';
   listechambre: Chambre[] = [new Chambre(1, 0)];
   disabled = false;
   isLoading = false;
-  picked = false;
+  picked = true;
   location: Location = new Location();
   locations: Location[] = [];
-  todaydate: Date = new Date();
-  searchControl: FormGroup;
+  search = new FormControl();
+  star1 = new FormControl();
+  star2 = new FormControl();
+  star3 = new FormControl();
+  star4 = new FormControl();
+  star5 = new FormControl();
+  starList = [this.star1,
+  this.star2,
+  this.star3,
+  this.star4,
+  this.star5
+  ];
+  startDate = moment();
+  endDate = moment();
+  todaydate = moment();
+  minCheckout: moment.Moment;
+  minValue = 0;
+  maxValue = 4000;
+  options: Options = {
+    floor: 0,
+    ceil: 4000
+  };
+  isReset = false;
+  firstPage: NextPage = {
+    amadeusNext: null,
+    localNext: 0,
+    amadeusSearchable: true,
+    localSearchable: true
+  };
+  hotelSearchResponse: HotelSearchResponse = new HotelSearchResponse();
+  fetching = false;
+
   constructor(private locationService: LocationService,
-              private fb: FormBuilder) {  this.searchControl = this.fb.group({
-      autoComplete: ['', [Validators.required]],
-      dateStart: ['', [Validators.required]],
-      dateEnd: ['', [Validators.required]]
-    }); }
+              private hotelsService: HotelsService,
+              private router: Router,
+              private activeRoute: ActivatedRoute) {
+    this.endDate = moment();
+    this.endDate.add(1, 'days');
+    this.minCheckout = moment(this.endDate.valueOf());
+  }
 
   ngOnInit(): void {
-
-     this.searchControl.get('autoComplete')?.valueChanges.pipe(
+    this.search.valueChanges.pipe(
       debounceTime(500),
       filter(value => !(value instanceof Object) && value !== ''),
       distinctUntilChanged(),
@@ -43,38 +84,92 @@ export class OffreComponent implements OnInit {
       }),
       switchMap(
         value => this.locationService.searchLocation(value, 'CITY').pipe(
-        finalize(() => {
-          this.isLoading = false;
-        }),
-       )
+          finalize(() => {
+            this.isLoading = false;
+          }),
+        )
       )
     )
-    .subscribe({
-      next: data => {
-        this.locations = data;
-        console.log(this.locations);
-      },
-      error: err => {
-        console.log('error has occured while searching');
-      }}
+      .subscribe({
+        next: data => {
+          this.locations = data;
+          console.log(this.locations);
+        },
+        error: err => {
+          console.log('error has occured while searching');
+        }
+      }
+      );
+    this.activeRoute.queryParamMap.subscribe({
+      next: params => {
+        const ratings = params.get('ratings');
+        this.toggleCheckbox(ratings);
+        const priceRange = params.get('priceRange');
+        this.toggleRange(priceRange);
+        const checkInDate = params.get('checkInDate');
+        this.startDate = moment(checkInDate, 'YYYY-MM-DD');
+        const checkOutDate = params.get('checkOutDate');
+        this.endDate = moment(checkOutDate, 'YYYY-MM-DD');
+        this.minCheckout = moment(checkOutDate, 'YYYY-MM-DD');
+        const cityCode = params.get('cityCode');
+        this.location.iataCode = cityCode;
+        const rooms = params.get('rooms');
+        this.fetching = true;
+        this.hotelsService.searchOffers(cityCode,
+          checkInDate,
+          checkOutDate,
+          rooms,
+          priceRange,
+          ratings,
+          this.firstPage)
+          .subscribe({
+            next: (response: HotelSearchResponse) => {
+              this.hotelSearchResponse.commission = response.commission;
+              this.hotelSearchResponse.dictionarie = response.dictionarie;
+              this.hotelSearchResponse.nextPage = response.nextPage;
+              this.hotelSearchResponse.hotelOffers = response.hotelOffers;
+              console.log('data:', this.hotelSearchResponse);
+            },
+            error: (err: HttpErrorResponse) => {
+              console.log('err: ', err.error.message);
+            },
+            complete: () => {
+              this.fetching = false;
+              console.log('fetch: ', this.fetching);
+            }
+          });
+      }
+    }
     );
   }
 
 
   submitForm(): void {
-    console.log('validated');
+    if (this.location.iataCode !== null && this.location.iataCode !== '') {
+      this.picked = true;
+      const start = this.startDate.format('YYYY-MM-DD');
+      const end = this.endDate.format('YYYY-MM-DD');
+      const listAdult = this.listechambre.map(ch => ch.adult + ch.enfant).join(',');
+      const destination = this.location.iataCode;
+      this.router.navigate(['./'], {
+        queryParams: {
+          checkInDate: start,
+          checkOutDate: end,
+          cityCode: destination,
+          rooms: listAdult
+        },
+        relativeTo: this.activeRoute
+      });
+    } else {
+      this.picked = false;
+    }
+    console.log('pick: ',  this.picked);
+    
   }
 
-
-  select($loc: Location): void{
+  select($loc: Location): void {
     console.log($loc);
-  }
-
-  onChangeSearch($event: string): void{
-
-  }
-  onFocused($event: any): void{
-
+    this.location = $loc;
   }
 
   plus(index: number, type: string): void {
@@ -91,18 +186,15 @@ export class OffreComponent implements OnInit {
 
   moin(index: number, type: string): void {
     if (type === 'adult') {
-        if (this.listechambre[index].adult > 1) {
-          this.listechambre[index].adult--;
+      if (this.listechambre[index].adult > 1) {
+        this.listechambre[index].adult--;
       }
-    }else {
+    } else {
       if (this.listechambre[index].enfant > 0) {
         this.listechambre[index].enfant--;
       }
     }
   }
-
-
-
 
   addChamber(): void {
     if (this.listechambre.length < 9) {
@@ -113,22 +205,17 @@ export class OffreComponent implements OnInit {
     }
   }
 
-
-
   removeChamber(index: number): void {
     this.listechambre.splice(index, 1);
   }
 
-
   openmodal(): void {
-
     // Get the button that opens the modal
     const btn = document.getElementById('myBtn') as HTMLElement;
     const modal = document.getElementById('myModal') as HTMLElement;
     const body = document.querySelector('body') as HTMLElement;
     // When the user clicks on the button, open the modal
     modal.setAttribute('style', 'display:block');
-
     body.setAttribute('style', 'overflow:hidden');
   }
 
@@ -136,8 +223,121 @@ export class OffreComponent implements OnInit {
     // Get the <span> element that closes the modal
     const span = document.getElementsByClassName('close')[0] as HTMLElement;
     const modal = document.getElementById('myModal') as HTMLElement;
+    const body = document.querySelector('body') as HTMLElement;
     // When the user clicks on <span> (x), close the modal
     modal.setAttribute('style', 'display:none;');
+    body.setAttribute('style', 'overflow:auto;');
+  }
 
+  filter = (i: any[], e: string) => i;
+
+  next(event: MatDatepickerInputEvent<moment.Moment>): void {
+    const date = event.value;
+    this.minCheckout = moment(date!.valueOf());
+    this.minCheckout.add(1, 'days');
+    console.log(this.minCheckout);
+  }
+
+  filterStar($event: MatCheckboxChange, n: string | null): void {
+    let ratings = this.activeRoute.snapshot.queryParamMap.get('ratings');
+    if ($event.checked) {
+      if (ratings !== null) {
+        ratings = ratings + `,${n}`;
+      } else {
+        ratings = `${n}`;
+      }
+    } else {
+      if (ratings !== null) {
+        const index = ratings?.indexOf(n!);
+        if (index === 0) {
+          ratings = ratings!.substring(2);
+        } else {
+          ratings = ratings!.replace(`,${n}`, '');
+        }
+      }
+    }
+    ratings === '' ? ratings = null : ratings = ratings;
+    this.router.navigate(['/hotels/searchresult'], { queryParams: { ratings }, queryParamsHandling: 'merge' });
+  }
+
+  toggleCheckbox(star: string | null): void {
+    const stars = star?.split(',');
+    if (stars && stars !== null) {
+      stars.forEach(element => {
+        const index = parseInt(element);
+        if (index > 0 && index < 6) {
+          this.starList[index - 1].setValue(true);
+        }
+      });
+    }
+  }
+
+  toggleRange(rangeString: string | null): void {
+    const range = rangeString?.split('-');
+    if (range && range !== null) {
+      this.minValue = parseInt(range[0]);
+      this.maxValue = parseInt(range[1]);
+    }
+  }
+
+  changeRnage(changeContext: ChangeContext): void {
+    const priceRange = `${this.minValue}-${this.maxValue}`;
+    this.isReset = true;
+    this.router.navigate(['/hotels/searchresult'], { queryParams: { priceRange }, queryParamsHandling: 'merge' });
+  }
+
+  reset(): void {
+    this.isReset = false;
+    this.minValue = 0;
+    this.maxValue = 4000;
+    this.router.navigate(['/hotels/searchresult'], { queryParams: { priceRange: null }, queryParamsHandling: 'merge' });
+  }
+
+  loadMore(): void {
+    const params = this.activeRoute.snapshot.queryParamMap;
+    const ratings = params.get('ratings');
+    this.toggleCheckbox(ratings);
+    const priceRange = params.get('priceRange');
+    this.toggleRange(priceRange);
+    const checkInDate = params.get('checkInDate');
+    const checkOutDate = params.get('checkOutDate');
+    const cityCode = params.get('cityCode');
+    const rooms = params.get('rooms');
+    this.fetching = true;
+    this.hotelsService.searchOffers(cityCode,
+      checkInDate,
+      checkOutDate,
+      rooms,
+      priceRange,
+      ratings,
+      this.hotelSearchResponse.nextPage)
+      .subscribe({
+        next: (response: HotelSearchResponse) => {
+          this.hotelSearchResponse.commission = response.commission;
+          this.hotelSearchResponse.dictionarie = response.dictionarie;
+          this.hotelSearchResponse.nextPage = response.nextPage;
+          if (response.dictionarie !== null) {
+            this.hotelSearchResponse.dictionarie = response.dictionarie;          }
+          if (response.hotelOffers !== null) {
+            this.hotelSearchResponse.hotelOffers = this.hotelSearchResponse.hotelOffers.concat(response.hotelOffers);
+          }
+          console.log('data:', this.hotelSearchResponse);
+        },
+        error: (err: HttpErrorResponse) => {
+          console.log('err: ', err.error.message);
+        },
+        complete: () => {
+          this.fetching = false;
+          const load = document.getElementById('loadMore') as HTMLElement;
+          if (!this.hotelSearchResponse.nextPage.amadeusSearchable) {
+            load.setAttribute('disabled', '');
+          }
+        }
+      });
+  }
+
+  detail(offer: HotelOfferResponse): void{
+    this.router.navigate([`/hotels/detailresult/${offer.hotel?.id_hotel}`], { queryParamsHandling: 'merge' });
   }
 }
+

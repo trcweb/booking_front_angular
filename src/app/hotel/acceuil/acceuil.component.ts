@@ -2,9 +2,11 @@ import { LocationService } from './../../service/location.service';
 import { Location } from './../../models/Location';
 import { Chambre } from './../../models/Chambre';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {Observable} from 'rxjs';
-import {debounceTime, distinctUntilChanged, filter, finalize, map, startWith, switchMap, tap} from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
+import {debounceTime, distinctUntilChanged, filter, finalize, isEmpty, map, startWith, switchMap, tap} from 'rxjs/operators';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import * as moment from 'moment';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-acceuil',
@@ -14,26 +16,29 @@ import {debounceTime, distinctUntilChanged, filter, finalize, map, startWith, sw
 export class AcceuilComponent implements OnInit {
 
   isReadonly = true;
-  key = 'detailedName';
+  key = 'name';
   listechambre: Chambre[] = [new Chambre(1, 0)];
   disabled = false;
   isLoading = false;
-  picked = false;
+  picked = true;
   location: Location = new Location();
   locations: Location[] = [];
-  searchControl: FormGroup;
+  search = new FormControl();
+  startDate = moment();
+  endDate = moment();
+  todaydate = moment();
+  minCheckout: moment.Moment;
 
   constructor(private locationService: LocationService,
-              private fb: FormBuilder) {
-    this.searchControl = this.fb.group({
-      autoComplete: ['', [Validators.required]],
-      dateStart: ['', [Validators.required]],
-      dateEnd: ['', [Validators.required]]
-    });
+              private router: Router,
+              private activeRoute: ActivatedRoute) {
+    this.endDate = moment();
+    this.endDate.add(1, 'days');
+    this.minCheckout = moment(this.endDate.valueOf());
   }
 
   ngOnInit(): void {
-    this.searchControl.get('autoComplete')?.valueChanges.pipe(
+    this.search.valueChanges.pipe(
       debounceTime(500),
       filter(value => !(value instanceof Object) && value !== ''),
       distinctUntilChanged(),
@@ -41,6 +46,7 @@ export class AcceuilComponent implements OnInit {
         this.locations = [];
         this.isLoading = true;
         this.location = new Location();
+        console.log('clicked');
       }),
       switchMap(
         value => this.locationService.searchLocation(value, 'CITY').pipe(
@@ -62,19 +68,26 @@ export class AcceuilComponent implements OnInit {
   }
 
   submitForm(): void {
-    console.log('validated');
+    if (this.location.name !== null && this.location.name !== '') {
+      this.picked = true;
+      const start = this.startDate.format('YYYY-MM-DD');
+      const end = this.endDate.format('YYYY-MM-DD');
+      const listAdult = this.listechambre.map(ch => ch.adult + ch.enfant).join(',');
+      const destination = this.location.iataCode;
+      this.router.navigate(['searchresult'], { queryParams: { checkInDate: start,
+                                                              checkOutDate: end,
+                                                              cityCode: destination,
+                                                              rooms: listAdult },
+                                                relativeTo: this.activeRoute });
+    } else {
+      this.picked = false;
+    }
   }
 
 
   select($loc: Location): void{
     console.log($loc);
-  }
-
-  onChangeSearch($event: string): void{
-
-  }
-  onFocused($event: any): void{
-
+    this.location = $loc;
   }
 
   plus(index: number, type: string): void {
@@ -101,9 +114,6 @@ export class AcceuilComponent implements OnInit {
     }
   }
 
-
-
-
   addChamber(): void {
     if (this.listechambre.length < 9) {
       this.listechambre.push(new Chambre(1, 0));
@@ -113,29 +123,17 @@ export class AcceuilComponent implements OnInit {
     }
   }
 
-
-
   removeChamber(index: number): void {
     this.listechambre.splice(index, 1);
   }
 
-
-
-
-
-
-
-
-
   openmodal(): void {
-
     // Get the button that opens the modal
     const btn = document.getElementById('myBtn') as HTMLElement;
     const modal = document.getElementById('myModal') as HTMLElement;
     const body = document.querySelector('body') as HTMLElement;
     // When the user clicks on the button, open the modal
     modal.setAttribute('style', 'display:block');
-
     body.setAttribute('style', 'overflow:hidden');
   }
 
@@ -143,10 +141,19 @@ export class AcceuilComponent implements OnInit {
     // Get the <span> element that closes the modal
     const span = document.getElementsByClassName('close')[0] as HTMLElement;
     const modal = document.getElementById('myModal') as HTMLElement;
+    const body = document.querySelector('body') as HTMLElement;
     // When the user clicks on <span> (x), close the modal
     modal.setAttribute('style', 'display:none;');
-
+    body.setAttribute('style', 'overflow:auto;');
   }
 
+  filter = (i: any[], e: string) => i;
+
+  next(event: MatDatepickerInputEvent<moment.Moment>): void{
+    const date = event.value;
+    this.minCheckout = moment(date!.valueOf());
+    this.minCheckout.add(1, 'days');
+    console.log(this.minCheckout);
+  }
 
 }

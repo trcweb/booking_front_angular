@@ -1,6 +1,6 @@
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
@@ -8,13 +8,15 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SumPipe } from './directives/sum.pipe';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import {MatButtonModule} from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 export const MY_FORMATS = {
     parse: {
@@ -34,6 +36,7 @@ export const MY_FORMATS = {
     CommonModule,
     AutocompleteLibModule,
     ReactiveFormsModule,
+    FormsModule,
     MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
@@ -41,7 +44,9 @@ export const MY_FORMATS = {
     MatSidenavModule,
     MatCheckboxModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
+    NgxSliderModule,
+    MatProgressBarModule
   ],
   exports: [
     SidebarComponent,
@@ -49,6 +54,7 @@ export const MY_FORMATS = {
     SumPipe,
     AutocompleteLibModule,
     ReactiveFormsModule,
+    FormsModule,
     MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
@@ -56,7 +62,9 @@ export const MY_FORMATS = {
     MatSidenavModule,
     MatCheckboxModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
+    NgxSliderModule,
+    MatProgressBarModule
   ],
    providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

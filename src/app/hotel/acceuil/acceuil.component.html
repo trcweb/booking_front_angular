@@ -6,44 +6,41 @@
             <div class="container">
                 <div class="row" style="justify-content: center;">
                     <div class="booking-form">
-                        <form [formGroup]="searchControl" (ngSubmit)="submitForm()" >
+                        <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && submitForm()">
+                            <div *ngIf="!picked" class="alert alert-danger">
+                                test test test
+                            </div>
                             <div class="row no-margin">
 
                                 <div class="col-md-8">
-                                    
-                                       
-                                            <div class="ng-autocomplete">
-                                                <ng-autocomplete 
-                                                  [data]="locations"
-                                                  formControlName="autoComplete"
-                                                  [isLoading]="isLoading"
-                                                  [searchKeyword]="key"
-                                                  (selected)='select($event)'
-                                                  (inputChanged)='onChangeSearch($event)'
-                                                  (inputFocused)='onFocused($event)'
-                                                  [itemTemplate]="itemTemplate"
-                                                  [ngClass]="{'is-invalid': searchControl.controls.autoComplete.invalid && (searchControl.controls.autoComplete.dirty || searchControl.controls.autoComplete.touched)}"
-                                                  >                                 
-                                                </ng-autocomplete>
-                                                
-                                                <ng-template #itemTemplate let-loc>
-                                                    <span class="material-icons"> location_on </span>
-                                                    <div style="margin-left: 5px;">
-                                                       <p [innerHTML]="'<b>' + loc.name + ' (' + loc.iataCode + ')</b>'"> </p> <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName | lowercase}}</span>
-                                                    </div>
-                                                    <hr>
-                                                </ng-template>
-                                                
-                                            </div>                                               
-                                                
-                                         
-                                        </div>
-                                  
-                                
+
+                                    <h6 class="form-label text-primary" style="position: absolute; z-index: 1;">
+                                        Destination </h6>
+                                    <div class="ng-autocomplete">
+                                        <ng-autocomplete [data]="locations" [formControl]="search"
+                                            [isLoading]="isLoading" [searchKeyword]="key" (selected)='select($event)'
+                                            [itemTemplate]="itemTemplate" [customFilter]="filter">
+                                        </ng-autocomplete>
+
+                                        <ng-template #itemTemplate let-loc>
+                                            <span class="material-icons"> location_on </span>
+                                            <div style="margin-left: 5px;">
+                                                <p [innerHTML]="'<b>' + loc.name + ' (' + loc.iataCode + ')</b>'"> </p>
+                                                <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName | lowercase}}</span>
+                                            </div>
+                                            <hr>
+                                        </ng-template>
+
+                                    </div>
+
+
+                                </div>
+
+
 
 
                                 <div class="col-md-4">
-                                    <div class="form-group click">
+                                    <div class="form-group">
                                         <h6 class="form-label text-primary">Voyageurs</h6>
                                         <div class="form-control" id="myBtn" (click)="openmodal()">
 
@@ -58,16 +55,55 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <h6 class="form-label text-primary">Check in</h6>
-                                        <input class="form-control" type="date" formControlName="dateStart" 
-                                        [ngClass]="{'is-invalid': searchControl.controls.dateStart.invalid && (searchControl.controls.dateStart.dirty || searchControl.controls.dateStart.touched)}"
-                                        >
+                                        <mat-form-field appearance="outline" class="example-form-field">
+                                            <mat-label style="font-size:15px;">Check-in</mat-label>
+                                            <input matInput 
+                                                [matDatepicker]="datepicker1" 
+                                                [min]="todaydate"
+                                                [(ngModel)]="startDate" 
+                                                #start=ngModel 
+                                                name="startDate"
+                                                [ngClass]="{'is-invalid': f.submitted && start.invalid}"
+                                                (dateChange)="next($event)"
+                                                required>
+                                            <mat-datepicker-toggle matSuffix [for]="datepicker1">
+                                            </mat-datepicker-toggle>
+                                            <!-- #docregion datepicker-actions -->
+                                            <mat-datepicker #datepicker1>
+                                                <mat-datepicker-actions>
+                                                    <button mat-button matDatepickerCancel>Cancel</button>
+                                                    <button mat-raised-button color="primary"
+                                                        matDatepickerApply>Apply</button>
+                                                </mat-datepicker-actions>
+                                            </mat-datepicker>
+                                            <div *ngIf="f.submitted && start.invalid">
+                                                <div class="text-danger" *ngIf="start.errors?.required">start date is
+                                                    required</div>
+                                            </div>
+                                        </mat-form-field>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <h6 class="form-label text-primary">Check out</h6>
-                                        <input class="form-control" type="date" formControlName="dateStart">
+                                        <mat-form-field appearance="outline" class="example-form-field">
+                                            <mat-label style="font-size:15px;">Check-out</mat-label>
+                                            <input matInput [matDatepicker]="datepicker2" [min]="minCheckout"
+                                                [(ngModel)]="endDate" #end=ngModel name="endDate"
+                                                [ngClass]="{'is-invalid': f.submitted && end.invalid}" required>
+                                            <mat-datepicker-toggle matSuffix [for]="datepicker2">
+                                            </mat-datepicker-toggle>
+
+                                            <mat-datepicker #datepicker2>
+                                                <mat-datepicker-actions>
+                                                    <button mat-button matDatepickerCancel>Cancel</button>
+                                                    <button mat-raised-button color="primary"
+                                                        matDatepickerApply>Apply</button>
+                                                </mat-datepicker-actions>
+                                            </mat-datepicker>
+                                            <div *ngIf="f.submitted && end.invalid">
+                                                <div class="text-danger" *ngIf="end.errors?.required">End date is required</div>
+                                            </div>
+                                        </mat-form-field>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -268,72 +304,72 @@
 <!--modal-->
 <!--footer-->
 <footer class="bg-light text-center text-lg-start">
-  <!-- Grid container -->
-  <div class="container p-4">
-    <!--Grid row-->
-    <div class="row">
-      <!--Grid column-->
-      <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-        <h5 class="text-uppercase">Footer Content</h5>
+    <!-- Grid container -->
+    <div class="container p-4">
+        <!--Grid row-->
+        <div class="row">
+            <!--Grid column-->
+            <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Footer Content</h5>
 
-        <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
-          molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae aliquam
-          voluptatem veniam, est atque cumque eum delectus sint!
-        </p>
-      </div>
-      <!--Grid column-->
+                <p>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
+                    molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae aliquam
+                    voluptatem veniam, est atque cumque eum delectus sint!
+                </p>
+            </div>
+            <!--Grid column-->
 
-      <!--Grid column-->
-      <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-        <h5 class="text-uppercase">Links</h5>
+            <!--Grid column-->
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Links</h5>
 
-        <ul class="list-unstyled mb-0">
-          <li>
-            <a href="#!" class="text-dark">Link 1</a>
-          </li>
-          <li>
-            <a href="#!" class="text-dark">Link 2</a>
-          </li>
-          <li>
-            <a href="#!" class="text-dark">Link 3</a>
-          </li>
-          <li>
-            <a href="#!" class="text-dark">Link 4</a>
-          </li>
-        </ul>
-      </div>
-      <!--Grid column-->
+                <ul class="list-unstyled mb-0">
+                    <li>
+                        <a href="#!" class="text-dark">Link 1</a>
+                    </li>
+                    <li>
+                        <a href="#!" class="text-dark">Link 2</a>
+                    </li>
+                    <li>
+                        <a href="#!" class="text-dark">Link 3</a>
+                    </li>
+                    <li>
+                        <a href="#!" class="text-dark">Link 4</a>
+                    </li>
+                </ul>
+            </div>
+            <!--Grid column-->
 
-      <!--Grid column-->
-      <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-        <h5 class="text-uppercase mb-0">Links</h5>
+            <!--Grid column-->
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase mb-0">Links</h5>
 
-        <ul class="list-unstyled">
-          <li>
-            <a href="#!" class="text-dark">Link 1</a>
-          </li>
-          <li>
-            <a href="#!" class="text-dark">Link 2</a>
-          </li>
-          <li>
-            <a href="#!" class="text-dark">Link 3</a>
-          </li>
-          <li>
-            <a href="#!" class="text-dark">Link 4</a>
-          </li>
-        </ul>
-      </div>
-      <!--Grid column-->
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="#!" class="text-dark">Link 1</a>
+                    </li>
+                    <li>
+                        <a href="#!" class="text-dark">Link 2</a>
+                    </li>
+                    <li>
+                        <a href="#!" class="text-dark">Link 3</a>
+                    </li>
+                    <li>
+                        <a href="#!" class="text-dark">Link 4</a>
+                    </li>
+                </ul>
+            </div>
+            <!--Grid column-->
+        </div>
+        <!--Grid row-->
     </div>
-    <!--Grid row-->
-  </div>
-  <!-- Grid container -->
+    <!-- Grid container -->
 
-  <!-- Copyright -->
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-    © 2020 Copyright:
-    <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-  </div>
-  <!-- Copyright -->
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2020 Copyright:
+        <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+    </div>
+    <!-- Copyright -->
 </footer>
