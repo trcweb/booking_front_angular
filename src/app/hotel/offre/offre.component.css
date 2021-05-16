@@ -1,14 +1,5 @@
 @media screen and (min-width: 420px) {
-  .section-center {
-    position: absolute;
-    top: 13%;
-    left: 0px;
-    right: 0px;
-    background-color: rgb(238, 233, 233);
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
-    height: 80px;
-  }
+  
 
   
 .material-icons {
@@ -24,7 +15,7 @@
     height: 5px;
     margin-right: 0px;
     margin-left: 7px;
-    margin-top: -40px;
+    margin-top: -23px;
   }
 
   .submit-btn {
@@ -40,6 +31,10 @@
   ::ng-deep.example-form-field {
     margin-right: 20px;
     margin-top: 10px;
+  }
+
+  ::ng-deep.mat-form-field-infix {
+    width: 80px !important;
   }
 
   ::ng-deep.mat-form-field-flex {
@@ -86,7 +81,6 @@
     margin-top: -82px;
     margin-right: 20px !important;
     height: 18px;
-
     margin-left: 80px;
   }
 
@@ -107,11 +101,7 @@
     font-size: 13px;
     color: black;
   }
-  .sidecontainer {
-    margin-top: 180px;
-    padding-left: 110px;
-    width: 400px;
-  }
+ 
   h3 {
     color: #141d38;
     font-size: 1.4rem;
@@ -143,64 +133,20 @@
     width: 490px;
   }
 
-  .content {
-    margin-left: 30%;
-    margin-top: -117rem;
-  }
-  .imgstyle {
-    width: 100%;
-    height: auto;
-  }
-  .container {
-    position: relative;
-    width: 100%;
-  }
-  .container .btn {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    background-color: #0275d8;
-    color: white;
-    font-size: 16px;
-    padding: 12px 24px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  .container .material-icons {
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    color: #0275d8;
-    padding: 12px 24px;
-    border: none;
-    cursor: pointer;
-    font-size: 3em;
-  }
-
-  .container .btn:hover {
-    background-color: rgb(25, 9, 172);
-  }
+ 
 
   .road {
     margin-top: 150px;
     margin-left: 95px;
     margin-bottom: -130px;
   }
-  .w-container {
-    float: right;
-    padding-right: 90px;
-    margin-top: -70px;
-  }
+  
 
   .card {
     flex-direction: row;
-    height: 15rem;
-    width: 60rem;
+    height: fit-content;
+    width: fit-content;
+    margin-bottom: 15px;
   }
   .card img {
     width: 30%;
@@ -235,9 +181,8 @@
 }
 .butt {
   display: inline;
-  float: right;
-  margin-top: -40px;
-  margin-right: -8px;
+  margin-right: -15px;
+ margin-top: 5px;
 }
 .spann {
   font-size: 12px;
@@ -262,6 +207,30 @@
   }
   .card img {
     width: 50%;
+  }
+}
+
+.sidebar{
+    margin-top: 40px;
+    padding-left: 85px;
+  }
+
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar h3 h4 .example-margin {float: left;}
+
+}
+
+/*On screens that are less than 400px, display the bar vertically, instead of horizontally */
+@media screen and (max-width: 400px) {
+  .sidebar h3 h4 .example-margin {
+    text-align: center;
+    float: none;
   }
 }
 

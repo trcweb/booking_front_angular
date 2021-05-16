@@ -3,10 +3,10 @@ import { Location } from './../../models/Location';
 import { Chambre } from './../../models/Chambre';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import {debounceTime, distinctUntilChanged, filter, finalize, isEmpty, map, startWith, switchMap, tap} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, filter, finalize, map, startWith, switchMap, tap} from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import * as moment from 'moment';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-acceuil',
@@ -50,21 +50,22 @@ export class AcceuilComponent implements OnInit {
       }),
       switchMap(
         value => this.locationService.searchLocation(value, 'CITY').pipe(
-        finalize(() => {
-          this.isLoading = false;
-        }),
-       )
+          finalize(() => {
+            this.isLoading = false;
+          }),
+        )
       )
     )
-    .subscribe({
-      next: data => {
-        this.locations = data;
-        console.log(this.locations);
-      },
-      error: err => {
-        console.log('error has occured while searching');
-      }}
-    );
+      .subscribe({
+        next: data => {
+          this.locations = data;
+          console.log(this.locations);
+        },
+        error: err => {
+          console.log('error has occured while searching');
+        }
+      }
+      );
   }
 
   submitForm(): void {
@@ -85,7 +86,7 @@ export class AcceuilComponent implements OnInit {
   }
 
 
-  select($loc: Location): void{
+  select($loc: Location): void {
     console.log($loc);
     this.location = $loc;
   }
@@ -104,10 +105,10 @@ export class AcceuilComponent implements OnInit {
 
   moin(index: number, type: string): void {
     if (type === 'adult') {
-        if (this.listechambre[index].adult > 1) {
-          this.listechambre[index].adult--;
+      if (this.listechambre[index].adult > 1) {
+        this.listechambre[index].adult--;
       }
-    }else {
+    } else {
       if (this.listechambre[index].enfant > 0) {
         this.listechambre[index].enfant--;
       }
@@ -149,11 +150,10 @@ export class AcceuilComponent implements OnInit {
 
   filter = (i: any[], e: string) => i;
 
-  next(event: MatDatepickerInputEvent<moment.Moment>): void{
+  next(event: MatDatepickerInputEvent<moment.Moment>): void {
     const date = event.value;
     this.minCheckout = moment(date!.valueOf());
     this.minCheckout.add(1, 'days');
     console.log(this.minCheckout);
   }
-
 }

@@ -4,17 +4,17 @@
 
 
             <div class="container">
-                <div class="row" style="justify-content: center;">
+                <div class="" style="justify-content: center;">
                     <div class="booking-form">
                         <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && submitForm()">
                             <div *ngIf="!picked" class="alert alert-danger">
                                 test test test
                             </div>
-                            <div class="row no-margin">
+                            <div class="row " style="justify-content: center;">
 
-                                <div class="col-md-8">
+                                <div class="col-md-7">
 
-                                    <h6 class="form-label text-primary" style="position: absolute; z-index: 1;">
+                                    <h6 class="form-label text-primary" style="margin-left: 25px !important; position: absolute; z-index: 1;">
                                         Destination </h6>
                                     <div class="ng-autocomplete">
                                         <ng-autocomplete [data]="locations" [formControl]="search"
@@ -26,7 +26,8 @@
                                             <span class="material-icons"> location_on </span>
                                             <div style="margin-left: 5px;">
                                                 <p [innerHTML]="'<b>' + loc.name + ' (' + loc.iataCode + ')</b>'"> </p>
-                                                <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName | lowercase}}</span>
+                                                <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName |
+                                                    lowercase}}</span>
                                             </div>
                                             <hr>
                                         </ng-template>
@@ -39,7 +40,7 @@
 
 
 
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <h6 class="form-label text-primary">Voyageurs</h6>
                                         <div class="form-control" id="myBtn" (click)="openmodal()">
@@ -52,20 +53,16 @@
                                     </div>
                                 </div>
 
-
+                            </div>
+                            <div class="row" style="justify-content: center;">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <mat-form-field appearance="outline" class="example-form-field">
+                                        <mat-form-field appearance="outline" style="margin-left: 20px !important;" class="example-form-field">
                                             <mat-label style="font-size:15px;">Check-in</mat-label>
-                                            <input matInput 
-                                                [matDatepicker]="datepicker1" 
-                                                [min]="todaydate"
-                                                [(ngModel)]="startDate" 
-                                                #start=ngModel 
-                                                name="startDate"
+                                            <input matInput [matDatepicker]="datepicker1" [min]="todaydate"
+                                                [(ngModel)]="startDate" #start=ngModel name="start"
                                                 [ngClass]="{'is-invalid': f.submitted && start.invalid}"
-                                                (dateChange)="next($event)"
-                                                required>
+                                                (dateChange)="next($event)" required>
                                             <mat-datepicker-toggle matSuffix [for]="datepicker1">
                                             </mat-datepicker-toggle>
                                             <!-- #docregion datepicker-actions -->
@@ -83,7 +80,7 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <mat-form-field appearance="outline" class="example-form-field">
                                             <mat-label style="font-size:15px;">Check-out</mat-label>
@@ -101,12 +98,13 @@
                                                 </mat-datepicker-actions>
                                             </mat-datepicker>
                                             <div *ngIf="f.submitted && end.invalid">
-                                                <div class="text-danger" *ngIf="end.errors?.required">End date is required</div>
+                                                <div class="text-danger" *ngIf="end.errors?.required">End date is
+                                                    required</div>
                                             </div>
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-btn">
                                         <button class="submit-btn" type="submit">
                                             <h5>Recherche</h5>
@@ -116,6 +114,8 @@
 
                                 </div>
                             </div>
+
+
 
                         </form>
                     </div>
@@ -238,8 +238,6 @@
     <div class="modal-content" style="top:30vh">
         <div class="modal-header">
             <h5 class="text-primary">Voyageurs</h5>
-            <span class="close" (click)="closemodal()">&times;</span>
-
         </div>
 
         <div class="modal-body" *ngFor="let chambre of listechambre; let index = index;">
@@ -295,7 +293,7 @@
             chambre</button>
 
         <div class="modal-footer">
-            <button class="btn btn-primary">Confirmer</button>
+            <button class="btn btn-primary" (click)="closemodal()">Confirmer</button>
         </div>
     </div>
 </div>

@@ -1,204 +1,258 @@
 <div id="main">
-
-  <div class="section-center ">
+  <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
-      <form class="form-inline form-floating" name="form" #f="ngForm" (ngSubmit)="f.form.valid && submitForm()">
+      <div class="row">
+        <form class="form-inline form-floating" name="form" #f="ngForm" (ngSubmit)="f.form.valid && submitForm()">
+          <div class="col-4">
+            <div class="form-group">
+              
+              <div class="ng-autocomplete ">
+                <h5 class="form-label" style="position: absolute; z-index: 1;">
+                  Destination </h5>
+                <ng-autocomplete [data]="locations" [formControl]="search" [isLoading]="isLoading" [searchKeyword]="key"
+                  (selected)='select($event)' [itemTemplate]="itemTemplate" [customFilter]="filter">
+                </ng-autocomplete>
 
-        <div class="form-group">
+                <ng-template #itemTemplate let-loc>
+                  <span class="material-icons"> location_on </span>
+                  <div style="margin-left: 5px;">
+                    <p [innerHTML]="'<b>' + loc.name + ' (' + loc.iataCode + ')</b>'"> </p>
+                    <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName | lowercase}}</span>
+                  </div>
+                  <hr>
+                </ng-template>
 
-          <div class="ng-autocomplete ">
-            <ng-autocomplete [data]="locations" [formControl]="search" [isLoading]="isLoading" [searchKeyword]="key"
-              (selected)='select($event)' [itemTemplate]="itemTemplate" [customFilter]="filter">
-            </ng-autocomplete>
-
-            <ng-template #itemTemplate let-loc>
-              <span class="material-icons"> location_on </span>
-              <div style="margin-left: 5px;">
-                <p [innerHTML]="'<b>' + loc.name + ' (' + loc.iataCode + ')</b>'"> </p>
-                <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName | lowercase}}</span>
               </div>
-              <hr>
-            </ng-template>
+            </div>
+          </div>
 
+          <div class="col-auto">
+            <div class="form-group click">
+
+              <div class="form-control " id="myBtn" (click)="openmodal()">
+                <label class="label" for="myBtn">Voyageurs</label>
+                <p style="margin-top: 23px;">{{listechambre.length}} chambre, {{listechambre
+                  | sum}} voyageurs
+                  <span class="material-icons iconstyle">people</span>
+                </p>
+              </div>
+            </div>
           </div>
 
 
 
-        </div>
+          <div class="col-auto">
+            <mat-form-field appearance="outline" class="example-form-field">
+              <mat-label style="font-size:15px;">Check-in</mat-label>
+              <input matInput [matDatepicker]="datepicker1" [min]="todaydate" [(ngModel)]="startDate" #start=ngModel
+                name="startDate" [ngClass]="{'is-invalid': f.submitted && start.invalid}" (dateChange)="next($event)"
+                [ngClass]="{'is-invalid': f.submitted && start.invalid}" style="width: 80px;" required>
+              <mat-datepicker-toggle matSuffix [for]="datepicker1"></mat-datepicker-toggle>
+              <!-- #docregion datepicker-actions -->
+              <mat-datepicker #datepicker1>
+                <mat-datepicker-actions>
+                  <button mat-button matDatepickerCancel>Cancel</button>
+                  <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                </mat-datepicker-actions>
+              </mat-datepicker>
+              <div *ngIf="f.submitted && start.invalid">
+                <div class="text-danger" *ngIf="start.errors?.required">start date is required</div>
+              </div>
 
-
-
-        <div class="form-group click">
-
-          <div class="form-control col-md-11" id="myBtn" (click)="openmodal()">
-            <label class="label" for="myBtn">Voyageurs</label>
-            <p style="margin-top: 23px;">{{listechambre.length}} chambre, {{listechambre
-              | sum}} voyageurs
-              <span class="material-icons iconstyle">people</span>
-            </p>
+            </mat-form-field>
           </div>
-        </div>
+          <div class="col-auto">
+            <mat-form-field appearance="outline" class="example-form-field">
+              <mat-label style="font-size:15px;">Check-out</mat-label>
+              <input matInput [matDatepicker]="datepicker2" [min]="minCheckout" [(ngModel)]="endDate" #end=ngModel name="endDate"
+                [ngClass]="{'is-invalid': f.submitted && end.invalid}" required>
+              <mat-datepicker-toggle matSuffix [for]="datepicker2"></mat-datepicker-toggle>
+              
+              <mat-datepicker #datepicker2>
+                <mat-datepicker-actions>
+                  <button mat-button matDatepickerCancel>Cancel</button>
+                  <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                </mat-datepicker-actions>
+              </mat-datepicker>
+              <div *ngIf="f.submitted && end.invalid">
+                <div class="text-danger" *ngIf="end.errors?.required">End date is required</div>
+              </div>
 
-
-
-
-        <mat-form-field appearance="outline" class="example-form-field">
-          <mat-label style="font-size:15px;">Check-in</mat-label>
-          <input matInput [matDatepicker]="datepicker1" [min]="todaydate" [(ngModel)]="startDate" #start=ngModel
-            name="startDate" [ngClass]="{'is-invalid': f.submitted && start.invalid}" (dateChange)="next($event)"
-            [ngClass]="{'is-invalid': f.submitted && start.invalid}" required>
-          <mat-datepicker-toggle matSuffix [for]="datepicker1"></mat-datepicker-toggle>
-          <!-- #docregion datepicker-actions -->
-          <mat-datepicker #datepicker1>
-            <mat-datepicker-actions>
-              <button mat-button matDatepickerCancel>Cancel</button>
-              <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
-            </mat-datepicker-actions>
-          </mat-datepicker>
-          <div *ngIf="f.submitted && start.invalid">
-            <div class="text-danger" *ngIf="start.errors?.required">start date is required</div>
+            </mat-form-field>
           </div>
-        </mat-form-field>
-
-
-        <mat-form-field appearance="outline" class="example-form-field">
-          <mat-label style="font-size:15px;">Check-out</mat-label>
-          <input matInput [matDatepicker]="datepicker2" [min]="minCheckout" [(ngModel)]="endDate" #end=ngModel
-            name="endDate" [ngClass]="{'is-invalid': f.submitted && end.invalid}" required>
-          <mat-datepicker-toggle matSuffix [for]="datepicker2"></mat-datepicker-toggle>
-
-          <mat-datepicker #datepicker2>
-            <mat-datepicker-actions>
-              <button mat-button matDatepickerCancel>Cancel</button>
-              <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
-            </mat-datepicker-actions>
-          </mat-datepicker>
-          <div *ngIf="f.submitted && end.invalid">
-            <div class="text-danger" *ngIf="end.errors?.required">End date is required</div>
+          <div class="col-1">
+            <div class="form-btn">
+              <button class="submit-btn btn btn-primary" type="submit">
+                <p>Recherche</p>
+              </button>
+            </div>
           </div>
-        </mat-form-field>
 
 
-        <div class="form-btn">
-          <button class="submit-btn btn btn-primary" type="submit">
-            <p>Recherche</p>
-          </button>
-        </div>
-
-
-
-      </form>
-
+        </form>
+      </div>
     </div>
 
-  </div>
+  </nav>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="sidebar">
 
-  <div class="sidecontainer">
+        <h3>Filtrer selon</h3><br>
+        <h4>Filtres populaires</h4>
 
-    <h3>Filtrer selon</h3><br>
-    <h4>Filtres populaires</h4>
-
-    <ul>
+        <ul>
 
 
-      <li>
-        <mat-checkbox class="example-margin">Tout compris</mat-checkbox>
-      </li>
-      <li>
-        <mat-checkbox class="example-margin">Hôtel</mat-checkbox>
-      </li>
-      <li>
-        <mat-checkbox class="example-margin">Piscine</mat-checkbox>
-      </li>
+          <li>
+            <mat-checkbox class="example-margin">Tout compris</mat-checkbox>
+          </li>
+          <li>
+            <mat-checkbox class="example-margin">Hôtel</mat-checkbox>
+          </li>
+          <li>
+            <mat-checkbox class="example-margin">Piscine</mat-checkbox>
+          </li>
 
-      <li>
-        <mat-checkbox class="example-margin">Petit-déjeuner compris</mat-checkbox>
-      </li>
+          <li>
+            <mat-checkbox class="example-margin">Petit-déjeuner compris</mat-checkbox>
+          </li>
 
-    </ul>
-    <hr>
-    <h4>Nombre d’étoiles</h4>
+        </ul>
+        <hr>
+        <h4>Nombre d’étoiles</h4>
 
-    <ul>
+        <ul>
 
-      <li>
-        <mat-checkbox [formControl]="star5" (change)="filterStar($event, '5')" class="example-margin">5 ★★★★★
-        </mat-checkbox>
-      </li>
-      <li>
-        <mat-checkbox [formControl]="star4" (change)="filterStar($event, '4')" class="example-margin">4 ★★★★
-        </mat-checkbox>
-      </li>
-      <li>
-        <mat-checkbox [formControl]="star3" (change)="filterStar($event, '3')" class="example-margin">3 ★★★
-        </mat-checkbox>
-      </li>
-      <li>
-        <mat-checkbox [formControl]="star2" (change)="filterStar($event, '2')" class="example-margin">2 ★★
-        </mat-checkbox>
-      </li>
-      <li>
-        <mat-checkbox [formControl]="star1" (change)="filterStar($event, '1')" class="example-margin">1 ★
-        </mat-checkbox>
-      </li>
-    </ul>
+        <li>
+          <mat-checkbox [formControl]="star5" (change)="filterStar($event, '5')" class="example-margin">5 ★★★★★
+          </mat-checkbox>
+        </li>
+        <li>
+          <mat-checkbox [formControl]="star4" (change)="filterStar($event, '4')" class="example-margin">4 ★★★★
+          </mat-checkbox>
+        </li>
+        <li>
+          <mat-checkbox [formControl]="star3" (change)="filterStar($event, '3')" class="example-margin">3 ★★★
+          </mat-checkbox>
+        </li>
+        <li>
+          <mat-checkbox [formControl]="star2" (change)="filterStar($event, '2')" class="example-margin">2 ★★
+          </mat-checkbox>
+        </li>
+        <li>
+          <mat-checkbox [formControl]="star1" (change)="filterStar($event, '1')" class="example-margin">1 ★
+          </mat-checkbox>
+        </li>
+        </ul>
 
-    <hr>
-    <h4>Votre Budget</h4>
+        <hr>
+        <h4>Votre Budget</h4>
+       <ul>
+        <li>  <a *ngIf="isReset" class="btn btn-primary btn-sm" style="margin-top: -5px;" (click)="reset()">
+            reset
+          </a>
+         
+        </li>
+        <li>  <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options" (userChangeEnd)="changeRnage($event)"
+            style="width: 200px;"></ngx-slider>
+       </li>
+       </ul>
+        <hr>
+        <h4>Conditions de réservation</h4>
 
-    <div>
-      <a *ngIf="isReset" class="btn btn-primary btn-sm" style="margin-top: -5px;" (click)="reset()">
-        reset
-      </a>
-      <br>
-      <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"
-        (userChangeEnd)="changeRnage($event)" style="width: 200px;"></ngx-slider>
+        <ul>
+          <li>
+            <mat-checkbox class="example-margin">Annulation gratuite</mat-checkbox>
+          </li>
+          <li>
+            <mat-checkbox class="example-margin">Reservation sans carte de crédit </mat-checkbox>
+          </li>
+          <li>
+            <mat-checkbox class="example-margin">Pas de prépaiement</mat-checkbox>
+          </li>
+
+        </ul>
+        <hr>
+        <h4>Note des commentaires</h4>
+
+        <ul>
+          <li>
+            <mat-checkbox class="example-margin">Fabuleux:9+</mat-checkbox>
+          </li>
+          <li>
+            <mat-checkbox class="example-margin">Trés bien:8+ </mat-checkbox>
+          </li>
+          <li>
+            <mat-checkbox class="example-margin">Bien:7+</mat-checkbox>
+          </li>
+          <li>
+            <mat-checkbox class="example-margin">Agréable:6+</mat-checkbox>
+          </li>
+
+        </ul>
+        <hr>
+
+
+      </div>
     </div>
 
-    <hr>
-    <h4>Conditions de réservation</h4>
+    <div class="col-md-7" style="margin-top: 40px;">
+      <h1>Hammamet : 21 établissements Trouvées</h1>
+      <hr>
+      <div *ngFor="let offer of hotelSearchResponse.hotelOffers" class="card">
+        <ng-container *ngIf="offer.hotel?.media !== null; else elseTemplate">
+          <img src="{{offer.hotel!.media[0]}}" class="card-img-top">
+        </ng-container>
+        <ng-template #elseTemplate>
+          <img src="assets/img/noimage.png" class="card-img-top">
+        </ng-template>
+        
+        
+        <div class="card-body">
+          <h3 class="card-title">{{offer.hotel?.nom}} <br> <h3 *ngIf="offer.hotel">{{star.repeat(offer.hotel.nbr_etoile || 0)}}</h3></h3>
+           
+          <p class="card-text"><strong>chambre double-vue sur jardin </strong> </p>
+          <p class="plit">2 lits simple</p>
+          <h6 class="h6"><strong>Tout compris </strong></h6>
+          <h6 class="h6"><strong>Annulation GRATUITE • Aucun prépaiement requis</strong> </h6>
+          <span class="spann">Vous pourrez annuler plus tard. N'attendez donc pas pour vous <br> garantir ce super tarif
+            aujourd'hui.</span>
+          <button class="btn btn-sm btn-primary float-lg-right butt">Voir details</button><br>
 
-    <ul>
-      <li>
-        <mat-checkbox class="example-margin">Annulation gratuite</mat-checkbox>
-      </li>
-      <li>
-        <mat-checkbox class="example-margin">Reservation sans carte de crédit </mat-checkbox>
-      </li>
-      <li>
-        <mat-checkbox class="example-margin">Pas de prépaiement</mat-checkbox>
-      </li>
+        </div>
+      </div>
+     <button id="loadMore" class="btn btn-primary" (click)="loadMore()">Afficher plus</button> 
+      <div *ngIf="fetching" class="sk-fading-circle">
+        <div class="sk-circle1 sk-circle"></div>
+        <div class="sk-circle2 sk-circle"></div>
+        <div class="sk-circle3 sk-circle"></div>
+        <div class="sk-circle4 sk-circle"></div>
+        <div class="sk-circle5 sk-circle"></div>
+        <div class="sk-circle6 sk-circle"></div>
+        <div class="sk-circle7 sk-circle"></div>
+        <div class="sk-circle8 sk-circle"></div>
+        <div class="sk-circle9 sk-circle"></div>
+        <div class="sk-circle10 sk-circle"></div>
+        <div class="sk-circle11 sk-circle"></div>
+        <div class="sk-circle12 sk-circle"></div>
+      </div>
+    </div>
+    <div class=" col-2 float-lg-right" style="margin-top: 28px;">
+      <mat-form-field appearance="outline">
+        <mat-label>Trier par</mat-label>
+        <mat-select name="tri">
+          <mat-option>Recommandés </mat-option>
+          <mat-option>Prix </mat-option>
+          <mat-option>Notes des voyages</mat-option>
+          <mat-option>Nombres des étoiles</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    </ul>
-    <hr>
-    <h4>Note des commentaires</h4>
-
-    <ul>
-      <li>
-        <mat-checkbox class="example-margin">Fabuleux:9+</mat-checkbox>
-      </li>
-      <li>
-        <mat-checkbox class="example-margin">Trés bien:8+ </mat-checkbox>
-      </li>
-      <li>
-        <mat-checkbox class="example-margin">Bien:7+</mat-checkbox>
-      </li>
-      <li>
-        <mat-checkbox class="example-margin">Agréable:6+</mat-checkbox>
-      </li>
-
-    </ul>
-    <hr>
-
-    <div class="container">
-      <img src="./assets/img/carte.png" alt="Car" class="imgstyle">
-      <span class="material-icons">
-        location_on
-      </span>
-      <button class="btn">Voir sur la carte</button>
     </div>
   </div>
 </div>
+
 <br>
 <br>
 <!--footer-->
@@ -273,57 +327,8 @@
   <!-- Copyright -->
 </footer>
 
-<div class="content">
-  <div *ngIf="fetching" class="sk-fading-circle">
-    <div class="sk-circle1 sk-circle"></div>
-    <div class="sk-circle2 sk-circle"></div>
-    <div class="sk-circle3 sk-circle"></div>
-    <div class="sk-circle4 sk-circle"></div>
-    <div class="sk-circle5 sk-circle"></div>
-    <div class="sk-circle6 sk-circle"></div>
-    <div class="sk-circle7 sk-circle"></div>
-    <div class="sk-circle8 sk-circle"></div>
-    <div class="sk-circle9 sk-circle"></div>
-    <div class="sk-circle10 sk-circle"></div>
-    <div class="sk-circle11 sk-circle"></div>
-    <div class="sk-circle12 sk-circle"></div>
-  </div>
-  <h1>Hammamet : 21 établissements Trouvées</h1>
-  <div class="w-container">
 
-    <mat-form-field appearance="outline">
-      <mat-label>Trier par</mat-label>
-      <mat-select name="tri">
-        <mat-option>Recommandés </mat-option>
-        <mat-option>Prix </mat-option>
-        <mat-option>Notes des voyages</mat-option>
-        <mat-option>Nombres des étoiles</mat-option>
-      </mat-select>
-    </mat-form-field>
 
-  </div>
-
-  <hr style="margin-right: 95px;">
-
-  <div *ngFor="let offer of hotelSearchResponse.hotelOffers" class="card">
-    <img src="./assets/img/card1.jpg" class="card-img-top">
-    <div class="card-body">
-      <h3 class="card-title">{{offer.hotel?.nom}} <br> ★★★★</h3>
-
-      <p class="card-text"><strong>{{offer.hotel?.description}} </strong> </p>
-      <p class="plit">2 lits simple</p>
-      <h6 class="h6"><strong>Tout compris </strong></h6>
-      <h6 class="h6"><strong>Annulation GRATUITE • Aucun prépaiement requis</strong> </h6>
-      <span class="spann">Vous pourrez annuler plus tard. N'attendez donc pas pour vous <br> garantir ce super tarif
-        aujourd'hui.</span>
-      <button href="#" (click)="detail(offer)" class="btn btn-primary butt">Voir les disponibilités</button><br>
-
-    </div>
-  </div>
-
-  <button id="loadMore" class="btn btn-primary" (click)="loadMore()">charger plus</button>
-
-</div>
 <br>
 <br>
 
@@ -339,8 +344,6 @@
   <div class="modal-content" style="top:30vh">
     <div class="modal-header">
       <h5 class="text-primary">Voyageurs</h5>
-      <span class="close" (click)="closemodal()">&times;</span>
-
     </div>
 
     <div class="modal-body" *ngFor="let chambre of listechambre; let index = index;">
@@ -395,7 +398,7 @@
       chambre</button>
 
     <div class="modal-footer">
-      <button class="btn btn-primary">Confirmer</button>
+      <button class="btn btn-primary" (click)="closemodal()">Confirmer</button>
     </div>
   </div>
 </div>

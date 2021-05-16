@@ -5,10 +5,32 @@
 <div id="booking" class="section">
     <div id="main">
         <div class="section-center">
-
-
-            <div class="container">
-                <div class="row" style="justify-content: center;">
+                    <div class="container-fluid">
+                        <div class="row justify-content-center">
+                            <form>
+                            <div class="col-md-3 mt-md-0 mt-3">
+                                <h6 class="form-label text-primary" style="position: absolute; z-index: 1;">
+                                    Destination </h6>
+                                <div class="ng-autocomplete">
+                                    <ng-autocomplete [data]="locations" [formControl]="search" [isLoading]="isLoading" [searchKeyword]="key"
+                                        (selected)='select($event)' (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                                        [itemTemplate]="itemTemplate" [customFilter]="filter">
+                                    </ng-autocomplete>
+                                
+                                    <ng-template #itemTemplate let-loc>
+                                        <span class="material-icons"> location_on </span>
+                                        <div style="margin-left: 5px;">
+                                            <p [innerHTML]="'<b>' + loc.name + ' (' + loc.iataCode + ')</b>'"> </p>
+                                            <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName | lowercase}}</span>
+                                        </div>
+                                        <hr>
+                                    </ng-template>
+                                
+                                </div>
+                            </div>
+                        </form>
+                    </div>>
+                <!--<div class="row" style="justify-content: center;">
                     <div class="booking-form">
                         <form>
                             <div class="row no-margin">
@@ -55,18 +77,18 @@
 
                         </form>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
-    </div>
+ 
+
 </div>
 
 
 
-
-
+</div>
     
-    <hr>
+
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam excepturi ratione iusto sequi modi, harum
         neque! Nobis officia ea sapiente exercitationem laudantium quos, id, alias magnam labore assumenda cum
         obcaecati.s</p>
@@ -79,44 +101,6 @@
 <br>
 
 
-<footer class="pt-4 pt-md-5 border-top" style="background-color: #f4f4fc;">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-md">
-               
-            </div>
-            <div class="col-6 col-md">
-                <h5>Features</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Cool stuff</a></li>
-                    <li><a class="text-muted" href="#">Random feature</a></li>
-                    <li><a class="text-muted" href="#">Team feature</a></li>
-                    <li><a class="text-muted" href="#">Stuff for developers</a></li>
-                    <li><a class="text-muted" href="#">Another one</a></li>
-                    <li><a class="text-muted" href="#">Last time</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>Resources</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Resource</a></li>
-                    <li><a class="text-muted" href="#">Resource name</a></li>
-                    <li><a class="text-muted" href="#">Another resource</a></li>
-                    <li><a class="text-muted" href="#">Final resource</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>About</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Team</a></li>
-                    <li><a class="text-muted" href="#">Locations</a></li>
-                    <li><a class="text-muted" href="#">Privacy</a></li>
-                    <li><a class="text-muted" href="#">Terms</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</footer>
 
 
 

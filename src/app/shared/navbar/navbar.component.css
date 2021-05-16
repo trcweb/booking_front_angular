@@ -2,43 +2,21 @@
 
 .logo {
     display: inline-block;
-    vertical-align: top;
-    width: 90px;
-    height: 60px;
-    margin-right: 50px;
-    margin-top: -3px;
-  }
-  .topnav {
-    overflow: hidden;
-    background-color: #0275d8;
-    position: fixed; /* Set the navbar to fixed position */
-    z-index: 1;
-    top: 0; /* Position the navbar at the top of the page */
-    width: 100%; /* Full width */
-    height: 8%;
     
-  
-  }
+    width: 70px;
+    height: 60px;
+    margin-left: -10px;
 
-  .topnav a {
-    float: right;
+  }
+  
+
+  .navbar-nav a {
+
     color:whitesmoke;
-    text-align: center;
-    padding: 10px 10px;
+    padding:  10px ;
     text-decoration: none;
     font-size: 20px;
-    font-family: initial;
-  }
-
-  .topnav-right {
-    float: right;
-  }
-
-
-  
-
-  .topnav-right {
-    float: right;
+    
   }
 
  .openbtn {

@@ -127,12 +127,7 @@
     background: none; 
 
   }
-#main {
-    transition: margin-left 0.5s;
-    padding: 16px;
-    margin-left: 80px;
-    padding-top: 0px;
-  }
+
   
 ::-webkit-scrollbar {
   width: 8px;               /* width of the entire scrollbar */

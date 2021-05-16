@@ -16,7 +16,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 export const MY_FORMATS = {
     parse: {
@@ -45,8 +44,7 @@ export const MY_FORMATS = {
     MatCheckboxModule,
     MatSelectModule,
     MatCardModule,
-    NgxSliderModule,
-    MatProgressBarModule
+    NgxSliderModule
   ],
   exports: [
     SidebarComponent,
@@ -63,8 +61,7 @@ export const MY_FORMATS = {
     MatCheckboxModule,
     MatSelectModule,
     MatCardModule,
-    NgxSliderModule,
-    MatProgressBarModule
+    NgxSliderModule
   ],
    providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

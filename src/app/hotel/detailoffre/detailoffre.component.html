@@ -1,144 +1,143 @@
-<div id="main">
-    <div class="section-center ">
+<div id="main" class="container-fluid">
+    <nav class="navbarr navbar-light bg-light">
         <div class="container-fluid">
-            <form class="form-inline form-floating" [formGroup]="searchControl" (ngSubmit)="submitForm()">
+            <div class="row">
+                <form class="form-inline form-floating" [formGroup]="searchControl" (ngSubmit)="submitForm()">
+                   
+                   
+                        <div class="form-group">
+                            <div class="ng-autocomplete ">
+                
+                                <ng-autocomplete [data]="locations" formControlName="autoComplete"
+                                    [isLoading]="isLoading" [searchKeyword]="key" (selected)='select($event)'
+                                    (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                                    [itemTemplate]="itemTemplate"
+                                    [ngClass]="{'is-invalid': searchControl.controls.autoComplete.invalid && (searchControl.controls.autoComplete.dirty || searchControl.controls.autoComplete.touched)}"
+                                   >
+                                    
+                                </ng-autocomplete>
 
-                <div class="form-group">
+                                <ng-template #itemTemplate let-loc>
+                                    <span class="material-icons"> location_on </span>
+                                    <div style="margin-left: 5px;">
+                                        <p [innerHTML]="'<b>' + loc.name + ' (' + loc.iataCode + ')</b>'"> </p>
+                                        <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName |
+                                            lowercase}}</span>
+                                    </div>
+                                    <hr>
+                                </ng-template>
 
-                    <div class="ng-autocomplete ">
-
-
-                        <ng-autocomplete [data]="locations" formControlName="autoComplete" [isLoading]="isLoading"
-                            [searchKeyword]="key" (selected)='select($event)' (inputChanged)='onChangeSearch($event)'
-                            (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"
-                            [ngClass]="{'is-invalid': searchControl.controls.autoComplete.invalid && (searchControl.controls.autoComplete.dirty || searchControl.controls.autoComplete.touched)}">
-
-                        </ng-autocomplete>
-
-                        <ng-template #itemTemplate let-loc>
-                            <span class="material-icons"> location_on </span>
-                            <div style="margin-left: 5px;">
-                                <p [innerHTML]="'<b>' + loc.name + ' (' + loc.iataCode + ')</b>'"> </p>
-                                <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName | lowercase}}</span>
                             </div>
-                            <hr>
-                        </ng-template>
+                        </div>
+                       
+                   
 
+                <div class="form-group mr-4 click">
+                            <div class="form-control mb-2" id="myBtn" (click)="openmodal()">
+                                <label class="label" for="myBtn">Voyageurs</label>
+                                <p style="margin-top: 23px;">{{listechambre.length}} chambre, {{listechambre
+                                    | sum}} voyageurs
+                                    <span class="material-icons iconstyle">people</span>
+                                </p>
+                            </div>
+                        </div>
+                   
+
+
+
+                     <div class="form-group mr-2">
+                        <mat-form-field appearance="outline" class="example-form-field">
+                            <mat-label style="font-size:15px;">Check-in</mat-label>
+                            <input matInput [matDatepicker]="datepicker1" [min]="todaydate" formControlName="dateStart" class="form-control">
+                            <mat-datepicker-toggle matSuffix [for]="datepicker1"></mat-datepicker-toggle >
+                            <!-- #docregion datepicker-actions -->
+                            <mat-datepicker #datepicker1>
+                                <mat-datepicker-actions>
+                                    <button mat-button matDatepickerCancel>Cancel</button>
+                                    <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                                </mat-datepicker-actions>
+                            </mat-datepicker>
+
+                        </mat-form-field>
                     </div>
+                <div class="form-group mr-2">
+                        <mat-form-field appearance="outline" class="example-form-field">
+                            <mat-label style="font-size:15px;">Check-out</mat-label>
+                            <input matInput [matDatepicker]="datepicker2" [min]="searchControl.controls.dateStart.value"
+                                formControlName="dateEnd" 
+                                class="form-control">
+                            <mat-datepicker-toggle matSuffix [for]="datepicker2"></mat-datepicker-toggle>
 
+                            <mat-datepicker #datepicker2>
+                                <mat-datepicker-actions>
+                                    <button mat-button matDatepickerCancel>Cancel</button>
+                                    <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                                </mat-datepicker-actions>
+                            </mat-datepicker>
 
-
-                </div>
-
-
-
-                <div class="form-group click">
-
-                    <div class="form-control col-md-11" id="myBtn" (click)="openmodal()">
-                        <label class="label" for="myBtn">Voyageurs</label>
-                        <p style="margin-top: 23px;">{{listechambre.length}} chambre, {{listechambre
-                                                        | sum}} voyageurs
-                            <span class="material-icons iconstyle">people</span>
-                        </p>
+                        </mat-form-field>
                     </div>
-                </div>
+                   
+                            <button class="submit-btn btn btn-primary" type="submit">
+                                <p>Recherche</p>
+                            </button>
+                       
 
-
-
-
-                <mat-form-field appearance="outline" class="example-form-field">
-                    <mat-label style="font-size:15px;">Check-in</mat-label>
-                    <input matInput [matDatepicker]="datepicker1" [min]="todaydate" formControlName="dateStart">
-                    <mat-datepicker-toggle matSuffix [for]="datepicker1"></mat-datepicker-toggle>
-                    <!-- #docregion datepicker-actions -->
-                    <mat-datepicker #datepicker1>
-                        <mat-datepicker-actions>
-                            <button mat-button matDatepickerCancel>Cancel</button>
-                            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
-                        </mat-datepicker-actions>
-                    </mat-datepicker>
-
-                </mat-form-field>
-
-
-                <mat-form-field appearance="outline" class="example-form-field">
-                    <mat-label style="font-size:15px;">Check-out</mat-label>
-                    <input matInput [matDatepicker]="datepicker2" [min]="searchControl.controls.dateStart.value"
-                        formControlName="dateEnd">
-                    <mat-datepicker-toggle matSuffix [for]="datepicker2"></mat-datepicker-toggle>
-
-                    <mat-datepicker #datepicker2>
-                        <mat-datepicker-actions>
-                            <button mat-button matDatepickerCancel>Cancel</button>
-                            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
-                        </mat-datepicker-actions>
-                    </mat-datepicker>
-
-                </mat-form-field>
-
-
-                <div class="form-btn">
-                    <button class="btn btn-primary submit-btn" type="submit">
-                        <p>Recherche</p>
-                    </button>
-                </div>
-
-
-
-            </form>
-
+                </form>
+            </div>
         </div>
 
-    </div>
-</div>
+    </nav>
 
-
-<div class="card">
-
+<div class="container-fluid">
+    <div class="row">
+<div class="card card1">
     <div class="card-header">
         <div class="card-title">
             <br>
-            <h2>Hôtel Lac Léman <br> ★★★★ </h2>
-            <button class="btn btn-primary" type="submit">Reserver une chambre</button>
+            <h2>Hôtel Lac Léman <br> ★★★★ <br> </h2>
+         <button class="btn btn-primary  float-lg-right" type="submit">Reserver une chambre</button>
         </div>
-
     </div>
     <br>
-    <div class="lightbox">
+
         <!-- Gallery -->
-        <div class="row">
-
-            <div class="col-lg-6 col-md-12 mb-4 mb-lg-0" style="position:unset">
-                <img style="margin-left: 15px;height: 19rem;" src="assets/img/hotel1.jpg"
-                    alt="Lightbox image 1"
-                    class="w-100 mb-2 mb-md-4 shadow-1-strong rounded" />
-
+    <div class="container">
+        <div class="row">    
+            <br/>
+            
+            <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
+                <img src="assets/img/hotel1.jpg" class="img-fluid">
             </div>
-            <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
-                <img style="margin-left: -6px ;height: 9.2rem;" src="assets/img/hotel2.jpg"
-                     alt="Lightbox image 1"
-                    class="w-100 mb-2 mb-md-4 shadow-1-strong rounded" />
-                <img style="margin-left: -6px;margin-top: -14px;height: 9.2rem;"
-                    src="assets/img/hotel3.jpg"
-                    alt="Lightbox image 1"
-                    class="w-100 mb-2 mb-md-4 shadow-1-strong rounded" />
-
+    
+            <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter sprinkle">
+                <img src="assets/img/hotel2.jpg" class="img-responsive">
             </div>
-            <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
-                <img style="margin-left:-25px ;height: 9.2rem;" src="assets/img/hotel4.jpg"
-                    data-mdb-img="https://mdbootstrap.com/img/Photos/Slides/1.jpg" alt="Lightbox image 1"
-                    class="w-100 mb-2 mb-md-4 shadow-1-strong rounded" />
-                <img style="margin-left: -25px ;margin-top: -14px; height: 9.2rem;"
-                    src="assets/img/hotel5.jpg"
-                    data-mdb-img="https://mdbootstrap.com/img/Photos/Slides/1.jpg" alt="Lightbox image 1"
-                    class="w-100 mb-2 mb-md-4 shadow-1-strong rounded" />
+    
+            <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
+                <img src="assets/img/hotel3.jpg" class="img-responsive">
             </div>
+    
+            <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter irrigation">
+                <img src="assets/img/hotel4.jpg" class="img-responsive">
+            </div>
+    
+            <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter spray">
+                <img src="assets/img/hotel5.jpg" class="img-responsive">
+            </div>
+    
+            <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter irrigation">
+                <img src="assets/img/hotel1.jpg" class="img-responsive">
+            </div>
+    
+            
+        </div>
+    </div>
 
-            <div class="col-lg-3 col-md-12 mb-4 mb-lg-0 navb">
 
+
+            <div class="col-lg-3  navb">
                 <nav class="navbar navbar-expand-lg navbar-light">
-
-
                     <div class="collapse navbar-collapse" id="navbarToggler9">
                         <ul class="navbar-nav">
 
@@ -157,18 +156,14 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Avis</a>
                             </li>
-
-
-
                         </ul>
-
                     </div>
                 </nav>
-
-                <hr class="hr">
-
+            </div>
+                <hr>
                 <br>
-
+                <div class="row">
+            <div class="col-lg-6">
                 <h3>Équipements populaires</h3> <br>
                 <ul class="equipement">
                     <li><span class="material-icons mat">
@@ -219,19 +214,25 @@
                 </ul>
                 <br>
                 <br>
+           
+</div>
             
-
-            </div>
-                 
+                 <div class="col-lg-2">
+                 </div>
+                <div class="col-lg-4">
                 <h3 class="location">Découvrir la zone</h3><br>
-                <p class="plocation"><span class="material-icons mat">
+                <p ><span class="material-icons mat">
                     location_on
                 </span>Dah Dah Happy Land Entertainment Park (parc de loisirs)
                 </p>
+                 </div>
+                </div>
 
                         <h3 style="margin-left:42px ;">Chambre</h3><br>
-                        <div  class="card" style="width:25rem ;margin-top: 45px;margin-left: -55px;margin-bottom: 15px;">
-                            <img src="assets/img/chambre1.jpg" class="card-img-top" alt="...">
+                        <div class="row  justify-content-md-center" style="margin-left: 5px;margin-bottom: 15px;">
+                        <div class="col-md-3 mt-md-0 mt-3">
+                        <div class="card" style="width: 20rem;margin-bottom: 10px;">
+                            <img src="assets/img/chambre1.jpg" class="card-img-top">
                             <div class="card-body">
                                 <h3 class="cardtitle">Suite</h3>
                                 <ul class="cardtext">
@@ -260,19 +261,20 @@
                                         beach_access
                                         </span>vue sur mere
                                     </li>
-                                    <hr style="margin-left:-25px;">
+                                    <hr>
                                     <li><h4>Politique d'annulation</h4></li>
                                     <li><label class="checkbox-inline">
                                         <input type="checkbox" class="checkbox-circle" name="" >
                                     </label>   Non remboursable      (0dt)</li>
-                                    <hr style="margin-left:-25px;">
+                                    <hr>
                                     <li><h2>100dt</h2></li>
                                 </ul>
                                 <a href="#" class="btn btn-primary float-lg-right">Reserver</a>
                             </div>
                         </div>
-                        
-                        <div class="card" style="width:25rem ;margin-top: 45px;margin-left: 5px;margin-bottom: 15px;">
+                        </div>
+                        <div class="col-md-3 mt-md-0 mt-3">
+                        <div class="card" style="width: 20rem;margin-bottom: 10px;">
                             <img src="assets/img/chambre2.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h3 class="cardtitle">Chambre Single</h3>
@@ -302,14 +304,14 @@
                                         beach_access
                                     </span>vue sur mere
                                 </li>
-                                <hr style="margin-left:-25px;">
+                                <hr>
                                 <li>
                                     <h4>Politique d'annulation</h4>
                                 </li>
                                 <li><label class="checkbox-inline">
                                         <input type="checkbox" class="checkbox-circle" name="">
                                     </label> Non remboursable (0dt)</li>
-                                <hr style="margin-left:-25px;">
+                                <hr>
                                 <li>
                                     <h2>90dt</h2>
                                 </li>
@@ -317,9 +319,10 @@
                             <a href="#" class="btn btn-primary float-lg-right">Reserver</a>
                         </div>
                         </div>
+                        </div>
                         
-
-                        <div class="card" style="width:25rem ;margin-top: 45px;margin-left: 5px;margin-bottom: 15px;">
+                        <div class="col-md-3 mt-md-0 mt-3">
+                        <div class="card" style="width: 20rem;margin-bottom: 10px;">
                             <img src="assets/img/chambre3.jpg" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h3 class="cardtitle">Chambre Double</h3>
@@ -364,12 +367,15 @@
                                 <a href="#" class="btn btn-primary float-lg-right">Reserver</a>
                             </div>
                         </div>
-                        
-            
+                        </div>
+            </div>
                     </div>
-        <!-- Gallery -->
-    </div>
+                    </div>
 </div>
+    </div>
+
+
+
 <br>
 <br>
 
@@ -445,74 +451,102 @@
 </div>
 
 <!--modal-->
+<!--footer-->
 
-<footer class="bg-light-gray text-center text-lg-start">
-    <!-- Grid container -->
-    <div class="container p-4">
-        <!--Grid row-->
-        <div class="row">
-            <!--Grid column-->
-            <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-                <h5 class="text-uppercase">Footer Content</h5>
+<!-- Footer -->
+<footer class="page-footer font-small unique-color-dark">
+    <!-- Footer Links -->
+    <div class="container text-center text-md-left mt-5">
 
+        <!-- Grid row -->
+        <div class="row mt-3">
+
+            <!-- Grid column -->
+            <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+
+                <!-- Content -->
+                <h6 class="text-uppercase font-weight-bold">Air Travel</h6>
+                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <p>Here you can use rows and columns to organize your footer content. Lorem ipsum dolor sit amet,
+                    consectetur
+                    adipisicing elit.</p>
+
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+
+                <!-- Links -->
+                <h6 class="text-uppercase font-weight-bold">Nos Services</h6>
+                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
-                    molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae aliquam
-                    voluptatem veniam, est atque cumque eum delectus sint!
+                    <a href="#!">MDBootstrap</a>
                 </p>
+                <p>
+                    <a href="#!">MDWordPress</a>
+                </p>
+                <p>
+                    <a href="#!">BrandFlow</a>
+                </p>
+                <p>
+                    <a href="#!">Bootstrap Angular</a>
+                </p>
+
             </div>
-            <!--Grid column-->
+            <!-- Grid column -->
 
-            <!--Grid column-->
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                <h5 class="text-uppercase">Links</h5>
+            <!-- Grid column -->
+            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
 
-                <ul class="list-unstyled mb-0">
-                    <li>
-                        <a href="#!" class="text-dark">Link 1</a>
-                    </li>
-                    <li>
-                        <a href="#!" class="text-dark">Link 2</a>
-                    </li>
-                    <li>
-                        <a href="#!" class="text-dark">Link 3</a>
-                    </li>
-                    <li>
-                        <a href="#!" class="text-dark">Link 4</a>
-                    </li>
-                </ul>
+                <!-- Links -->
+                <h6 class="text-uppercase font-weight-bold">Useful links</h6>
+                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <p>
+                    <a href="#!">Your Account</a>
+                </p>
+                <p>
+                    <a href="#!">Become an Affiliate</a>
+                </p>
+                <p>
+                    <a href="#!">Shipping Rates</a>
+                </p>
+                <p>
+                    <a href="#!">Help</a>
+                </p>
+
             </div>
-            <!--Grid column-->
+            <!-- Grid column -->
 
-            <!--Grid column-->
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                <h5 class="text-uppercase mb-0">Links</h5>
+            <!-- Grid column -->
+            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
 
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="#!" class="text-dark">Link 1</a>
-                    </li>
-                    <li>
-                        <a href="#!" class="text-dark">Link 2</a>
-                    </li>
-                    <li>
-                        <a href="#!" class="text-dark">Link 3</a>
-                    </li>
-                    <li>
-                        <a href="#!" class="text-dark">Link 4</a>
-                    </li>
-                </ul>
+                <!-- Links -->
+                <h6 class="text-uppercase font-weight-bold">Contact Us</h6>
+                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <p>
+                    <i class="fas fa-home mr-3"></i> New York, NY 10012, US
+                </p>
+                <p>
+                    <i class="fas fa-envelope mr-3"></i> info@example.com
+                </p>
+                <p>
+                    <i class="fas fa-phone mr-3"></i> + 01 234 567 88
+                </p>
+                <p>
+                    <i class="fas fa-print mr-3"></i> + 01 234 567 89
+                </p>
+
             </div>
-            <!--Grid column-->
+            <!-- Grid column -->
+
         </div>
-        <!--Grid row-->
-    </div>
-    <!-- Grid container -->
+        <!-- Grid row -->
 
-    <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        © 2020 Copyright:
-        <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
     </div>
-    <!-- Copyright -->
+    <!-- Footer Links -->
+
+   
+
 </footer>
+<!-- Footer -->

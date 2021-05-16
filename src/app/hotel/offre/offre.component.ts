@@ -62,6 +62,7 @@ export class OffreComponent implements OnInit {
   };
   hotelSearchResponse: HotelSearchResponse = new HotelSearchResponse();
   fetching = false;
+  star = '★';
 
   constructor(private locationService: LocationService,
               private hotelsService: HotelsService,
@@ -114,6 +115,9 @@ export class OffreComponent implements OnInit {
         const cityCode = params.get('cityCode');
         this.location.iataCode = cityCode;
         const rooms = params.get('rooms');
+        const load = document.getElementById('loadMore') as HTMLElement;
+        load.setAttribute('style', 'display: none;');
+        this.hotelSearchResponse = new HotelSearchResponse();
         this.fetching = true;
         this.hotelsService.searchOffers(cityCode,
           checkInDate,
@@ -136,6 +140,10 @@ export class OffreComponent implements OnInit {
             complete: () => {
               this.fetching = false;
               console.log('fetch: ', this.fetching);
+              load.removeAttribute('style');
+              if (!this.hotelSearchResponse.nextPage.amadeusSearchable) {
+                load.setAttribute('disabled', '');
+              }
             }
           });
       }
@@ -164,7 +172,6 @@ export class OffreComponent implements OnInit {
       this.picked = false;
     }
     console.log('pick: ',  this.picked);
-    
   }
 
   select($loc: Location): void {
@@ -304,6 +311,8 @@ export class OffreComponent implements OnInit {
     const cityCode = params.get('cityCode');
     const rooms = params.get('rooms');
     this.fetching = true;
+    const load = document.getElementById('loadMore') as HTMLElement;
+    load.setAttribute('style', 'display: none;');
     this.hotelsService.searchOffers(cityCode,
       checkInDate,
       checkOutDate,
@@ -328,7 +337,7 @@ export class OffreComponent implements OnInit {
         },
         complete: () => {
           this.fetching = false;
-          const load = document.getElementById('loadMore') as HTMLElement;
+          load.removeAttribute('style');
           if (!this.hotelSearchResponse.nextPage.amadeusSearchable) {
             load.setAttribute('disabled', '');
           }
@@ -339,5 +348,6 @@ export class OffreComponent implements OnInit {
   detail(offer: HotelOfferResponse): void{
     this.router.navigate([`/hotels/detailresult/${offer.hotel?.id_hotel}`], { queryParamsHandling: 'merge' });
   }
+
 }
 
