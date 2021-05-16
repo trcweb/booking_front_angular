@@ -26,9 +26,42 @@
   }
 
   
-  .section {
+  
+  .booking-form .form-btn {
+    height: 80px;
+    margin-right: 0px;
+    margin-left: -10px;
+    margin-bottom: 10px;
+  }
+
+  .booking-form .submit-btn {
+    background: rgb(52, 166, 204);
+    border: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    height: 60px;
+    border-radius: 0px;
+    font-size: 18px;
+    width: 100%;
+    color: white;
+  }
+   .section {
     position: relative;
     height: 100vh;
+  }
+
+  .ng-autocomplete {
+    width: 400px !important;
+    height: 18px;
+  }
+   ::ng-deep.autocomplete-container .input-container input {
+    box-shadow: none;
+    border: 1px solid rgb(206, 206, 206);
+    background-color: transparent !important;
+    background: rgba(255, 255, 255, 0.85) !important;
+    -webkit-transition: 0.2s background !important;
+    transition: 0.2s background !important;
   }
 
 }

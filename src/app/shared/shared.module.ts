@@ -1,6 +1,6 @@
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
@@ -15,6 +15,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+
 
 export const MY_FORMATS = {
     parse: {
@@ -34,6 +36,7 @@ export const MY_FORMATS = {
     CommonModule,
     AutocompleteLibModule,
     ReactiveFormsModule,
+    FormsModule,
     MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
@@ -41,7 +44,8 @@ export const MY_FORMATS = {
     MatSidenavModule,
     MatCheckboxModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
+    NgxSliderModule
   ],
   exports: [
     SidebarComponent,
@@ -49,6 +53,7 @@ export const MY_FORMATS = {
     SumPipe,
     AutocompleteLibModule,
     ReactiveFormsModule,
+    FormsModule,
     MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
@@ -56,7 +61,8 @@ export const MY_FORMATS = {
     MatSidenavModule,
     MatCheckboxModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
+    NgxSliderModule
   ],
    providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

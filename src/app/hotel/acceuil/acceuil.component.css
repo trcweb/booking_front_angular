@@ -1,6 +1,4 @@
 @media screen and (min-width: 420px) {
-  
-
   .section .section-center {
     position: absolute;
     top: 50%;
@@ -23,7 +21,7 @@
     height: 80px;
     margin-bottom: -12px;
     margin-right: 0px;
-    margin-left: -20px;
+    margin-left: -10px;
   }
 
   .material-icons {
@@ -34,9 +32,6 @@
     height: 2rem;
   }
 
-
-
-  
   .booking-form .form-control {
     font-size: 13px;
     background-color: transparent;
@@ -54,36 +49,54 @@
     padding: 20px 0px 0px 10px;
   }
 
-
-    ::ng-deep.autocomplete-container .input-container input {
+  ::ng-deep.autocomplete-container .input-container input {
     height: 60px !important;
-    
     box-shadow: none;
-    border : 1px solid rgb(206, 206, 206);
-   background-color: transparent !important;
-   background: rgba(255, 255, 255, 0.85) !important;
-   
+    border: 1px solid rgb(206, 206, 206);
+    background-color: transparent !important;
+    background: rgba(255, 255, 255, 0.85) !important;
     -webkit-transition: 0.2s background !important;
     transition: 0.2s background !important;
-    
-    
+  }
 
-}
-::ng-deep.ng-invalid.ng-touched, .ng-invalid.ng-dirty {
-    border-bottom:transparent;
-}
+  ::ng-deep.mat-form-field-outline {
+    background-color: transparent !important;
+    background: rgba(255, 255, 255, 0.85) !important;
+    border-radius: 4px;
+  }
 
+  ::ng-deep.mat-form-field-underline {
+    /*change color of underline*/
+    background-color: #0275d8 !important;
+  }
 
-.ng-autocomplete {
-  width: 48.4rem !important;
-  margin-top: -75px;
-  margin-right: 20px !important;
-  height: 25px ;
-padding: 20px 0px 0px 10px !important;
-  margin-left:-28px;
-   padding-top: 55px !important;
-}
+  ::ng-deep.mat-form-field-ripple {
+    /*change color of underline when focused*/
+    background-color: #0275d8 !important;
+  }
 
+  ::ng-deep .mat-form-field-label {
+    /*change color of label*/
+    color: #0275d8 !important;
+    font-weight: 500;
+  }
+
+  mat-datepicker-toggle {
+    color: black !important;
+  }
+  ::ng-deep.ng-invalid.ng-touched,
+  .ng-invalid.ng-dirty {
+    border-bottom: transparent;
+  }
+
+  .ng-autocomplete {
+    width: 38.4rem !important;
+    margin-top: -75px;
+    margin-right: 10px !important;
+    height: 25px;
+    padding: 20px 0px 0px 10px !important;
+    padding-top: 55px !important;
+  }
 
   .booking-form .form-control:focus {
     background: rgba(255, 255, 255, 1);
@@ -140,7 +153,7 @@ padding: 20px 0px 0px 10px !important;
   .booking-form .form-btn {
     height: 80px;
     margin-right: 0px;
-    margin-left: -20px;
+    margin-left: -10px;
     margin-bottom: 10px;
   }
 
@@ -161,30 +174,12 @@ padding: 20px 0px 0px 10px !important;
     margin-top: 15px;
   }
 
-  .booking-cta {
-    text-align: center;
-  }
-
-  .booking-cta {
-    margin-bottom: 50px;
-  }
-
-  .booking-cta h1 {
-    font-family: initial, serif;
-    color: white;
-    position: center;
-    font-size: 52px;
-    font-weight: 700;
-    text-align: center;
-    padding-left: 15%;
-  }
-
+ 
+  
   .section {
     position: relative;
     height: 100vh;
   }
-
-
 
   .about-section {
     padding: 50px;
@@ -250,8 +245,6 @@ padding: 20px 0px 0px 10px !important;
   .button:hover {
     background-color: #555;
   }
-
-  
 }
 
 @media screen and (max-width: 650px) {
@@ -260,5 +253,3 @@ padding: 20px 0px 0px 10px !important;
     display: block;
   }
 }
-
-
