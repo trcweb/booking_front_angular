@@ -1,109 +1,576 @@
-
-
-<app-navbar></app-navbar>
-<app-sidebar></app-sidebar>
-<div id="booking" class="section">
+<div class="section">
     <div id="main">
-        <div class="section-center">
-                    <div class="container-fluid">
-                        <div class="row justify-content-center">
-                            <form>
-                            <div class="col-md-3 mt-md-0 mt-3">
-                                <h6 class="form-label text-primary" style="position: absolute; z-index: 1;">
-                                    Destination </h6>
+        <div class="fixed">
+            <nav class="navbar">
+                <img routerLink="/home" class="navbar-brand logo click" src="assets/img/logo-air-travel2.png">
+                <ng-container *ngIf="!authenticated; else elseTemplate">
+                    <div class="navbar-nav ml-auto ">
+                        <a routerLink="/sign-in" class="nav-item nav-link">Sign-in</a>
+                    </div>
+                    <div class="navbar-nav">
+                        <a routerLink="/sign-up" class="nav-item nav-link">Sign-up</a>
+                    </div>
+                </ng-container>
+                <ng-template #elseTemplate>
+                    <div *ngIf="user.name" class="navbar-nav ml-auto " >
+                        <p class="user-name-static">{{user.name + " " + user.lastname }}</p>
+                    </div>
+                    <div class="navbar-nav ">
+                        <div >
+                            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" class="avatar">
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item>
+                                    <mat-icon>person</mat-icon>
+                                    <span>profile</span>
+                                </button>                                        
+                                <button mat-menu-item>
+                                    <mat-icon>notifications</mat-icon>
+                                    <span>notifications</span>
+                                </button>
+                                <button mat-menu-item (click)="logout()">
+                                    <mat-icon>logout</mat-icon>
+                                    <span>logout</span>
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </div>
+                </ng-template>
+
+
+
+                <!--<button class="openbtn" (click)="openNav()"><span><i class="fa fa-bars"></i></span></button>-->
+            </nav>
+        </div>
+        <div id="mySidebar" class="sidebar" (mouseover)="toggleSidebar()" (mouseout)="toggleSidebar()">
+
+
+            <!--<a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>-->
+            <br>
+            <br>
+
+            <a routerLink="/hotels"><i class="material-icons icon-left">hotel</i><span class="icon-text ">Hotel</span></a>
+            <br>
+            <a routerLink="/flights" class="selected-route selected-nodes"><i class="material-icons icon-left">flight</i><span class="icon-text ">Vols</span></a>
+            <br>
+            <a routerLink="/cars"><i class="material-icons icon-left">time_to_leave</i><span class="icon-text ">Location</span></a>
+            <br>
+            <a href="#"><span><i class="material-icons icon-left">card_giftcard</i><span class="icon-text">nos
+                        packs</span></span></a><br>
+
+            <!-- <div class="mobile">
+                    <hr>
+                    <a href="#"><span><i class="material-icons">login</i><span class="icon-text"></span>Connexion</span></a>
+                    <a href="#"><span><i class="material-icons">person_add</i><span class="icon-text"></span>S'inscrire</span></a>
+            
+                </div>-->
+        </div>
+        <div class="container">
+            <div class="row justify-content-center ">
+                <div class="card searchcard">
+                    <div class="card-header header-card">
+                        <ul class="list-inline">
+                            <li class="list-inline-item li-list selected-flight-type" id="flight1"
+                                (click)="flightType('retour')">aller-retour</li>
+                            <li class="list-inline-item li-list" id="flight2" (click)="flightType('simple')">aller
+                                simple</li>
+                            <li class="list-inline-item li-list float-right">
+                                <div style="display: flex;">
+                                    <mat-label class="list-drop">{{travelClass}}</mat-label>
+                                    <mat-select name="class" required [(ngModel)]="travelClass">
+                                        <mat-option value="Economy" selected>Economy</mat-option>
+                                        <mat-option value="Premium_economy">Premium_economy
+                                        </mat-option>
+                                        <mat-option value="Business">Business</mat-option>
+                                        <mat-option value="First">First</mat-option>
+                                    </mat-select>
+                                </div>
+
+                            </li>
+                            <li class="list-inline-item li-list float-right">
+
+                                <p class="list-drop" id="myBtn" (click)="openmodal()">{{travlers.adults +
+                                    travlers.children + travlers.infants }} voyageurs
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body" style="display: flex; flex-direction: column;">
+
+                        <!-- aller retour -->
+                        <form id="allerRetour" name="form" #f="ngForm" (ngSubmit)="f.form.valid && submitForm()"
+                            class="form-inline">
+                            <!--aller-retour-->
+
+                            <div class="form-group">
+                                <p class="form-label text-dark">
+                                    Origine </p>
                                 <div class="ng-autocomplete">
-                                    <ng-autocomplete [data]="locations" [formControl]="search" [isLoading]="isLoading" [searchKeyword]="key"
-                                        (selected)='select($event)' (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
-                                        [itemTemplate]="itemTemplate" [customFilter]="filter">
+                                    <ng-autocomplete [data]="locations" [formControl]="search1" [isLoading]="isLoading1"
+                                        [searchKeyword]="key" (selected)='select($event)' [itemTemplate]="itemTemplate"
+                                        [customFilter]="filter">
                                     </ng-autocomplete>
-                                
+
                                     <ng-template #itemTemplate let-loc>
-                                        <span class="material-icons"> location_on </span>
-                                        <div style="margin-left: 5px;">
+                                        <span class="material-icons icon-right"> {{autoIcon(loc.subType)}} </span>
+                                        <div style="margin-top: 5px; margin-left: 5px; line-height: 60%;">
                                             <p [innerHTML]="'<b>' + loc.name + ' (' + loc.iataCode + ')</b>'"> </p>
-                                            <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName | lowercase}}</span>
+                                            <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName |
+                                                lowercase}}</span>
                                         </div>
                                         <hr>
                                     </ng-template>
-                                
+                                    <div class="help-block" *ngIf="!picked1">
+                                        <div class="text-danger">please select origin city</div>
+                                    </div>
+
                                 </div>
+
+
+                            </div>
+                            <div class="form-group">
+                                <span class="material-icons direction-icon">
+                                    swap_horiz
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <p class="form-label text-dark">
+                                    Destination </p>
+                                <div class="ng-autocomplete">
+                                    <ng-autocomplete [data]="locations" [formControl]="search2" [isLoading]="isLoading2"
+                                        [searchKeyword]="key" (selected)='select($event)' [itemTemplate]="itemTemplate"
+                                        [customFilter]="filter">
+                                    </ng-autocomplete>
+
+                                    <ng-template #itemTemplate let-loc>
+                                        <span class="material-icons icon-right"> location_on </span>
+                                        <div style="margin-left: 5px;">
+                                            <p [innerHTML]="'<b>' + loc.name + ' (' + loc.iataCode + ')</b>'"> </p>
+                                            <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName |
+                                                lowercase}}</span>
+                                        </div>
+                                        <hr>
+                                    </ng-template>
+                                    <div class="help-block" *ngIf="!picked2">
+                                        <div class="text-danger">please select a destination</div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="example-form-field3">
+                                    <mat-label style="font-size:15px;">depart</mat-label>
+                                    <input matInput [matDatepicker]="datepicker1" [min]="todaydate"
+                                        [(ngModel)]="startDate" #start=ngModel name="start"
+                                        [ngClass]="{'is-invalid': f.submitted && start.invalid}"
+                                        (dateChange)="next($event)" required>
+                                    <mat-datepicker-toggle matSuffix [for]="datepicker1">
+                                    </mat-datepicker-toggle>
+
+                                    <mat-datepicker #datepicker1>
+                                        <mat-datepicker-actions>
+                                            <button mat-button matDatepickerCancel>Cancel</button>
+                                            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                                        </mat-datepicker-actions>
+                                    </mat-datepicker>
+                                    <div *ngIf="f.submitted && start.invalid">
+                                        <div class="text-danger" *ngIf="start.errors?.required">start date is
+                                            required</div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="example-form-field3">
+                                    <mat-label style="font-size:15px;">retour</mat-label>
+                                    <input matInput [matDatepicker]="datepicker2" [min]="minCheckout"
+                                        [(ngModel)]="endDate" #end=ngModel name="end"
+                                        [ngClass]="{'is-invalid': f.submitted && end.invalid}" required>
+                                    <mat-datepicker-toggle matSuffix [for]="datepicker2">
+                                    </mat-datepicker-toggle>
+
+                                    <mat-datepicker #datepicker2>
+                                        <mat-datepicker-actions>
+                                            <button mat-button matDatepickerCancel>Cancel</button>
+                                            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                                        </mat-datepicker-actions>
+                                    </mat-datepicker>
+                                    <div *ngIf="f.submitted && end.invalid">
+                                        <div class="text-danger" *ngIf="end.errors?.required">End date is
+                                            required</div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-group">
+                                <button class="btn submit-btn" type="submit">
+                                    Recherche
+                                </button>
                             </div>
                         </form>
-                    </div>>
-                <!--<div class="row" style="justify-content: center;">
-                    <div class="booking-form">
-                        <form>
-                            <div class="row no-margin">
+                        <!-- aller simple -->
+                        <form id="allerSimple" style="display: none;" name="form" #f="ngForm" (ngSubmit)="f.form.valid && submitForm()"
+                            class="form-inline">
 
-                                <div class="col-md-8">
-                                    <div class="form-group">
-                                        <h6 class="form-label text-primary">Destination</h6>
-                                        <div class="form-control">
-                                           
-                                            <p style="margin-top: 9px;"> Addresse ,Ville ou Airport <span
-                                                    class="material-icons">
-                                                    location_on
-                                                </span> </p>
+                            <div class="form-group">
+                                <p class="form-label text-dark">
+                                    Origine </p>
+                                <div class="ng-autocomplete">
+                                    <ng-autocomplete [data]="locations" [formControl]="search1" [isLoading]="isLoading1"
+                                        [searchKeyword]="key" (selected)='select($event)' [itemTemplate]="itemTemplate"
+                                        [customFilter]="filter">
+                                    </ng-autocomplete>
+
+                                    <ng-template #itemTemplate let-loc>
+                                        <span class="material-icons icon-right"> location_on </span>
+                                        <div style="margin-left: 5px;">
+                                            <p [innerHTML]="'<b>' + loc.name + ' (' + loc.iataCode + ')</b>'"> </p>
+                                            <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName |
+                                                lowercase}}</span>
                                         </div>
+                                        <hr>
+                                    </ng-template>
+                                    <div class="help-block" *ngIf="!picked1">
+                                        <div class="text-danger">please select origin city</div>
                                     </div>
+
                                 </div>
 
 
-                                
-
-
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <h6 class="form-label text-primary">Check in</h6>
-                                        <input class="form-control" type="date" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <h6 class="form-label text-primary">Check out</h6>
-                                        <input class="form-control" type="date" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-btn">
-                                        <button class="submit-btn ">
-                                            <h5>Recherche</h5>
-                                        </button>
-                                    </div>
-
-
-                                </div>
                             </div>
 
+                            <div class="form-group">
+                                <p class="form-label text-dark">
+                                    Destination </p>
+                                <div class="ng-autocomplete">
+                                    <ng-autocomplete [data]="locations" [formControl]="search2" [isLoading]="isLoading2"
+                                        [searchKeyword]="key" (selected)='select($event)' [itemTemplate]="itemTemplate"
+                                        [customFilter]="filter">
+                                    </ng-autocomplete>
+
+                                    <ng-template #itemTemplate let-loc>
+                                        <span class="material-icons icon-right"> location_on </span>
+                                        <div style="margin-left: 5px;">
+                                            <p [innerHTML]="'<b>' + loc.name + ' (' + loc.iataCode + ')</b>'"> </p>
+                                            <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName |
+                                                lowercase}}</span>
+                                        </div>
+                                        <hr>
+                                    </ng-template>
+                                    <div class="help-block" *ngIf="!picked2">
+                                        <div class="text-danger">please select a destination</div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="example-form-field3"
+                                    style="width: 18rem !important;">
+                                    <mat-label style="font-size:15px;">depart</mat-label>
+                                    <input matInput [matDatepicker]="datepicker3" [min]="todaydate"
+                                        [(ngModel)]="startDate" #start=ngModel name="start"
+                                        [ngClass]="{'is-invalid': f.submitted && start.invalid}"
+                                        (dateChange)="next($event)" required>
+                                    <mat-datepicker-toggle matSuffix [for]="datepicker1">
+                                    </mat-datepicker-toggle>
+
+                                    <mat-datepicker #datepicker3>
+                                        <mat-datepicker-actions>
+                                            <button mat-button matDatepickerCancel>Cancel</button>
+                                            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                                        </mat-datepicker-actions>
+                                    </mat-datepicker>
+                                    <div *ngIf="f.submitted && start.invalid">
+                                        <div class="text-danger" *ngIf="start.errors?.required">start date is
+                                            required</div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-group">
+                                <button class="btn submit-btn" type="submit">
+                                    Recherche
+                                </button>
+                            </div>
                         </form>
                     </div>
-                </div>-->
+                </div>
             </div>
         </div>
- 
-
+    </div>
 </div>
 
 
 
+
+
+<br>
+
+<div class="container">
+    <h1 style="margin-top: 40px;margin-left: -50px;" class="bold">Famous destinations</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-3 img-list">
+            <img src="/assets/img/Paris.png" class="img-responsive inline-block test-overlay " />
+            <div class="bottom-left">Paris <br>
+                <h3> On se voit a Paris ? </h3>
+            </div>
+        </div>
+        <div class="col-md-3 img-list">
+            <img src="/assets/img/rome.png" class="img-responsive inline-block  " />
+            <div class="bottom-left">Rome <br>
+                <h3> Découvrez la rome antique </h3>
+            </div>
+        </div>
+        <div class="col-md-3 img-list">
+            <img src="/assets/img/amesterdam.png" class="img-responsive inline-block " />
+            <div class="bottom-left">Amesterdame <br>
+                <h3> Vis une nouvelle avanture </h3>
+            </div>
+        </div>
+        <div class="col-md-3 img-list">
+            <img src="/assets/img/london.png" class="img-responsive inline-block  " />
+            <div class="bottom-left">London <br>
+                <h3>
+                    votre prochaine distination </h3>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!--recomendation-->
+<div class="container">
     
-
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam excepturi ratione iusto sequi modi, harum
-        neque! Nobis officia ea sapiente exercitationem laudantium quos, id, alias magnam labore assumenda cum
-        obcaecati.s</p>
-
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A est cumque aliquam, aliquid ratione eveniet dicta
-        similique quis necessitatibus fuga et explicabo tenetur id corrupti nobis animi eligendi? Fugiat, dolor!</p>
-
-
-<br>
-<br>
-
-
-
+    <div class="row" style="margin-top: 90px ;" >
+        <div class="col-md-12 travel-img ">
+            <img src="/assets/img/travel1.png" class="img-fluid " alt="Responsive image">
+            <div class="text-travel">
+               
+             Notre Recommandations de voyage  <br> <a routerLink="" style="font-size:22px; color:rgb(255, 168, 39)" >Voir details</a>
+            </div>
+        </div>
+    </div>
+</div>
+ <br>
+ <br>
 
 
+<!--footer-->
+<footer class="page-footer font-small blue-grey lighten-5">
+    
+        
+    
+    <!-- Footer Links -->
+    <div class="container text-center text-md-left mt-5">
+
+        <!-- Grid row -->
+        <div class="row mt-3 dark-grey-text">
+
+            <!-- Grid column -->
+            <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
+
+                <!-- Content -->
+                <h5 class="text-uppercase font-weight-bold">Air Travel</h5>
+                <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+         
+                    <p class="dark-grey-text" >
+                         <span class="material-icons" style="vertical-align: middle;">
+                        sell
+                        </span> Meilleur prix garanti </p>
+                
+            
+                    <p class="dark-grey-text" > 
+                        <span class="material-icons" style="vertical-align: middle;">
+                        lock
+                    </span>
+                    Paiement en toute sécurité
+                   </p>
+          
+
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+
+                <!-- Links -->
+                <h5 class="text-uppercase font-weight-bold">A propos </h5>
+                <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <p>
+                    <a class="dark-grey-text" href="#!">Qui sommes nous</a>
+                </p>
+                <p>
+                    <a class="dark-grey-text" href="#!">Contactez nous</a>
+                </p>
+               
+               
+
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+
+                <!-- Links -->
+                <h5 class="text-uppercase font-weight-bold">LIENS</h5>
+                <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <p>
+                    <a class="dark-grey-text" routerLink="/signin">Log-in</a>
+                </p>
+                <p>
+                    <a class="dark-grey-text" routerLink="/hotels">Hotel</a>
+                </p>
+                <p>
+                    <a class="dark-grey-text" routerLink="/flights">Vols</a>
+                </p>
+                <p>
+                    <a class="dark-grey-text" routerLink="">Location</a>
+                </p>
+
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+
+                <!-- Links -->
+                <h5 class="text-uppercase font-weight-bold">Contact</h5>
+                <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <p>
+                    <i class="fas fa-home mr-3"></i> Djerba,Midoune 4116 <br>
+                   
+                </p>
+                <p>
+                    <i class="fas fa-envelope mr-3"></i> support@air-travel.com
+                </p>
+                <p>
+                    <i class="fas fa-phone mr-3"></i> + 216 234 567 88
+                </p>
+                <p>
+                    <i class="fas fa-print mr-3"></i> + 216 234 567 89
+                </p>
+
+            </div>
+            <!-- Grid column -->
+
+        </div>
+        <!-- Grid row -->
+
+    </div>
+    <!-- Footer Links -->
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center text-black-50 py-3">© 2020 Copyright:
+        <a class="dark-grey-text" href="www.trc-web.fr"> TRC-Web.com</a>
+    </div>
+    <!-- Copyright -->
+
+</footer>
+<!--footer-->
 
 
 
+
+<div id="myModal" class="modal">
+    <div class="modal-content" style="top:30vh">
+        <div class="modal-header">
+            <h5 class="text-primary">Voyageurs</h5>
+        </div>
+
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-7">
+                    <span class="counter"><strong> Adultes</strong></span>
+                    <div class="small-text">plus âgé que 12 ans</div>
+                </div>
+                <div class="col-md-5 ">
+                    <ul class="btn-group">
+                        <li>
+                            <a (click)="moin('adult')"> <span class="material-icons ">
+                                    remove_circle_outlined
+                                </span></a>
+                        </li>
+                        <li>
+                            <input matInput type="text" size="1%" [value]="travlers.adults" readonly="isReadonly"
+                                class="inputcounter">
+                        </li>
+                        <li>
+                            <a (click)="plus('adult')"><span class="material-icons ">
+                                    add_circle_outlined
+                                </span></a>
+                        </li>
+                    </ul> <br>
+                </div>
+
+                <div class="col-md-7">
+                    <span class="counter"> <strong> Enfants </strong></span>
+                    <div class="small-text">age entre de 2ans et 12 ans</div>
+                </div>
+                <div class="col-md-5 ">
+                    <ul class="btn-group">
+                        <li>
+                            <a (click)="moin('enfant')">
+                                <span style="margin-right: 22px;" class="material-icons">
+                                    remove_circle_outlined
+                                </span></a>
+                        </li>
+                        <li>
+                            <input type="text" size="1%" [value]="travlers.children" readonly="isReadonly"
+                                class="inputcounter">
+                        </li>
+                        <li>
+                            <a (click)="plus('enfant')">
+                                <span class="material-icons">
+                                    add_circle_outlined
+                                </span></a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-7">
+                    <span class="counter">
+                        <strong> Bébés</strong>
+                        <br>
+
+                        <div class="small-text">moins de 2ans, sur genoux</div>
+                        <div class="small-text">(nombre doit être inférieur ou égale au nombre d'adults)</div>
+                    </span>
+                </div>
+                <div class="col-md-5 ">
+                    <ul class="btn-group">
+                        <li>
+                            <a (click)="moin('bebe')">
+                                <span style="margin-right: 22px;" class="material-icons modal-icon">
+                                    remove_circle_outlined
+                                </span></a>
+                        </li>
+                        <li>
+                            <input type="text" size="1%" [value]="travlers.infants" readonly="isReadonly"
+                                class="inputcounter">
+                        </li>
+                        <li>
+                            <a (click)="plus('bebe')">
+                                <span class="material-icons modal-icon">
+                                    add_circle_outlined
+                                </span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-primary" (click)="closemodal()">Confirmer</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+<router-outlet></router-outlet>

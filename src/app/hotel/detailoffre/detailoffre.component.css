@@ -212,30 +212,40 @@
 
   ::ng-deep.ng-invalid.ng-touched, .ng-invalid.ng-dirty {
     border-bottom:transparent;
-}
+  }
 
-
-
-.port-image
-{
+  .port-image {
     width: 100%;
-}
+  }
 
-.gallery_product
-{
+  .gallery_product {
     margin-bottom: 30px;
-}
-
-
-
+  }
 
 }
 
+.loading1 {
+  width: 300px; 
+  height: 30px;
+  border-radius: 3px;
+}
 
+.loading2 {
+  width: 200px; 
+  height: 30px;
+  border-radius: 3px;
+}
 
+.loading3 {
+  width: 270px; 
+  height: 190px;
+  border-radius: 3px;
+}
 
-
-
+.gallery-pic {
+  max-width: 270px;
+  max-height: 190px;
+}
 
 
 

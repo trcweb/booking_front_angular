@@ -1,380 +1,183 @@
+<app-navbar></app-navbar>
+<app-sidebar></app-sidebar>
 <div id="main" class="container-fluid">
-    <nav class="navbarr navbar-light bg-light">
-        <div class="container-fluid">
-            <div class="row">
-                <form class="form-inline form-floating" [formGroup]="searchControl" (ngSubmit)="submitForm()">
-                   
-                   
-                        <div class="form-group">
-                            <div class="ng-autocomplete ">
-                
-                                <ng-autocomplete [data]="locations" formControlName="autoComplete"
-                                    [isLoading]="isLoading" [searchKeyword]="key" (selected)='select($event)'
-                                    (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
-                                    [itemTemplate]="itemTemplate"
-                                    [ngClass]="{'is-invalid': searchControl.controls.autoComplete.invalid && (searchControl.controls.autoComplete.dirty || searchControl.controls.autoComplete.touched)}"
-                                   >
-                                    
-                                </ng-autocomplete>
-
-                                <ng-template #itemTemplate let-loc>
-                                    <span class="material-icons"> location_on </span>
-                                    <div style="margin-left: 5px;">
-                                        <p [innerHTML]="'<b>' + loc.name + ' (' + loc.iataCode + ')</b>'"> </p>
-                                        <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName |
-                                            lowercase}}</span>
-                                    </div>
-                                    <hr>
-                                </ng-template>
-
-                            </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="card card1">
+                <div class="card-header">
+                    <div class="card-title">
+                        <br>
+                        <div [ngClass]="{'animated-background-x loading1': fetching | async}">
+                            <h2 *ngIf="hotelSearchResponse">{{hotelSearchResponse!.hotelOffers[0].hotel?.nom}}</h2>
                         </div>
-                       
-                   
-
-                <div class="form-group mr-4 click">
-                            <div class="form-control mb-2" id="myBtn" (click)="openmodal()">
-                                <label class="label" for="myBtn">Voyageurs</label>
-                                <p style="margin-top: 23px;">{{listechambre.length}} chambre, {{listechambre
-                                    | sum}} voyageurs
-                                    <span class="material-icons iconstyle">people</span>
-                                </p>
-                            </div>
-                        </div>
-                   
-
-
-
-                     <div class="form-group mr-2">
-                        <mat-form-field appearance="outline" class="example-form-field">
-                            <mat-label style="font-size:15px;">Check-in</mat-label>
-                            <input matInput [matDatepicker]="datepicker1" [min]="todaydate" formControlName="dateStart" class="form-control">
-                            <mat-datepicker-toggle matSuffix [for]="datepicker1"></mat-datepicker-toggle >
-                            <!-- #docregion datepicker-actions -->
-                            <mat-datepicker #datepicker1>
-                                <mat-datepicker-actions>
-                                    <button mat-button matDatepickerCancel>Cancel</button>
-                                    <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
-                                </mat-datepicker-actions>
-                            </mat-datepicker>
-
-                        </mat-form-field>
-                    </div>
-                <div class="form-group mr-2">
-                        <mat-form-field appearance="outline" class="example-form-field">
-                            <mat-label style="font-size:15px;">Check-out</mat-label>
-                            <input matInput [matDatepicker]="datepicker2" [min]="searchControl.controls.dateStart.value"
-                                formControlName="dateEnd" 
-                                class="form-control">
-                            <mat-datepicker-toggle matSuffix [for]="datepicker2"></mat-datepicker-toggle>
-
-                            <mat-datepicker #datepicker2>
-                                <mat-datepicker-actions>
-                                    <button mat-button matDatepickerCancel>Cancel</button>
-                                    <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
-                                </mat-datepicker-actions>
-                            </mat-datepicker>
-
-                        </mat-form-field>
-                    </div>
-                   
-                            <button class="submit-btn btn btn-primary" type="submit">
-                                <p>Recherche</p>
-                            </button>
-                       
-
-                </form>
-            </div>
-        </div>
-
-    </nav>
-
-<div class="container-fluid">
-    <div class="row">
-<div class="card card1">
-    <div class="card-header">
-        <div class="card-title">
-            <br>
-            <h2>Hôtel Lac Léman <br> ★★★★ <br> </h2>
-         <button class="btn btn-primary  float-lg-right" type="submit">Reserver une chambre</button>
-        </div>
-    </div>
-    <br>
-
-        <!-- Gallery -->
-    <div class="container">
-        <div class="row">    
-            <br/>
-            
-            <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
-                <img src="assets/img/hotel1.jpg" class="img-fluid">
-            </div>
-    
-            <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter sprinkle">
-                <img src="assets/img/hotel2.jpg" class="img-responsive">
-            </div>
-    
-            <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
-                <img src="assets/img/hotel3.jpg" class="img-responsive">
-            </div>
-    
-            <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter irrigation">
-                <img src="assets/img/hotel4.jpg" class="img-responsive">
-            </div>
-    
-            <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter spray">
-                <img src="assets/img/hotel5.jpg" class="img-responsive">
-            </div>
-    
-            <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter irrigation">
-                <img src="assets/img/hotel1.jpg" class="img-responsive">
-            </div>
-    
-            
-        </div>
-    </div>
-
-
-
-            <div class="col-lg-3  navb">
-                <nav class="navbar navbar-expand-lg navbar-light">
-                    <div class="collapse navbar-collapse" id="navbarToggler9">
-                        <ul class="navbar-nav">
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Presentation</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Chambre</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Équipements</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Conditions</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Avis</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-                <hr>
-                <br>
-                <div class="row">
-            <div class="col-lg-6">
-                <h3>Équipements populaires</h3> <br>
-                <ul class="equipement">
-                    <li><span class="material-icons mat">
-                            ac_unit
-                        </span>climatisation</li>
-                    <li>
-                        <span class="material-icons mat">
-                            local_cafe
-                        </span>
-                        Petit-déjeuner inclus </li>
-                    <li><span class="material-icons mat">
-                            beach_access
-                        </span>1ere position</li>
-                    <li><span class="material-icons mat">
-                            wifi
-                        </span>Wifi Gratuit</li>
-                    <li><span class="material-icons mat">
-                            local_parking
-                        </span>Parking inclus</li>
-                    <li><span class="material-icons mat">
-                            local_convenience_store
-                        </span>Réception 24/24</li>
-                </ul>
-
-                <br>
-                <h3>Protocole sanitaire</h3><br>
-
-                <ul class="equipement">
-                    <li>
-                        <span class="material-icons mat">
-                            social_distance
-                        </span>
-                        Distanciation sociale </li>
-
-                    <li>
-                        <span class="material-icons mat">
-                            medical_services
-                        </span>
-                        Mesures de sécurité </li>
-
-                    <li>
-                        <span class="material-icons mat">
-                            sanitizer
-                        </span>
-                        Nettoyage avec désinfectant </li>
-
-
-                </ul>
-                <br>
-                <br>
-           
-</div>
-            
-                 <div class="col-lg-2">
-                 </div>
-                <div class="col-lg-4">
-                <h3 class="location">Découvrir la zone</h3><br>
-                <p ><span class="material-icons mat">
-                    location_on
-                </span>Dah Dah Happy Land Entertainment Park (parc de loisirs)
-                </p>
-                 </div>
-                </div>
-
-                        <h3 style="margin-left:42px ;">Chambre</h3><br>
-                        <div class="row  justify-content-md-center" style="margin-left: 5px;margin-bottom: 15px;">
-                        <div class="col-md-3 mt-md-0 mt-3">
-                        <div class="card" style="width: 20rem;margin-bottom: 10px;">
-                            <img src="assets/img/chambre1.jpg" class="card-img-top">
-                            <div class="card-body">
-                                <h3 class="cardtitle">Suite</h3>
-                                <ul class="cardtext">
-                                    <li>
-                                        <span class="material-icons mat" >
-                                            straighten
-                                        </span>24 m²
-                                    </li>
-                                    <li>
-                                    <span class="material-icons mat">
-                                        bed
-                                    </span>Trés grand lit
-                                    </li>
-                                    <li>
-                                        <span class="material-icons mat">
-                                            wifi
-                                        </span>wifi gratuit 
-                                    </li>
-                                    <li>
-                                        <span class="material-icons mat">
-                                        people_alt
-                                        </span>3 personnes
-                                    </li>
-                                    <li>
-                                        <span class="material-icons mat">
-                                        beach_access
-                                        </span>vue sur mere
-                                    </li>
-                                    <hr>
-                                    <li><h4>Politique d'annulation</h4></li>
-                                    <li><label class="checkbox-inline">
-                                        <input type="checkbox" class="checkbox-circle" name="" >
-                                    </label>   Non remboursable      (0dt)</li>
-                                    <hr>
-                                    <li><h2>100dt</h2></li>
-                                </ul>
-                                <a href="#" class="btn btn-primary float-lg-right">Reserver</a>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="col-md-3 mt-md-0 mt-3">
-                        <div class="card" style="width: 20rem;margin-bottom: 10px;">
-                            <img src="assets/img/chambre2.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h3 class="cardtitle">Chambre Single</h3>
-                            <ul class="cardtext">
-                                <li>
-                                    <span class="material-icons mat">
-                                        straighten
-                                    </span>24 m²
-                                </li>
-                                <li>
-                                    <span class="material-icons mat">
-                                        bed
-                                    </span>Trés grand lit
-                                </li>
-                                <li>
-                                    <span class="material-icons mat">
-                                        wifi
-                                    </span>wifi gratuit
-                                </li>
-                                <li>
-                                    <span class="material-icons mat">
-                                        people_alt
-                                    </span>3 personnes
-                                </li>
-                                <li>
-                                    <span class="material-icons mat">
-                                        beach_access
-                                    </span>vue sur mere
-                                </li>
-                                <hr>
-                                <li>
-                                    <h4>Politique d'annulation</h4>
-                                </li>
-                                <li><label class="checkbox-inline">
-                                        <input type="checkbox" class="checkbox-circle" name="">
-                                    </label> Non remboursable (0dt)</li>
-                                <hr>
-                                <li>
-                                    <h2>90dt</h2>
-                                </li>
-                            </ul>
-                            <a href="#" class="btn btn-primary float-lg-right">Reserver</a>
-                        </div>
-                        </div>
+                        <div id="rating" class="">
+                            <h2 *ngIf="hotelSearchResponse"> {{star.repeat(hotelSearchResponse!.hotelOffers[0].hotel?.nbr_etoile || 0)}} </h2>
                         </div>
                         
-                        <div class="col-md-3 mt-md-0 mt-3">
-                        <div class="card" style="width: 20rem;margin-bottom: 10px;">
-                            <img src="assets/img/chambre3.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h3 class="cardtitle">Chambre Double</h3>
-                                <ul class="cardtext">
-                                    <li>
-                                        <span class="material-icons mat">
-                                            straighten
-                                        </span>24 m²
-                                    </li>
-                                    <li>
-                                        <span class="material-icons mat">
-                                            bed
-                                        </span>Trés grand lit
-                                    </li>
-                                    <li>
-                                        <span class="material-icons mat">
-                                            wifi
-                                        </span>wifi gratuit
-                                    </li>
-                                    <li>
-                                        <span class="material-icons mat">
-                                            people_alt
-                                        </span>3 personnes
-                                    </li>
-                                    <li>
-                                        <span class="material-icons mat">
-                                            beach_access
-                                        </span>vue sur mere
-                                    </li>
-                                    <hr style="margin-left:-25px;">
-                                    <li>
-                                        <h4>Politique d'annulation</h4>
-                                    </li>
-                                    <li><label class="checkbox-inline">
-                                            <input type="checkbox" class="checkbox-circle" name="">
-                                        </label> Non remboursable (0dt)</li>
-                                    <hr style="margin-left:-25px;">
-                                    <li>
-                                        <h2>120dt</h2>
-                                    </li>
-                                </ul>
-                                <a href="#" class="btn btn-primary float-lg-right">Reserver</a>
+                        <button (click)="scroll('chambers')" class="btn orange-btn float-lg-right" type="submit">Reserver une chambre</button>
+                    </div>
+                </div>
+                <br>
+
+                <!-- Gallery -->
+                <div class="container">
+                    <div class="row">
+                        <br />
+                        <ng-container *ngIf="hotelSearchResponse">
+                            <div *ngFor="let image of hotelSearchResponse.hotelOffers[0].hotel?.media" class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
+                                <div name="gallery" class="">
+                                    <img src="{{image}}" class="img-fluid gallery-pic">
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+
+
+
+                <div class="col-lg-3  navb">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <div class="collapse navbar-collapse" id="navbarToggler9">
+                            <ul class="navbar-nav">
+
+                                <li class="nav-item">
+                                    <a class="nav-link click" (click)="scroll('presentation')">Presentation</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link click" (click)="scroll('chambers')">Chambre</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link click" (click)="scroll('equp')">Équipements</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link click" (click)="scroll('presentation')">Conditions</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+                <hr>
+                <br>
+
+                <!-- presentation -->
+                <div id="presentation" class="row">
+                    <div class="col-lg-6">
+                        <h3>Presentation</h3> <br>
+                        <p *ngIf="hotelSearchResponse"> {{hotelSearchResponse.hotelOffers[0].hotel!.description}} </p>
+                    </div>
+                    
+                </div>
+
+                <div id="equp" class="row">
+                    <div class="col-lg-6">
+                        <h3>Équipements populaires</h3> <br>
+                        <ul class="equipement">
+                            <li><span class="material-icons mat">
+                                    ac_unit
+                                </span>climatisation</li>
+                            <li>
+                                <span class="material-icons mat">
+                                    local_cafe
+                                </span>
+                                Petit-déjeuner inclus
+                            </li>
+                            <li><span class="material-icons mat">
+                                    beach_access
+                                </span>1ere position</li>
+                            <li><span class="material-icons mat">
+                                    wifi
+                                </span>Wifi Gratuit</li>
+                            <li><span class="material-icons mat">
+                                    local_parking
+                                </span>Parking inclus</li>
+                            <li><span class="material-icons mat">
+                                    local_convenience_store
+                                </span>Réception 24/24</li>
+                        </ul>
+
+                        <br>
+                        <h3>Protocole sanitaire</h3><br>
+
+                        <ul class="equipement">
+                            <li>
+                                <span class="material-icons mat">
+                                    social_distance
+                                </span>
+                                Distanciation sociale
+                            </li>
+
+                            <li>
+                                <span class="material-icons mat">
+                                    medical_services
+                                </span>
+                                Mesures de sécurité
+                            </li>
+
+                            <li>
+                                <span class="material-icons mat">
+                                    sanitizer
+                                </span>
+                                Nettoyage avec désinfectant
+                            </li>
+
+
+                        </ul>
+                        <br>
+                        <br>
+
+                    </div>
+
+                </div>
+
+                <h3 id="chambers" style="margin-left:42px ;">Chambre</h3><br>
+                <div class="row " style="margin-left: 15px;margin-bottom: 15px;">
+                    <ng-container *ngIf="hotelSearchResponse">
+                        <div class="col-md-4" *ngFor="let offer of hotelSearchResponse.hotelOffers[0].offers">
+                            <div class="card" style="width: 20rem;margin-bottom: 10px;">
+                                <div class="card-body">
+                                    <ul class="cardtext">
+                                        
+                                        <li>
+                                            <span class="material-icons mat">
+                                                bed
+                                            </span> {{offer.rooms[0].bedType}}
+                                        </li>
+                                        <li>
+                                            <span class="material-icons mat">
+                                                wifi
+                                            </span>wifi gratuit
+                                        </li>
+                                        <li>
+                                            <span class="material-icons mat">
+                                                people_alt
+                                            </span> {{offer.guests}} personnes
+                                        </li>
+                                        <li *ngIf="offer.boardType">
+                                            <span class="material-icons mat"> restaurant </span>
+                                            {{offer.boardType.toLowerCase()}}
+                                        </li>
+                                        <hr>
+                                        <li>
+                                            <h4>Politique d'annulation</h4>
+                                        </li>
+                                        <li><label class="checkbox-inline">
+                                                <input type="checkbox" class="checkbox-circle" name="">
+                                            </label> Non remboursable (0dt)</li>
+                                        <hr>
+                                        <li>
+                                            <h2> {{offer.total! | euro: offer.currency: hotelSearchResponse.dictionarie: hotelSearchResponse.commission  | currency:'EUR':'symbol':'1.0'}} </h2>
+                                        </li>
+                                    </ul>
+                                    <a (click)="reserver(offer.id!)" class="btn orange-btn float-lg-right click">Reserver</a>
+                                </div>
                             </div>
                         </div>
-                        </div>
+                    </ng-container>                
+                </div>
             </div>
-                    </div>
-                    </div>
-</div>
+        </div>
     </div>
-
-
+</div>
 
 <br>
 <br>
@@ -383,74 +186,7 @@
     <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia sit facilis tenetur voluptatibus velit non
         eveniet quia doloribus, quaerat itaque aliquid, totam dolor cumque iste, quos laborum ea quidem placeat!</p>
 </div>
-<!--modal-->
-<div id="myModal" class="modal">
-    <div class="modal-content" style="top:30vh">
-        <div class="modal-header">
-            <h5 class="text-primary">Voyageurs</h5>
-            <span class="close" (click)="closemodal()">&times;</span>
 
-        </div>
-
-        <div class="modal-body" *ngFor="let chambre of listechambre; let index = index;">
-            <hr *ngIf="index != 0">
-            <h6 class="text-primary">chambre {{index + 1}}</h6>
-            <span class="counter"><strong> Adultes</strong></span>
-            <ul class="btn-group">
-                <li>
-                    <a (click)="moin(index,'adult')"> <span style="margin-right: -22px;" class="material-icons">
-                            remove_circle_outlined
-                        </span></a>
-                </li>
-                <li>
-                    <input matInput type="text" size="1%" [value]="chambre.adult" readonly="isReadonly"
-                        class="inputcounter">
-                </li>
-                <li>
-                    <a (click)="plus(index,'adult')"><span class="material-icons">
-                            add_circle_outlined
-                        </span></a>
-                </li>
-            </ul> <br>
-            <br>
-            <br>
-            <span class="counter"> <strong> Enfants </strong></span>
-
-            <ul class="btn-group">
-                <li>
-                    <a (click)="moin(index,'enfant')">
-                        <span class="material-icons">
-                            remove_circle_outlined
-                        </span></a>
-                </li>
-                <li>
-                    <input type="text" size="1%" [value]="chambre.enfant" readonly="isReadonly" class="inputcounter">
-                </li>
-                <li>
-                    <a (click)="plus(index,'enfant')">
-                        <span class="material-icons">
-                            add_circle_outlined
-                        </span></a>
-                </li>
-            </ul>
-            <div *ngIf="index != 0">
-                <button (click)="removeChamber(index)" class="pstyle float-right text-danger">Supprimer la
-                    chambre</button>
-                <br>
-            </div>
-        </div>
-
-
-        <button id="btnforme" (click)="addChamber()" [disabled]="disabled" class="pstyle">Ajouter une autre
-            chambre</button>
-
-        <div class="modal-footer">
-            <button class="btn btn-primary">Confirmer</button>
-        </div>
-    </div>
-</div>
-
-<!--modal-->
 <!--footer-->
 
 <!-- Footer -->
@@ -546,7 +282,7 @@
     </div>
     <!-- Footer Links -->
 
-   
+
 
 </footer>
 <!-- Footer -->

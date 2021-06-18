@@ -1,67 +1,119 @@
 @media screen and (min-width: 420px) {
-  .section .section-center {
-    position: absolute;
-    top: 50%;
-    left: 0px;
-    right: 0px;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
-  }
-
-  #booking {
-    font-family: "Imprima", sans-serif;
-    background-image: url("/assets/img/background.jpg");
+  .section {
+    background-image: url("/assets/img/bghotel.png");
     background-size: cover;
     background-position: center;
-    margin-right: 0px;
-  }
-
-  .booking-form .form-group {
     position: relative;
-    height: 80px;
-    margin-bottom: -12px;
-    margin-right: 0px;
-    margin-left: -10px;
+    height: 80vh;
+    
   }
-
-  .material-icons {
+  .section::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: rgba(0,0,0,0.4);
+}
+  
+ 
+  .icon-right {
     vertical-align: middle;
     float: right;
     padding-right: 8px;
     color: black;
     height: 2rem;
   }
+/* side bar */
+.sidebar {
+  height: 89.5%;
+  width: 50px;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  overflow-x: hidden;
+  padding-top: 60px;
+  white-space: nowrap;
+  transition: 0.5s;
+  border-right: 2px solid #dbe8f5;
+  
+  
+}
 
-  .booking-form .form-control {
-    font-size: 13px;
-    background-color: transparent;
-    border-radius: 0px;
-    border: none;
-    height: 60px;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    color: grey;
-    font-weight: 400;
-    background: rgba(255, 255, 255, 0.85);
-    padding-top: 60px;
-    -webkit-transition: 0.2s background;
-    transition: 0.2s background;
-    padding: 20px 0px 0px 10px;
-  }
+.sidebar a {
+  padding: 0px 0px 0px 30px;
+  text-decoration: none;
+  font-size: 17px;
+  color: #ffffff;
+  display: block;
+  margin-left: -4px;
+}
 
+.sidebar a:hover {
+  color: chocolate;
+}
+
+
+.icon-text {
+  vertical-align: super;
+  color: white;
+}
+
+
+.icon-text:hover {
+  color: chocolate;
+}
+
+.icon-left {
+  padding-bottom: 3px;
+  margin-right: 25px;
+  margin-left: -15px;
+  color: #dbe8f5;
+}
+ /*sidebar*/
+
+
+
+
+ /*navb*/
+ .logo {
+  display: inline-block;
+  width: 70px;
+  height: 60px;
+  margin-left: -10px;
+  margin-top: -16px;
+  margin-bottom: -20px;
+  background-size: contain;
+}
+
+.navbar-nav a {
+  color: #dbe8f5;
+  padding: 10px;
+  font-size: 15px;
+  font-weight: 500;    
+}
+
+.navbar-nav a:hover {
+  color: chocolate;
+  
+}
+
+.navbar {
+  border-bottom: 2px solid #dbe8f5;
+ 
+
+  
+ 
+}
+
+/*navb*/
   ::ng-deep.autocomplete-container .input-container input {
-    height: 60px !important;
-    width: 600px !important;
-    box-shadow: none;
-    border: 1px solid rgb(206, 206, 206);
-    background-color: transparent !important;
-    background: rgba(255, 255, 255, 0.85) !important;
-    -webkit-transition: 0.2s background !important;
-    transition: 0.2s background !important;
-  }
-
-  ::ng-deep.autocomplete-container {
-    width: 600px !important;
+    height: 57px !important;
+    box-shadow: none !important;
+    background-color: white !important;
+    border: 1px solid rgb(230, 222, 222) !important;
+    border-radius: 4px;
   }
 
   ::ng-deep.mat-form-field-outline {
@@ -82,116 +134,112 @@
 
   ::ng-deep .mat-form-field-label {
     /*change color of label*/
-    color: #0275d8 !important;
+    color: chocolate !important;
     font-weight: 500;
+    font-size: 35px;
   }
 
-  mat-datepicker-toggle {
-    color: black !important;
-  }
   ::ng-deep.ng-invalid.ng-touched,
   .ng-invalid.ng-dirty {
     border-bottom: transparent;
   }
+  .form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #0a0a0a;
+    background-color: #f7f6f6ef;
+    background-clip: padding-box;
+    border: 1px solid;
+    border-radius: .25rem;
+    /* transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out; */
+}
+.header-center {
+  padding-top: 8%;
+   padding-bottom: 3%; 
+    font-size: 2rem;
+  display: grid;
+  grid-template-columns: 1fr max-content 1fr;
+  grid-column-gap: 1rem;
+  align-items: center;
+  color : chocolate;
+
+}
+
+.header-center::before,
+.header-center::after {
+  content: "";
+  display: block;
+  height: 1px;
+  background-color: currentColor;
+ 
+}
+.travel-img img {
+  display: inline-block;
+  height: auto;
+  width: 100%;
+  margin: 1%;
+  border-radius: 10px;
+}
+
+.travel-img::before {
+  content: "";
+  position: absolute;
+  top: 12.5px;
+  right: 4px;
+  bottom: 0px;
+  left: 24.5px;
+  background-color: rgba(0,0,0,0.5);
+  display: inline-block;
+  height: 95%;
+  width: 97.5%;
+  margin: 0%;
+  border-radius: 10px;
+}
+
+
+.text-travel{
+  position: absolute;
+  bottom: 30px;
+  left: 40px;
+  color : rgb(232, 223, 223) ;
+  letter-spacing: 1px;
+  font-size: 25px;
+  font-weight: 500;
+}
 
   .ng-autocomplete {
-    width: 25.4rem !important;
-    margin-top: -75px;
+    width: 20.4rem !important;
     margin-right: 10px !important;
-    height: 25px;
+    height: 20px;
     padding: 20px 0px 0px 10px !important;
-    padding-top: 55px !important;
+    margin-top: -85px;
+  }
+  #myBtn {
+    height: 58px;
+    font-size: 14px;
+    margin-top: 30px;
+    border: 1px solid rgb(230, 222, 222);
   }
 
-  .booking-form .form-control:focus {
-    background: rgba(255, 255, 255, 1);
-    -webkit-box-shadow: none;
-    box-shadow: none;
+  .submit-btn{
+   color : white ;
+   border-radius: 4px;
+   background-color : chocolate ; 
+   margin-left: 24rem;
+   width: 10rem ;
+   height: 45px;
   }
+  ::ng-deep.mat-form-field-infix {
+   
+    margin-top: 10px !important;
+}
 
-  .booking-form .form-control::-webkit-input-placeholder {
-    color: grey;
-  }
-
-  .booking-form .form-control:-ms-input-placeholder {
-    color: grey;
-  }
-
-  .booking-form .form-control::placeholder {
-    color: grey;
-  }
-
-  .booking-form input[type="date"].form-control:invalid {
-    color: grey;
-  }
-
-  .booking-form select.form-control {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-  }
-
-  .booking-form select.form-control + .select-arrow {
-    position: absolute;
-    right: 0px;
-    bottom: 10px;
-    width: 20px;
-    text-align: center;
-    pointer-events: none;
-    height: 60px;
-    line-height: 60px;
-  }
-
-  .booking-form .form-label {
-    color: rgb(77, 112, 202);
-    display: block;
-    font-weight: 700;
-    height: 30px;
-    line-height: 30px;
-    font-size: 15px;
-    letter-spacing: 1px;
-    position: absolute;
-    left: 12px;
-    top: 0px;
-  }
-
-  .booking-form .form-btn {
-    height: 80px;
-    margin-right: 0px;
-    margin-left: -10px;
-    margin-bottom: 10px;
-  }
-
-  .booking-form .submit-btn {
-    background: rgb(52, 166, 204);
-    border: none;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-    height: 60px;
-    border-radius: 0px;
-    font-size: 18px;
-    width: 100%;
-    color: white;
-  }
-
-  .submit-btn h5 {
-    margin-top: 15px;
-  }
-
- 
   
-  .section {
-    position: relative;
-    height: 100vh;
-  }
-
-  .about-section {
-    padding: 50px;
-    text-align: center;
-    background-color: #474e5d;
-    color: white;
-  }
 
   body {
     font-family: Arial, Helvetica, sans-serif;
@@ -250,11 +298,51 @@
   .button:hover {
     background-color: #555;
   }
-}
 
+  .searchcard1 {
+    width: 63rem !important;
+    max-width: 63rem !important;
+    height: 14rem !important;
+    min-height: 14rem !important;
+    margin-top: 6.5rem !important;
+    border-radius: 7px;
+     box-shadow: 0 8px 10px 0 rgba(0,0,0,0.2);
+     background-color :transparent;
+     background : rgba(255, 255, 255, 0.55);
+     -webkit-transition: 0.2s background;
+     transition: 0.2s background;
+  }
+  .label {
+    float: left;
+    font-size: 13px;
+    color: chocolate;
+  }
+
+  ::ng-deep.example-form-field1 {
+    margin-top: 50px;
+    margin-left: 10px;
+  }
+
+  ::ng-deep.mat-form-field-flex {
+    height: 62px;
+    width: 12rem !important;
+  }
+
+  .form-label {
+    position: absolute;
+    z-index: 1;
+    margin-top: 17px;
+    margin-left: 20px;
+    color: chocolate;
+  }
+}
 @media screen and (max-width: 650px) {
   .column {
     width: 100%;
     display: block;
   }
+}
+
+.selected-nodes > * {
+  color: rgb(196, 188, 185);
 }

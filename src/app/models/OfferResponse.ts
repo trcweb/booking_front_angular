@@ -1,4 +1,4 @@
-import { Room } from "./Room";
+import { Room } from './Room';
 
 export class OfferResponse {
     id: string | null;
@@ -7,11 +7,11 @@ export class OfferResponse {
     rooms: Room[];
     guests: number | null;
     currency: string | null;
-    base: string | null;
+    base: number | null;
     total: number | null;
     paymentType: string | null;
     cancellationDeadline: string | null;
-    cancellationAmmount: string | null;
+    cancellationAmmount: number | null;
 
     constructor() {
         this.id = null;

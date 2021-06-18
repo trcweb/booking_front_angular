@@ -3,12 +3,12 @@ import { OfferResponse } from './OfferResponse';
 
 export class HotelOfferResponse {
     hotel: HotelResponse | null;
-    offers: OfferResponse | null;
+    offers: OfferResponse[];
     source: string | null;
 
     constructor() {
         this.hotel = null;
-        this.offers = null;
+        this.offers = [];
         this.source = null;
     }
 }

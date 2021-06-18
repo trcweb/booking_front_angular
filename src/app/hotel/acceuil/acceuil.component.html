@@ -1,119 +1,174 @@
-<div id="booking" class="section">
+<div class="section">
     <div id="main">
-        <div class="section-center">
+        <div class="fixed">
+            <nav class="navbar">
+                <img routerLink="/home" class="navbar-brand logo click" src="/assets/img/logo-air-travel2.png">
+                <ng-container *ngIf="!authenticated; else elseTemplate">
+                    <div class="navbar-nav ml-auto ">
+                        <a routerLink="/sign-in" class="nav-item nav-link">Sign-in</a>
+                    </div>
+                    <div class="navbar-nav">
+                        <a routerLink="/sign-up" class="nav-item nav-link">Sign-up</a>
+                    </div>
+                </ng-container>
+                <ng-template #elseTemplate>
+                    <div *ngIf="user.name" class="navbar-nav ml-auto " >
+                        <p class="user-name-static">{{user.name + " " + user.lastname }}</p>
+                    </div>
+                    <div class="navbar-nav">
+                        <div >
+                            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" class="avatar">
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item>
+                                    <mat-icon>person</mat-icon>
+                                    <span>profile</span>
+                                </button>                                        
+                                <button mat-menu-item>
+                                    <mat-icon>notifications</mat-icon>
+                                    <span>notifications</span>
+                                </button>
+                                <button mat-menu-item (click)="logout()">
+                                    <mat-icon>logout</mat-icon>
+                                    <span>logout</span>
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </div>
+                </ng-template>
+
+                <!--<button class="openbtn" (click)="openNav()"><span><i class="fa fa-bars"></i></span></button>-->
+            </nav>
+        </div>
+        <div id="mySidebar" class="sidebar" (mouseover)="toggleSidebar()" (mouseout)="toggleSidebar()">
 
 
-            <div class="container">
-                <div class="" style="justify-content: center;">
-                    <div class="booking-form">
-                        <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && submitForm()">
-                            <div *ngIf="!picked" class="alert alert-danger">
-                                test test test
-                            </div>
-                            <div class="row " style="justify-content: center;">
+            <br>
+            <br>
 
-                                <div class="col-md-7">
-
-                                    <h6 class="form-label text-primary" style="margin-left: 25px !important; position: absolute; z-index: 1;">
-                                        Destination </h6>
-                                    <div class="ng-autocomplete">
-                                        <ng-autocomplete [data]="locations" [formControl]="search"
-                                            [isLoading]="isLoading" [searchKeyword]="key" (selected)='select($event)'
-                                            [itemTemplate]="itemTemplate" [customFilter]="filter">
-                                        </ng-autocomplete>
-
-                                        <ng-template #itemTemplate let-loc>
-                                            <span class="material-icons"> location_on </span>
-                                            <div style="margin-left: 5px;">
-                                                <p [innerHTML]="'<b>' + loc.name + ' (' + loc.iataCode + ')</b>'"> </p>
-                                                <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName |
-                                                    lowercase}}</span>
-                                            </div>
-                                            <hr>
-                                        </ng-template>
-
-                                    </div>
+            <a routerLink="/hotels" class="selected-route selected-nodes"><i
+                    class="material-icons icon-left">hotel</i><span class="icon-text ">Hotel</span></a>
+            <br>
+            <a routerLink="/flights"><i class="material-icons icon-left">flight</i><span
+                    class="icon-text ">Vols</span></a>
+            <br>
+            <a routerLink="/cars"><i class="material-icons icon-left">time_to_leave</i><span
+                    class="icon-text ">Location</span></a><br>
 
 
-                                </div>
+            <a href="#"><span><i class="material-icons icon-left">card_giftcard</i><span class="icon-text">nos
+                        packs</span></span></a><br>
 
+            <!-- <div class="mobile">
+                    <hr>
+                    <a href="#"><span><i class="material-icons">login</i><span class="icon-text"></span>Connexion</span></a>
+                    <a href="#"><span><i class="material-icons">person_add</i><span class="icon-text"></span>S'inscrire</span></a>
+            
+                </div>-->
+        </div>
+        <div class="container">
+            <div class="row justify-content-center ">
+                <div class="card searchcard1">
+                    <div class="card-body">
+                        <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && submitForm()" class="form-inline">
 
+                            <div class="form-group">
+                                <p class="form-label">
+                                    Destination </p>
+                                <div class="ng-autocomplete">
+                                    <ng-autocomplete [data]="locations" [formControl]="search" [isLoading]="isLoading"
+                                        [searchKeyword]="key" (selected)='select($event)' [itemTemplate]="itemTemplate"
+                                        [customFilter]="filter">
+                                    </ng-autocomplete>
 
-
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <h6 class="form-label text-primary">Voyageurs</h6>
-                                        <div class="form-control" id="myBtn" (click)="openmodal()">
-
-                                            <p style="margin-top: 9px;">{{listechambre.length}} chambre, {{listechambre
-                                                | sum}} voyageurs
-                                                <span class="material-icons">people</span>
-                                            </p>
+                                    <ng-template #itemTemplate let-loc>
+                                        <span class="material-icons icon-right"> location_on </span>
+                                        <div style="margin-top: 5px; margin-left: 5px; line-height: 60%;">
+                                            <p [innerHTML]="'<b>' + loc.name + ' (' + loc.iataCode + ')</b>'"> </p>
+                                            <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName |
+                                                lowercase}}</span>
                                         </div>
+                                        <hr>
+                                    </ng-template>
+                                    <div class="help-block" *ngIf="!picked">
+                                        <div class="text-danger">please select a destination</div>
                                     </div>
+
                                 </div>
+
 
                             </div>
-                            <div class="row" style="justify-content: center;">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <mat-form-field appearance="outline" style="margin-left: 20px !important;" class="example-form-field">
-                                            <mat-label style="font-size:15px;">Check-in</mat-label>
-                                            <input matInput [matDatepicker]="datepicker1" [min]="todaydate"
-                                                [(ngModel)]="startDate" #start=ngModel name="start"
-                                                [ngClass]="{'is-invalid': f.submitted && start.invalid}"
-                                                (dateChange)="next($event)" required>
-                                            <mat-datepicker-toggle matSuffix [for]="datepicker1">
-                                            </mat-datepicker-toggle>
-                                            <!-- #docregion datepicker-actions -->
-                                            <mat-datepicker #datepicker1>
-                                                <mat-datepicker-actions>
-                                                    <button mat-button matDatepickerCancel>Cancel</button>
-                                                    <button mat-raised-button color="primary"
-                                                        matDatepickerApply>Apply</button>
-                                                </mat-datepicker-actions>
-                                            </mat-datepicker>
-                                            <div *ngIf="f.submitted && start.invalid">
-                                                <div class="text-danger" *ngIf="start.errors?.required">start date is
-                                                    required</div>
-                                            </div>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <mat-form-field appearance="outline" class="example-form-field">
-                                            <mat-label style="font-size:15px;">Check-out</mat-label>
-                                            <input matInput [matDatepicker]="datepicker2" [min]="minCheckout"
-                                                [(ngModel)]="endDate" #end=ngModel name="endDate"
-                                                [ngClass]="{'is-invalid': f.submitted && end.invalid}" required>
-                                            <mat-datepicker-toggle matSuffix [for]="datepicker2">
-                                            </mat-datepicker-toggle>
-
-                                            <mat-datepicker #datepicker2>
-                                                <mat-datepicker-actions>
-                                                    <button mat-button matDatepickerCancel>Cancel</button>
-                                                    <button mat-raised-button color="primary"
-                                                        matDatepickerApply>Apply</button>
-                                                </mat-datepicker-actions>
-                                            </mat-datepicker>
-                                            <div *ngIf="f.submitted && end.invalid">
-                                                <div class="text-danger" *ngIf="end.errors?.required">End date is
-                                                    required</div>
-                                            </div>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-btn">
-                                        <button class="submit-btn" type="submit">
-                                            <h5>Recherche</h5>
-                                        </button>
-                                    </div>
 
 
+
+                            <div class="form-group click">
+                                <div class="form-control" id="myBtn" (click)="openmodal()">
+                                    <label class="label" for="myBtn">Voyageurs</label>
+                                    <p style="margin-top: 23px;">{{listechambre.length}} chambre, {{listechambre
+                                        | sum}} voyageurs
+                                        <span class="material-icons icon-right">people</span>
+                                    </p>
                                 </div>
                             </div>
+
+
+
+
+
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="example-form-field1">
+                                    <mat-label style="font-size:15px;">Check-in</mat-label>
+                                    <input matInput [matDatepicker]="datepicker1" [min]="todaydate"
+                                        [(ngModel)]="startDate" #start=ngModel name="start"
+                                        [ngClass]="{'is-invalid': f.submitted && start.invalid}"
+                                        (dateChange)="next($event)" required>
+                                    <mat-datepicker-toggle matSuffix [for]="datepicker1">
+                                    </mat-datepicker-toggle>
+
+                                    <mat-datepicker #datepicker1>
+                                        <mat-datepicker-actions>
+                                            <button mat-button matDatepickerCancel>Cancel</button>
+                                            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                                        </mat-datepicker-actions>
+                                    </mat-datepicker>
+                                    <div *ngIf="f.submitted && start.invalid">
+                                        <div class="text-danger" *ngIf="start.errors?.required">start date is
+                                            required</div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+
+
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="example-form-field1">
+                                    <mat-label style="font-size:15px;">Check-out</mat-label>
+                                    <input matInput [matDatepicker]="datepicker2" [min]="minCheckout"
+                                        [(ngModel)]="endDate" #end=ngModel name="end"
+                                        [ngClass]="{'is-invalid': f.submitted && end.invalid}" required>
+                                    <mat-datepicker-toggle matSuffix [for]="datepicker2">
+                                    </mat-datepicker-toggle>
+
+                                    <mat-datepicker #datepicker2>
+                                        <mat-datepicker-actions>
+                                            <button mat-button matDatepickerCancel>Cancel</button>
+                                            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                                        </mat-datepicker-actions>
+                                    </mat-datepicker>
+                                    <div *ngIf="f.submitted && end.invalid">
+                                        <div class="text-danger" *ngIf="end.errors?.required">End date is
+                                            required</div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+
+
+                            <div class="form-group">
+                                <button class="btn submit-btn" type="submit">
+                                    Recherche
+                                </button>
+                            </div>
+
+
 
 
 
@@ -125,14 +180,11 @@
     </div>
 </div>
 
-
 <div class="container">
 
 
-    <h2 class="text-center text-primary"
-        style="padding-top: 5%; padding-bottom: 2%; font-size: 40px; letter-spacing: 10px;">Nos
-        Recommandation</h2>
-    <hr>
+    <h2 class="text-center  header-center">
+        Nos Recommandation</h2>
 
 
     <div class="row">
@@ -143,7 +195,7 @@
                     <h4>Hasdrubal Thalassa et SPA </h4>
                     <p class="title">★★★★★ (Hammamet)</p>
                     <p style="font-size: small; color:grey"> a partir de * <br> <strong
-                            style="color: orange; font-size: 30px;">98 dt</strong> <br> prix du 07/1/2021</p>
+                            style="color: chocolate; font-size: 30px;">98 dt</strong> <br> prix du 07/1/2021</p>
                     <p><button class="button">Plus de details</button></p>
                 </div>
             </div>
@@ -156,7 +208,7 @@
                     <h4>El Mouradi El Menzah</h4>
                     <p class="title">★★★★ (Hammamet)</p>
                     <p style="font-size: small; color:grey"> a partir de * <br> <strong
-                            style="color: orange; font-size: 30px;">75 dt
+                            style="color:chocolate; font-size: 30px;">75 dt
                         </strong> <br> prix du 05/4/2021</p>
 
                     <p><button class="button">Plus de details</button></p>
@@ -171,7 +223,7 @@
                     <h4>Club Calimera Yati Beach</h4>
                     <p class="title">★★★★ (Mahdia)</p>
                     <p style="font-size: small; color:grey"> a partir de * <br>
-                        <strong style="color: orange; font-size: 30px;">43
+                        <strong style="color: chocolate; font-size: 30px;">43
                             dt</strong> <br> prix du 05/5/2021
                     </p>
                     <p><button class="button">Plus de details</button></p>
@@ -181,9 +233,9 @@
     </div>
 
 
-    <h2 class="text-center text-primary"
-        style="padding-top: 5%; padding-bottom: 2%; font-size: 40px; letter-spacing: 10px;">Nos Packs </h2>
-    <hr>
+    <h2 class="text-center  header-center">
+
+        Meilleur Prix </h2>
 
     <div class="row">
         <div class="column">
@@ -218,13 +270,19 @@
         </div>
     </div>
 
-    <hr>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam excepturi ratione iusto sequi modi, harum
-        neque! Nobis officia ea sapiente exercitationem laudantium quos, id, alias magnam labore assumenda cum
-        obcaecati.s</p>
+    <div class="container">
 
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A est cumque aliquam, aliquid ratione eveniet dicta
-        similique quis necessitatibus fuga et explicabo tenetur id corrupti nobis animi eligendi? Fugiat, dolor!</p>
+        <div class="row justify-content-center" style="margin-top: 90px ;">
+            <div class="col-md-12 travel-img ">
+                <img src="/assets/img/travel2.png" class="img-fluid " alt="Responsive image">
+                <div class="text-travel">
+
+                    on a recommander pour vous <br> <a routerLink=""
+                        style="font-size:22px; color:rgb(255, 168, 39)">Voir details</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 <br>
@@ -246,7 +304,8 @@
             <span class="counter"><strong> Adultes</strong></span>
             <ul class="btn-group">
                 <li>
-                    <a (click)="moin(index,'adult')"> <span class="material-icons">
+                    <a (click)="moin(index,'adult')"> <span style="margin-right: -22px;"
+                            class="material-icons modal-icon">
                             remove_circle_outlined
                         </span></a>
                 </li>
@@ -255,7 +314,7 @@
                         class="inputcounter">
                 </li>
                 <li>
-                    <a (click)="plus(index,'adult')"><span class="material-icons">
+                    <a (click)="plus(index,'adult')"><span class="material-icons modal-icon">
                             add_circle_outlined
                         </span></a>
                 </li>
@@ -267,7 +326,7 @@
             <ul class="btn-group">
                 <li>
                     <a (click)="moin(index,'enfant')">
-                        <span class="material-icons">
+                        <span class="material-icons modal-icon">
                             remove_circle_outlined
                         </span></a>
                 </li>
@@ -276,7 +335,7 @@
                 </li>
                 <li>
                     <a (click)="plus(index,'enfant')">
-                        <span class="material-icons">
+                        <span class="material-icons modal-icon">
                             add_circle_outlined
                         </span></a>
                 </li>
@@ -299,75 +358,118 @@
 </div>
 
 
-<!--modal-->
+
+
 <!--footer-->
-<footer class="bg-light text-center text-lg-start">
-    <!-- Grid container -->
-    <div class="container p-4">
-        <!--Grid row-->
-        <div class="row">
-            <!--Grid column-->
-            <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-                <h5 class="text-uppercase">Footer Content</h5>
+<footer class="page-footer font-small blue-grey lighten-5">
 
-                <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
-                    molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae aliquam
-                    voluptatem veniam, est atque cumque eum delectus sint!
+
+
+    <!-- Footer Links -->
+    <div class="container text-center text-md-left mt-5">
+
+        <!-- Grid row -->
+        <div class="row mt-3 dark-grey-text">
+
+            <!-- Grid column -->
+            <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
+
+                <!-- Content -->
+                <h5 class="text-uppercase font-weight-bold">Air Travel</h5>
+                <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+
+                <p class="dark-grey-text">
+                    <span class="material-icons" style="vertical-align: middle;">
+                        sell
+                    </span> Meilleur prix garanti
                 </p>
+
+
+                <p class="dark-grey-text">
+                    <span class="material-icons" style="vertical-align: middle;">
+                        lock
+                    </span>
+                    Paiement en toute sécurité
+                </p>
+
+
             </div>
-            <!--Grid column-->
+            <!-- Grid column -->
 
-            <!--Grid column-->
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                <h5 class="text-uppercase">Links</h5>
+            <!-- Grid column -->
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
 
-                <ul class="list-unstyled mb-0">
-                    <li>
-                        <a href="#!" class="text-dark">Link 1</a>
-                    </li>
-                    <li>
-                        <a href="#!" class="text-dark">Link 2</a>
-                    </li>
-                    <li>
-                        <a href="#!" class="text-dark">Link 3</a>
-                    </li>
-                    <li>
-                        <a href="#!" class="text-dark">Link 4</a>
-                    </li>
-                </ul>
+                <!-- Links -->
+                <h5 class="text-uppercase font-weight-bold">A propos </h5>
+                <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <p>
+                    <a class="dark-grey-text" href="#!">Qui sommes nous</a>
+                </p>
+                <p>
+                    <a class="dark-grey-text" href="#!">Contactez nous</a>
+                </p>
+
+
+
             </div>
-            <!--Grid column-->
+            <!-- Grid column -->
 
-            <!--Grid column-->
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                <h5 class="text-uppercase mb-0">Links</h5>
+            <!-- Grid column -->
+            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
 
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="#!" class="text-dark">Link 1</a>
-                    </li>
-                    <li>
-                        <a href="#!" class="text-dark">Link 2</a>
-                    </li>
-                    <li>
-                        <a href="#!" class="text-dark">Link 3</a>
-                    </li>
-                    <li>
-                        <a href="#!" class="text-dark">Link 4</a>
-                    </li>
-                </ul>
+                <!-- Links -->
+                <h5 class="text-uppercase font-weight-bold">LIENS</h5>
+                <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <p>
+                    <a class="dark-grey-text" routerLink="/signin">Log-in</a>
+                </p>
+                <p>
+                    <a class="dark-grey-text" routerLink="/hotels">Hotel</a>
+                </p>
+                <p>
+                    <a class="dark-grey-text" routerLink="/flights">Vols</a>
+                </p>
+                <p>
+                    <a class="dark-grey-text" routerLink="">Location</a>
+                </p>
+
             </div>
-            <!--Grid column-->
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+
+                <!-- Links -->
+                <h5 class="text-uppercase font-weight-bold">Contact</h5>
+                <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <p>
+                    <i class="fas fa-home mr-3"></i> Djerba,Midoune 4116 <br>
+
+                </p>
+                <p>
+                    <i class="fas fa-envelope mr-3"></i> support@air-travel.com
+                </p>
+                <p>
+                    <i class="fas fa-phone mr-3"></i> + 216 234 567 88
+                </p>
+                <p>
+                    <i class="fas fa-print mr-3"></i> + 216 234 567 89
+                </p>
+
+            </div>
+            <!-- Grid column -->
+
         </div>
-        <!--Grid row-->
+        <!-- Grid row -->
+
     </div>
-    <!-- Grid container -->
+    <!-- Footer Links -->
 
     <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        © 2020 Copyright:
-        <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+    <div class="footer-copyright text-center text-black-50 py-3">© 2020 Copyright:
+        <a class="dark-grey-text" href="www.trc-web.fr"> TRC-Web.com</a>
     </div>
     <!-- Copyright -->
+
 </footer>
+<!--footer-->

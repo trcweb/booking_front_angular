@@ -136,6 +136,8 @@ export class OffreComponent implements OnInit {
             },
             error: (err: HttpErrorResponse) => {
               console.log('err: ', err.error.message);
+              this.hotelSearchResponse = new HotelSearchResponse();
+              this.fetching = false;
             },
             complete: () => {
               this.fetching = false;
@@ -334,6 +336,8 @@ export class OffreComponent implements OnInit {
         },
         error: (err: HttpErrorResponse) => {
           console.log('err: ', err.error.message);
+          this.hotelSearchResponse = new HotelSearchResponse();
+          this.fetching = false;
         },
         complete: () => {
           this.fetching = false;

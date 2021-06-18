@@ -1,0 +1,133 @@
+<div class="fixed">
+    <nav class="navbar ">
+        <img class="navbar-brand logo" src="assets/img/logo-air-travel2.png">
+        <div class="navbar-nav ml-auto ">
+            <a routerLink="login" class="nav-item nav-link">sign-in</a>
+        </div>
+
+
+        <!--<button class="openbtn" (click)="openNav()"><span><i class="fa fa-bars"></i></span></button>-->
+    </nav>
+</div>
+<div class="main">
+   
+    <div class="row">
+    <div class="col-lg-3">>
+    <div class="sidebar">
+        <div class="container" style="margin-top: 40px;">
+                    <!-- <button class="accordion"> <span class="material-icons" style="vertical-align: middle;font-size: 27px;margin-top: -6px;margin-right: 5px;">
+                        manage_accounts
+                        </span>Comptes</button>
+                    <div class="panel">
+                        <a routerLink="add-agence">test</a><br>
+                      <a routerlink="">Admin</a>
+                    </div>
+                   
+                    <hr style="color: rgb(255, 255, 255);">
+                    <button class="accordion"><span class="material-icons" style="vertical-align: middle;font-size: 27px;margin-top: -6px;margin-right: 5px;">
+                        description
+                        </span>Contrats</button>
+                    <div class="panel">
+                      <p>Hotel</p>
+                      <p>Location</p>
+                    </div>
+                    <hr>
+                    <button class="accordion"><span class="material-icons" style="vertical-align: middle;font-size: 27px;margin-top: -6px;margin-right: 5px;">
+                        book_online
+                        </span>Réservation</button>
+                    <div class="panel">
+                      <p>Agence</p>
+                      <p>Utilisateur</p>
+                      <p>Visiteur</p>
+
+                    </div>    -->
+            
+  
+
+
+                    <div class="accordion" id="accordionExample">
+                       
+                         
+                            <h5 class="mb-0">
+                              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
+                                aria-expanded="false" aria-controls="collapseOne"><span class="material-icons" style="vertical-align: middle;font-size: 27px;margin-top: -6px;margin-right: 5px;">
+                                  manage_accounts
+                                  </span>
+                                Comptes
+                              </button>
+                            </h5>
+                         
+                          <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                            data-parent="#accordionExample">
+                            <div class="card-body">
+                          <a routerLink="list-admin">  Admin </a>
+                            </div>
+                            <div class="card-body">
+                                <a routerLink="list-agence">  Agence </a>
+                                  </div>
+                          </div>
+                       
+                       
+                       
+                            <h5 class="mb-0">
+                              <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><span class="material-icons" style="vertical-align: middle;font-size: 27px;margin-top: -6px;margin-right: 5px;">
+                                  description
+                                  </span>
+                              Contrat
+                              </button>
+                            </h5>
+                         
+                          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                            <div class="card-body">
+                           <a routerLink="add-hotel">Hotel</a>   
+                            </div>
+                            <div class="card-body">
+                           <a routerLink="add-location">location voiture</a>  
+                              </div>
+                          </div>
+                      
+                       
+                        
+                            <h5 class="mb-0">
+                              <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"><span class="material-icons" style="vertical-align: middle;font-size: 27px;margin-top: -6px;margin-right: 5px;">
+                                  book_online
+                                  </span>
+                                Réservation
+                              </button>
+                            </h5>
+                          
+                          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <a routerLink="reservation-agence">Agence</a>  
+
+                            </div>
+                            <div class="card-body">
+                                <a routerLink="reservation-user">utilisateurs</a>  
+
+                            </div>
+                          </div>
+                          <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                              data-target="#collapse4" aria-expanded="false" aria-controls="collapse4"
+                              routerLink="soldeAgence"><span class="material-icons" style="vertical-align: middle;font-size: 27px;margin-top: -6px;margin-right: 5px;">
+                                attach_money 
+                                </span>
+                               solde de garantir
+                            </button>
+                          </h5>
+                        
+                      </div>
+    </div>
+  </div>
+</div>
+
+  
+        
+    
+<div class="col-md-9" style="margin-top: 35px;">
+    <router-outlet></router-outlet>
+</div>
+</div>
+</div>

@@ -1,0 +1,297 @@
+<app-navbar></app-navbar>
+<app-sidebar></app-sidebar>
+
+
+<div id="main">
+    <div class="section">
+      <div class="container">
+        <div class="row ">
+          <div class="card searchcard2">
+            <div class="card-body">
+  
+              <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && submitForm()" class="form-inline">
+  
+                <div class="form-group">
+                  <p class="form-label">
+                    Origine </p>
+                  <div class="ng-autocomplete">
+                    <ng-autocomplete [data]="locations" [formControl]="search" [isLoading]="isLoading"
+                      [searchKeyword]="key" (selected)='select($event)' [itemTemplate]="itemTemplate"
+                      [customFilter]="filter">
+                    </ng-autocomplete>
+  
+                    <ng-template #itemTemplate let-loc>
+                      <span class="material-icons icon-right"> location_on </span>
+                      <div style="margin-top: 5px; margin-left: 5px; line-height: 60%;">
+                        <p [innerHTML]="'<b>' + loc.name + ' (' + loc.iataCode + ')</b>'"> </p>
+                        <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName |
+                          lowercase}}</span>
+                      </div>
+                      <hr>
+                    </ng-template>
+                    <div class="help-block" *ngIf="!picked">
+                      <div class="text-danger">please select a destination</div>
+                    </div>
+  
+                  </div>
+  
+  
+                </div>
+  
+                <div class="form-group">
+                    <p class="form-label">
+                       Destination </p>
+                <div class="ng-autocomplete">
+                    <ng-autocomplete [data]="locations" [formControl]="search1" [isLoading]="isLoading1"
+                        [searchKeyword]="key" (selected)='select($event)' [itemTemplate]="itemTemplate"
+                        [customFilter]="filter">
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplate let-loc>
+                        <div style="margin-top: 5px; margin-left: 5px; line-height: 60%;">
+                            <p [innerHTML]="'<b>' + loc.name + ' (' + loc.iataCode + ')</b>'"> </p>
+                            <span>{{loc.address.cityName}}</span><span>-{{loc.address.countryName |
+                                lowercase}}</span>
+                        </div>
+                        <hr>
+                    </ng-template>
+                    <div class="help-block" *ngIf="!picked1">
+                        <div class="text-danger">please select origin city</div>
+                    </div>
+
+                </div>
+                </div>
+  
+  
+  
+  
+  
+                <div class="form-group">
+                  <mat-form-field appearance="outline" class="example-form-field2">
+                    <mat-label style="font-size:15px;">Check-in</mat-label>
+                    <input matInput [matDatepicker]="datepicker1" [min]="todaydate" [(ngModel)]="startDate" #start=ngModel
+                      name="start" [ngClass]="{'is-invalid': f.submitted && start.invalid}" (dateChange)="next($event)"
+                      required>
+                    <mat-datepicker-toggle matSuffix [for]="datepicker1">
+                    </mat-datepicker-toggle>
+  
+                    <mat-datepicker #datepicker1>
+                      <mat-datepicker-actions>
+                        <button mat-button matDatepickerCancel>Cancel</button>
+                        <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                      </mat-datepicker-actions>
+                    </mat-datepicker>
+                    <div *ngIf="f.submitted && start.invalid">
+                      <div class="text-danger" *ngIf="start.errors?.required">start date is
+                        required</div>
+                    </div>
+                  </mat-form-field>
+                </div>
+  
+  
+                <div class="form-group">
+                  <mat-form-field appearance="outline" class="example-form-field2">
+                    <mat-label style="font-size:15px;">Check-out</mat-label>
+                    <input matInput [matDatepicker]="datepicker2" [min]="minCheckout" [(ngModel)]="endDate" #end=ngModel
+                      name="end" [ngClass]="{'is-invalid': f.submitted && end.invalid}" required>
+                    <mat-datepicker-toggle matSuffix [for]="datepicker2">
+                    </mat-datepicker-toggle>
+  
+                    <mat-datepicker #datepicker2>
+                      <mat-datepicker-actions>
+                        <button mat-button matDatepickerCancel>Cancel</button>
+                        <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                      </mat-datepicker-actions>
+                    </mat-datepicker>
+                    <div *ngIf="f.submitted && end.invalid">
+                      <div class="text-danger" *ngIf="end.errors?.required">End date is
+                        required</div>
+                    </div>
+                  </mat-form-field>
+                </div>
+  
+  
+                <div class="form-group">
+                  <button class="btn submit-btn" type="submit">
+                    Recherche
+                  </button>
+                </div>
+  
+  
+  
+  
+  
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row " style="margin-left :  80px !important;">
+        <div class="col-lg-3">
+          <div class="sidebar">
+    
+            <h3>Filtrer selon</h3><br>
+            <h4>Escale</h4>
+    
+            <ul>
+    
+    
+              <li>
+                <mat-checkbox class="example-margin">1 escale</mat-checkbox>
+              </li>
+              <li>
+                <mat-checkbox class="example-margin">2 escales</mat-checkbox>
+              </li>
+            
+    
+            </ul>
+            <hr>
+            <h4>Companie Aerienne </h4>
+    
+            <ul>
+    
+              <li>
+                <mat-checkbox [formControl]="star5" (change)="filterStar($event, '5')" class="example-margin">Air France
+                </mat-checkbox>
+              </li>
+              <li>
+                <mat-checkbox [formControl]="star4" (change)="filterStar($event, '4')" class="example-margin">Sky express
+                </mat-checkbox>
+              </li>
+              <li>
+                <mat-checkbox [formControl]="star3" (change)="filterStar($event, '3')" class="example-margin">Aegen
+                </mat-checkbox>
+              </li>
+             
+            </ul>
+    
+            <hr>
+            <h4>Votre Budget</h4>
+            <ul style="list-style: none;">
+                <li>
+                    <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"
+                      (userChangeEnd)="changeRnage($event)" style="width: 200px;"></ngx-slider>
+                  </li>
+                <li > <a *ngIf="isReset" class="btn btn-primary btn-sm" style="margin-top: -5px;" (click)="reset()">
+                    reset
+                  </a>
+      
+                </li>
+
+               
+              </ul>
+            <hr>
+            <h4>Heure de depart</h4>
+    
+            <ul>
+              <li>
+                <mat-checkbox class="example-margin">petit matin</mat-checkbox>
+              </li>
+              <li>
+                <mat-checkbox class="example-margin">matin </mat-checkbox>
+              </li>
+              <li>
+                <mat-checkbox class="example-margin">soir</mat-checkbox>
+              </li>
+    
+            </ul>
+            <hr>
+            <h4>Heure d'arrivé</h4>
+    
+            <ul>
+              <li>
+                <mat-checkbox class="example-margin">petit matin </mat-checkbox>
+              </li>
+              <li>
+                <mat-checkbox class="example-margin">matin</mat-checkbox>
+              </li>
+              <li>
+                <mat-checkbox class="example-margin">soir</mat-checkbox>
+              </li>
+              
+    
+            </ul>
+            <hr>
+    
+    
+          </div>
+        </div>
+    
+        <div class="col-md-5" style="margin-top: -10px;">
+          <h1 *ngIf="hotelSearchResponse.hotelOffers !== null && hotelSearchResponse.hotelOffers.length !== 0">
+            {{hotelSearchResponse.hotelOffers.length}} établissements Trouvées
+          </h1>
+          <hr>
+          <div *ngFor="let offer of hotelSearchResponse.hotelOffers" class="card">
+            <ng-container *ngIf="offer.hotel?.media !== null; else elseTemplate">
+              <img src="{{offer.hotel!.media[0]}}" class="card-img-top embed-responsive-item">
+            </ng-container>
+            <ng-template #elseTemplate>
+              <img src="assets/img/noimage.png" class="card-img-top embed-responsive-item">
+            </ng-template>
+    
+    
+            <div class="card-body">
+              <h3 class="card-title">{{offer.hotel?.nom}} <br>
+                <h3 *ngIf="offer.hotel">{{star.repeat(offer.hotel.nbr_etoile || 0)}}</h3>
+              </h3>
+    
+              <p class="card-text"><strong>{{offer.offers[0].roomQuantity}} chambre {{offer.offers[0].rooms[0].bedType}}
+                  <span *ngIf="offer.offers[0].rooms[0].bedType !== null">bed</span> </strong> </p>
+              <h6 class="h6"><strong>Annulation GRATUITE • Aucun prépaiement requis</strong> </h6>
+    
+              <div class="float-right " style="margin-top: -50px;">
+                <div class="base-price float-right" *ngIf="offer.offers[0]!.base !== 0">
+                  <b class="float-right">{{(offer.offers[0]!.base || 0) |
+                    euro: offer.offers[0].currency : hotelSearchResponse.dictionarie | currency:'EUR':'symbol':'1.0'}} </b>
+                </div>
+                <br>
+                <div class="sub-price float-right text-right price-margin" *ngIf="offer.offers[0]!.base !== 0">per night
+                </div>
+                <br>
+                <div class="total-price float-right price-margin" style="margin-top: -7px !important;"> <b class="">
+                    {{(offer.offers[0]!.total || 0) |
+                    euro: offer.offers[0].currency : hotelSearchResponse.dictionarie : hotelSearchResponse.commission |
+                    currency:'EUR':'symbol':'1.0'}} </b> </div>
+                <br>
+                <div class="sub-price float-right price-margin" style="margin-top: -15px !important;">total include taxes
+                </div>
+                <br>
+                <button class="btn btn-sm btn-primary butt price-margin" (click)="detail(offer)">Voir details</button><br>
+              </div>
+    
+    
+            </div>
+          </div>
+          <div *ngIf="!fetching && (hotelSearchResponse.hotelOffers === null || hotelSearchResponse.hotelOffers.length === 0)" class="lead text-center"
+            style="font-weight: normal; margin-top: 50px;">
+            pas de resultats pour les filtre donnés
+          </div>
+          <button id="loadMore" 
+                  class="btn btn-primary" 
+                  (click)="loadMore()"
+                  [hidden]="hotelSearchResponse.hotelOffers === null || hotelSearchResponse.hotelOffers.length === 0">
+                  Afficher plus
+          </button>
+          <div *ngIf="fetching" class="sk-fading-circle">
+            <div class="sk-circle1 sk-circle"></div>
+            <div class="sk-circle2 sk-circle"></div>
+            <div class="sk-circle3 sk-circle"></div>
+            <div class="sk-circle4 sk-circle"></div>
+            <div class="sk-circle5 sk-circle"></div>
+            <div class="sk-circle6 sk-circle"></div>
+            <div class="sk-circle7 sk-circle"></div>
+            <div class="sk-circle8 sk-circle"></div>
+            <div class="sk-circle9 sk-circle"></div>
+            <div class="sk-circle10 sk-circle"></div>
+            <div class="sk-circle11 sk-circle"></div>
+            <div class="sk-circle12 sk-circle"></div>
+          </div>
+        </div>
+      
+      </div>
+
+    </div>

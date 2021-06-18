@@ -1,0 +1,82 @@
+<div class="section">
+    <div id="main">
+        <div class="sticky-top">
+            <nav class="navbar navbar-light ">
+                <img routerLink="/home" class="navbar-brand logo click" src="assets/img/logo-air-travel2.png">
+                <ng-container *ngIf="!authenticated; else elseTemplate">
+                    <div class="navbar-nav ml-auto ">
+                        <a routerLink="/sign-in" class="nav-item nav-link">Sign-in</a>
+                    </div>
+                    <div class="navbar-nav">
+                        <a routerLink="/sign-up" class="nav-item nav-link">Sign-up</a>
+                    </div>
+                </ng-container>
+                <ng-template #elseTemplate>
+                    <div *ngIf="user.name" class="navbar-nav ml-auto " >
+                        <p class="user-name-static">{{user.name + " " + user.lastname }}</p>
+                    </div>
+                    <div class="navbar-nav">
+                        <div >
+                            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" class="avatar">
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item>
+                                    <mat-icon>person</mat-icon>
+                                    <span>profile</span>
+                                </button>                                        
+                                <button mat-menu-item>
+                                    <mat-icon>notifications</mat-icon>
+                                    <span>notifications</span>
+                                </button>
+                                <button mat-menu-item (click)="logout()">
+                                    <mat-icon>logout</mat-icon>
+                                    <span>logout</span>
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </div>
+                </ng-template>
+                <!--<button class="openbtn" (click)="openNav()"><span><i class="fa fa-bars"></i></span></button>-->
+            </nav>
+        </div>
+
+        <div id="mySidebar" class="sidebar" (mouseover)="toggleSidebar()" (mouseout)="toggleSidebar()">
+        
+
+            <!--<a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>-->
+            <br>
+            <br>
+
+            <a routerLink="/hotels"><i class="material-icons">hotel</i><span class="icon-text">Hotel</span></a><br>
+            <a routerLink="/flights"><i class="material-icons">flight</i><span class="icon-text">Vols</span></a><br>
+            <a routerLink="/cars"><i class="material-icons">time_to_leave</i><span class="icon-text">Location</span></a><br>
+         
+            
+            <a href="#"><span><i class="material-icons">card_giftcard</i><span class="icon-text">nos
+                        packs</span></span></a><br>
+                      
+            <!-- <div class="mobile">
+            <hr>
+            <a href="#"><span><i class="material-icons">login</i><span class="icon-text"></span>Connexion</span></a>
+            <a href="#"><span><i class="material-icons">person_add</i><span class="icon-text"></span>S'inscrire</span></a>
+    
+        </div>-->
+        </div>
+        <div class="section-center">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-3">
+                        <div class="booking-cta">
+                            <p class="display-4"> Le plus beau voyage,<br> c'est celui qu’on a pas encore fait </p>
+                        </div>
+
+                        <a type="button" class="btn" style="margin-left: -19.8rem;">About Us</a>
+                        <a routerLink="/hotels" type="button" class="btn" style="margin-left: -12.8rem;">Book now</a>
+
+                    </div>
+                </div>
+            </div>
+            -
+        </div>
+
+    </div>

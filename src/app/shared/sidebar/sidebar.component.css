@@ -1,29 +1,29 @@
 @media screen and (min-width: 420px) {
   .sidebar {
-    height: 100%;
+    height: 58%;
     width: 50px;
-    position: fixed;
+    position: absolute;
     z-index: 1;
     left: 0;
     overflow-x: hidden;
     padding-top: 60px;
     white-space: nowrap;
     transition: 0.5s;
-    
+    border-right : 1px solid rgb(196, 190, 190);
+    background-color : white ;  
+    z-index: 2;
   }
 
   .sidebar a {
     padding: 0px 0px 0px 30px;
     text-decoration: none;
     font-size: 17px;
-    color: whitesmoke;
+    color: gray;
     display: block;
     margin-left: -4px;
   }
 
-  .sidebar a:hover {
-    color:lightblue;
-  }
+  
 
   .sidebar .closebtn {
     position: absolute;
@@ -36,20 +36,20 @@
   .material-icons,
   .icon-text {
     vertical-align: middle;
-    color:whitesmoke;
+    color: gray;
   }
 
   .material-icons,
   .icon-text:hover {
-color:rgb(2, 117, 216);
+    color: chocolate;
   }
   .material-icons {
     padding-bottom: 3px;
     margin-right: 25px;
     margin-left: -15px;
-    color:whitesmoke;
+    color:rgb(163, 153, 153);
   }
-.sidebar .closebtn {
+  .sidebar .closebtn {
     position: absolute;
     top: 0;
     right: 50px;
@@ -58,11 +58,9 @@ color:rgb(2, 117, 216);
     visibility: hidden;
   }
 
-  
-.mobile  {
+  .mobile {
     visibility: hidden;
   }
-
 }
 
 @media screen and (max-width: 420px) {
@@ -80,8 +78,7 @@ color:rgb(2, 117, 216);
     transition: 0.5s;
   }
 
-
-   .sidebar .closebtn {
+  .sidebar .closebtn {
     position: absolute;
     top: -8px;
     right: 5px;
@@ -89,8 +86,7 @@ color:rgb(2, 117, 216);
     margin-left: 50px;
     color: white;
     background-color: transparent;
-        font-family: initial;
-
+    font-family: initial;
   }
 
   .material-icons,
@@ -112,8 +108,6 @@ color:rgb(2, 117, 216);
   }
 
   .sidebar a:hover {
-    color: orange;
+    color: chocolate;
   }
-  
-
 }

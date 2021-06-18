@@ -1,0 +1,77 @@
+
+
+   <div class="fixed">
+    <nav class="navbar">
+        <img routerLink="/home" class="navbar-brand logo click" src="/assets/img/logo-air-travel2.png">
+        <div class="navbar-nav ml-auto ">
+            <a routerLink="/sign-in" class="nav-item nav-link">Sign-in</a>
+        </div>
+        <div class="navbar-nav" style="margin-right: -10px;">
+            <a routerLink="/sign-up" class="nav-item nav-link">Sign-up</a>
+        </div>
+
+        <!--<button class="openbtn" (click)="openNav()"><span><i class="fa fa-bars"></i></span></button>-->
+    </nav>
+    </div>
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+
+        <!-- Icon -->
+         <div class="fadeIn first">
+            <span class="material-icons icon-user">
+                account_circle
+                </span>        </div> 
+
+        <!-- Login Form -->
+         <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && submitForm()">
+             <div class="alert alert-danger auth-alert" *ngIf="authError">
+                email ou mot de passe non valid!
+             </div>
+            <input type="text" 
+                   id="login" 
+                   class="fadeIn second" 
+                   name="login" 
+                   [(ngModel)]="authRequest.email" 
+                   #login=ngModel
+                   [ngClass]="{'is-invalid': f.submitted && login.invalid}" 
+                   required
+                   email
+                   placeholder="login">
+            <div *ngIf="f.submitted && login.invalid">
+                <div class="text-danger" *ngIf="login.errors?.required">
+                    veuillez entrer votre nom d'utilisateur
+                </div>
+            </div>
+            <div *ngIf="f.submitted && login.invalid">
+                <div class="text-danger" *ngIf="login.errors?.email">
+                    veuillez entrer un email valide
+                </div>
+            </div>
+            <input type="password" 
+                   id="password" 
+                   class="fadeIn third" 
+                   name="psw" 
+                   [(ngModel)]="authRequest.password" 
+                   #pass=ngModel
+                   [ngClass]="{'is-invalid': f.submitted && pass.invalid}" 
+                   required                                   
+                   placeholder="password">
+            <div *ngIf="f.submitted && pass.invalid">
+                <div class="text-danger" *ngIf="pass.errors?.required">
+                    veuillez entrer le mot de passe
+                </div>
+            </div>
+            <input type="submit" class="fadeIn fourth" value="Log In">
+        </form> 
+
+        <!-- Remind Passowrd -->
+     <div id="formFooter">
+            <a class="underlineHover" href="#">Forgot Password?</a>
+        </div>
+
+    </div>
+</div>
+
+
+

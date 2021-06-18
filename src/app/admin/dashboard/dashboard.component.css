@@ -1,0 +1,82 @@
+.main {
+    background-color: #1a2035;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .logo {
+    display: inline-block;
+    width: 70px;
+    height: 60px;
+    margin-left: -10px;
+    margin-top: -12px;
+    margin-bottom: -12px;
+  }
+  
+  .navbar-nav a {
+    color: #dbe8f5;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .navbar-nav a:hover {
+    color: chocolate;
+  }
+  
+  .navbar {
+    /*border-bottom: 2px solid rgb(230, 148, 90);*/
+    background-color: #1a2035;
+    -webkit-box-shadow: 0 16px 38px -12px rgb(0 0 0 / 56%),
+      0 4px 25px 0px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(0 0 0 / 20%);
+    box-shadow: 0 16px 38px -12px rgb(0 0 0 / 56%),
+      0 4px 25px 0px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(0 0 0 / 20%);
+  }
+  
+  /*sidebar*/
+  .sidebar {
+    margin: 0;
+    padding: 0;
+    width: 300px;
+    background-color: #1a213a;
+    position: fixed;
+    height: 100%;
+    overflow: none;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 16px 38px -12px rgb(0 0 0 / 56%),
+      0 4px 25px 0px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(0 0 0 / 20%);
+    box-shadow: 0 16px 38px -12px rgb(0 0 0 / 56%),
+      0 4px 25px 0px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(0 0 0 / 20%);
+  }
+  
+
+  
+
+
+  /*sidebar*/
+  
+
+
+   /* Style the buttons that are used to open and close the accordion panel */
+.accordion button {
+  background-color: transparent;
+  color: rgb(235, 208, 175);
+  cursor: pointer;
+  padding: 12px;
+  width: 75%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+ margin-left: 25px;
+ font-weight: 500;
+ font-size: 1.4em;
+	font-style: italic;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+
+

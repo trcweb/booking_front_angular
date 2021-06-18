@@ -1,3 +1,4 @@
+import { HotelBookingRequest } from './../models/HotelBookingRequest';
 import { Observable } from 'rxjs';
 import { HotelSearchResponse } from './../models/HotelSearchResponse';
 import { NextPage } from './../models/NextPage';
@@ -35,5 +36,17 @@ export class HotelsService {
                                                 `${this.apiUrl}/${this.api}/searchOffers/${cityCode}/${checkInDate}/${checkOutDate}/${rooms}`,
                                                   nextPage,
                                                   {params});
+  }
+
+  hotelOfferSearch(hotelId: string, checkInDate: string, checkOutDate: string, rooms: string): Observable<HotelSearchResponse> {
+    return this.http.get<HotelSearchResponse>(`${this.apiUrl}/${this.api}/hotelOfferSearch/${hotelId}/${checkInDate}/${checkOutDate}/${rooms}`);
+  }
+
+  hotelOfferAvailibility(offerId: string): Observable<HotelSearchResponse> {
+    return this.http.get<HotelSearchResponse>(`${this.apiUrl}/${this.api}/hotelOfferAvailibility/${offerId}`);
+  }
+
+  bookOffer(bookingRequest: HotelBookingRequest): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/${this.api}/hotel-booking`, bookingRequest);
   }
 }

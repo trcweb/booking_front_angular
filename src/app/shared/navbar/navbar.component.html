@@ -1,12 +1,41 @@
-<div class="sticky-top"> 
-    <nav class="navbar navbar-light bg-primary ">
-        <img class="navbar-brand logo" src="assets/img/logo-air-travel.jpg">
-        <div class="navbar-nav ml-auto ">
-            <a href="#" class="nav-item nav-link">sign-in</a>
-        </div>
-        <div class="navbar-nav" style="margin-right: -45px;">
-            <a href="#" class="nav-item nav-link">sign-up</a>
-        </div>
-        <button class="openbtn" (click)="openNav()"><span><i class="fa fa-bars"></i></span></button>
+<div class="sticky-top">
+    <nav class="navbar navbar-light bg-white">
+        <img routerLink="/home" class="navbar-brand logo click" src="/assets/img/logo-air-travel2.png">
+        <ng-container *ngIf="!authenticated; else elseTemplate">
+            <div class="navbar-nav ml-auto ">
+                <a routerLink="/sign-in" class="nav-item nav-link">Sign-in</a>
+            </div>
+            <div class="navbar-nav">
+                <a routerLink="/sign-up" class="nav-item nav-link">Sign-up</a>
+            </div>
+        </ng-container>
+        <ng-template #elseTemplate>
+            <div *ngIf="user.name" class="navbar-nav ml-auto " >
+                <p class="user-name">{{user.name + " " + user.lastname }}</p>
+            </div>
+            <div class="navbar-nav ">
+                <div >
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" class="avatar">
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>
+                            <mat-icon>person</mat-icon>
+                            <span>profile</span>
+                        </button>                                        
+                        <button mat-menu-item>
+                            <mat-icon>notifications</mat-icon>
+                            <span>notifications</span>
+                        </button>
+                        <button mat-menu-item (click)="logout()">
+                            <mat-icon>logout</mat-icon>
+                            <span>logout</span>
+                        </button>
+                    </mat-menu>
+                </div>
+            </div>
+        </ng-template>
+
+
+        <!-- <button class="openbtn" (click)="openNav()"><span><i class="fa fa-bars"></i></span></button> -->
     </nav>
 </div>

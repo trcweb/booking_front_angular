@@ -7,6 +7,9 @@ import {debounceTime, distinctUntilChanged, filter, finalize, map, startWith, sw
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import * as moment from 'moment';
+import { AuthService } from 'src/app/service/auth.service';
+import { StorageKeys } from 'src/app/models/StorageKeys';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-acceuil',
@@ -15,6 +18,7 @@ import * as moment from 'moment';
 })
 export class AcceuilComponent implements OnInit {
 
+  mini = true;
   isReadonly = true;
   key = 'name';
   listechambre: Chambre[] = [new Chambre(1, 0)];
@@ -28,8 +32,11 @@ export class AcceuilComponent implements OnInit {
   endDate = moment();
   todaydate = moment();
   minCheckout: moment.Moment;
+  authenticated = false;
+  user: User = new User();
 
   constructor(private locationService: LocationService,
+              private authService: AuthService,
               private router: Router,
               private activeRoute: ActivatedRoute) {
     this.endDate = moment();
@@ -38,6 +45,13 @@ export class AcceuilComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // auth state
+    const user = this.authService.getFromStorage(StorageKeys.USER);
+    if (user !== null) {
+      this.authenticated = true;
+      this.user = JSON.parse(user);
+    }
+    // search field
     this.search.valueChanges.pipe(
       debounceTime(500),
       filter(value => !(value instanceof Object) && value !== ''),
@@ -155,5 +169,32 @@ export class AcceuilComponent implements OnInit {
     this.minCheckout = moment(date!.valueOf());
     this.minCheckout.add(1, 'days');
     console.log(this.minCheckout);
+  }
+
+  toggleSidebar(): void {
+    if (this.mini) {
+      console.log('opening sidebar');
+      const mysidebar = document.getElementById('mySidebar') as HTMLElement;
+
+      mysidebar.setAttribute('style', 'width:160px');
+      this.mini = false;
+    } else {
+      console.log('closing sidebar');
+      const mysidebar = document.getElementById('mySidebar') as HTMLElement;
+      mysidebar.setAttribute('style', 'width:50px');
+      this.mini = true;
+    }
+  }
+
+  closeNav(): void {
+    const element = document.getElementById('mySidebar') as HTMLElement;
+    element.setAttribute('style', 'width:0px');
+    const elem = document.getElementById('main') as HTMLElement;
+    elem.setAttribute('style', 'marginLeft:0px');
+
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }

@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,6 +17,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { EuroPipe } from './directives/euro.pipe';
+import { CreditCardDirectivesModule } from 'angular-cc-library';
+import { MatExpansionModule } from '@angular/material/expansion';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatIconModule} from '@angular/material/icon';
 
 export const MY_FORMATS = {
     parse: {
@@ -30,7 +36,7 @@ export const MY_FORMATS = {
 };
 
 @NgModule({
-  declarations: [SidebarComponent, NavbarComponent, SumPipe],
+  declarations: [SidebarComponent, NavbarComponent, SumPipe, EuroPipe],
   imports: [
     CommonModule,
     AutocompleteLibModule,
@@ -44,7 +50,12 @@ export const MY_FORMATS = {
     MatCheckboxModule,
     MatSelectModule,
     MatCardModule,
-    NgxSliderModule
+    NgxSliderModule,
+    RouterModule,
+    CreditCardDirectivesModule,
+    MatExpansionModule,
+    MatMenuModule,
+    MatIconModule
   ],
   exports: [
     SidebarComponent,
@@ -61,7 +72,12 @@ export const MY_FORMATS = {
     MatCheckboxModule,
     MatSelectModule,
     MatCardModule,
-    NgxSliderModule
+    NgxSliderModule,
+    EuroPipe,
+    CreditCardDirectivesModule,
+    MatExpansionModule,
+    MatMenuModule,
+    MatIconModule
   ],
    providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

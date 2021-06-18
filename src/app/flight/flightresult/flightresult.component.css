@@ -1,0 +1,133 @@
+.section {
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    height: 40vh;
+  
+  
+  }
+
+  .searchcard2 {
+    width: 90rem !important;
+    height: 9.2rem !important;
+    margin-top: 1rem;
+    border-radius: 7px;
+    box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.1);
+    background-color: transparent;
+    background: rgba(255, 255, 255, 0.55);
+    -webkit-transition: 0.2s background;
+    transition: 0.2s background;
+  }
+
+  .modal-icon {
+    vertical-align: middle;
+    float: right;
+    padding-right: 8px;
+    color: black;
+    height: 2rem;
+  }
+   .submit-btn{
+   color : white ;
+   border-radius: 4px;
+   background-color : chocolate ; 
+   margin-left: 27rem;
+   width: 10rem ;
+   height: 35px;
+   margin-top: -12px;
+  }
+
+  ::ng-deep.example-form-field2 {
+   margin-top: 7px;
+    margin-left: 10px;
+  }
+
+  :host::ng-deep.mat-form-field-flex {
+    height: 62px;
+    width: 12rem !important;
+  }
+  
+  ::ng-deep.mat-form-field-infix {
+    margin-top: 10px !important;
+  }
+
+  .form-label {
+    position: absolute;
+    z-index: 1;
+    margin-top: -28px;
+    margin-left: 20px;
+    color: chocolate;
+  }
+
+
+
+  ::ng-deep.autocomplete-container .input-container input {
+    height: 60px !important;
+    box-shadow: none !important;
+    background-color: white !important;
+    border: 1px solid rgb(230, 222, 222) !important;
+    border-radius: 4px;
+  }
+
+  ::ng-deep.mat-form-field-outline {
+    background-color: white;
+    border-radius: 4px;
+   
+  }
+
+  ::ng-deep.mat-form-field-underline {
+    /*change color of underline*/
+    background-color: #0275d8 !important;
+  }
+
+  ::ng-deep.mat-form-field-ripple {
+    /*change color of underline when focused*/
+    background-color: #0275d8 !important;
+  }
+
+  ::ng-deep .mat-form-field-label {
+    /*change color of label*/
+    color: chocolate  !important;
+  }
+
+  mat-datepicker-toggle {
+    color: black !important;
+  }
+
+  ::ng-deep.ng-invalid.ng-touched,
+  .ng-invalid.ng-dirty {
+    border-bottom: transparent;
+  }
+
+  .ng-autocomplete {
+    width: 20.4rem !important;
+    margin-right: 10px !important;
+    height: 25px;
+    padding: 20px 0px 0px 10px !important;
+    margin-top: -8rem;
+  }
+  #myBtn {
+    height: 60px;
+    font-size: 14px;
+    margin-top: -13px;
+    border: 1px solid rgb(230, 222, 222);
+  }
+
+  
+  .iconstyle {
+    margin-left: 13px;
+    display: inline;
+    margin-top: -3px;
+  }
+  .icon-right {
+    vertical-align: middle;
+    float: right;
+    padding-right: 8px;
+    color: black;
+    height: 2rem;
+  }
+
+  .label {
+    float: left;
+    font-size: 13px;
+    color: chocolate;
+  }

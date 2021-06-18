@@ -7,50 +7,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
+  mini = true;
+
   constructor() { }
 
   ngOnInit(): void {
   }
- mini = true;
 
+  // tslint:disable-next-line: typedef
   toggleSidebar() {
-    
     if (this.mini) {
-      console.log("opening sidebar");
-          
-      let mysidebar = document.getElementById("mySidebar") as HTMLElement;
-        
-      mysidebar.setAttribute("style", "width:170px");
-      let main = document.getElementById("main") as HTMLElement;
-      main.setAttribute("style", "marginLeft:170px");
-          
+      console.log('opening sidebar');
+      const mysidebar = document.getElementById('mySidebar') as HTMLElement;
+      mysidebar.setAttribute('style', 'width:150px; box-shadow: 11px -8px 14px 2px rgba(0, 0, 0, 0.3);');
       this.mini = false;
     } else {
-      console.log("closing sidebar");
-      let mysidebar = document.getElementById("mySidebar") as HTMLElement;
-      mysidebar.setAttribute("style", "width:50px");
-      let main = document.getElementById("main") as HTMLElement;
-      main.setAttribute("style", "marginLeft:50px");
+      console.log('closing sidebar');
+      const mysidebar = document.getElementById('mySidebar') as HTMLElement;
+      mysidebar.setAttribute('style', 'width:50px');
       this.mini = true;
     }
-      
   }
 
-
-
-
-    
-  
-   
-  
-
-  
+  // tslint:disable-next-line: typedef
   closeNav() {
-    let element = document.getElementById("mySidebar") as HTMLElement;
-    element.setAttribute("style", "width:0px");
-    let elem = document.getElementById("main") as HTMLElement;
-    elem.setAttribute("style", "marginLeft:0px");
-
-     
+    const element = document.getElementById('mySidebar') as HTMLElement;
+    element.setAttribute('style', 'width:0px');
+    const elem = document.getElementById('main') as HTMLElement;
+    elem.setAttribute('style', 'marginLeft:0px');
   }
 }

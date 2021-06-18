@@ -1,0 +1,98 @@
+.section {
+    background-size: cover;
+    background-position: center;
+    background-image: url("/../assets/img/home2.png");
+    position: relative;
+    height: 100vh;
+  }
+  
+  .section::before {
+      content: "";
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      background-color: rgba(0,0,0,0.4);
+  }
+  
+  .sidebar {
+    height: 100%;
+    width: 50px;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 60px;
+    white-space: nowrap;
+    transition: 0.5s;
+    border-right: 1px solid #dbe8f5;
+    
+  }
+  
+  .sidebar a {
+    padding: 0px 0px 0px 30px;
+    text-decoration: none;
+    font-size: 17px;
+    color: whitesmoke;
+    display: block;
+    margin-left: -4px;
+  }
+  
+  .sidebar a:hover {
+    color: lightblue;
+  }
+  
+  .icon-text {
+    vertical-align: super;
+    color: #dbe8f5;
+  }
+  
+  .material-icons,
+  .icon-text:hover {
+    color: chocolate;
+  }
+  .material-icons {
+    padding-bottom: 3px;
+    margin-right: 25px;
+    margin-left: -15px;
+    color: #dbe8f5;
+  }
+  .logo {
+    display: inline-block;
+    width: 70px;
+    height: 60px;
+    margin-left: -10px;
+    margin-top: -12px;
+    margin-bottom: -12px;
+  }
+  
+  .navbar-nav a {
+    color: #dbe8f5;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: 500;    
+  }
+  
+  .navbar {
+    border-bottom: 1px solid #dbe8f5;
+  }
+  .booking-cta {
+    margin-top: 10rem;
+    margin-left: -20rem;
+  }
+  .booking-cta p{
+    color :#dbe8f5 ;
+    font-weight: 400;
+    
+  }
+  .btn{
+    border: 3px solid chocolate;
+    color : chocolate ;
+    float: left;
+    
+  }
+
+  .navbar-nav a:hover {
+    color: chocolate;    
+  }

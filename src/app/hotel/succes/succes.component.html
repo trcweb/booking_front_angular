@@ -1,0 +1,22 @@
+<app-navbar></app-navbar>
+<app-sidebar></app-sidebar>
+<div class="container">
+    <br>
+    <div class="row">
+        <div class="col-md-8 alert alert-success">
+            <mat-icon style="vertical-align: middle;">check_circle_round</mat-icon>
+            reservation validé avec succès, consultez vos email pour verifier les info relatif à la reservation            
+        </div>        
+    </div>
+    <div class="row flex-column">
+        <h4><strong>nom: </strong> {{guest.name!.lastName}}</h4>
+        <h4><strong>prénom</strong> {{guest.name!.firstName}}</h4>
+        <h4><strong>email</strong> {{guest.contact!.email}}</h4>
+        <h4><strong>téléphone</strong> {{guest.contact!.phone}}</h4>
+        <h4><strong></strong> {{booking.type}}</h4>
+        <h4><strong></strong> {{booking.id}}</h4>
+        <h4><strong></strong> {{booking.providerConfirmationId}}</h4>
+        <h4><strong></strong> {{booking.associatedRecords[0].reference}}</h4>
+        <h4><strong></strong> {{booking.associatedRecords[0].originSystemCode}}</h4>
+    </div>
+</div>

@@ -1,3 +1,5 @@
+import { SuccesComponent } from './succes/succes.component';
+import { ReservationComponent } from './reservation/reservation.component';
 import { AcceuilComponent } from './acceuil/acceuil.component';
 import { DetailoffreComponent } from './detailoffre/detailoffre.component';
 import { HotelComponent } from './hotel/hotel.component';
@@ -14,7 +16,9 @@ const routes: Routes = [
     children: [
       { path: '', component: AcceuilComponent },
       { path: 'searchresult', component: OffreComponent },
-      { path: 'detailresult/:id', component: DetailoffreComponent }
+      { path: 'detailresult/:id', component: DetailoffreComponent },
+      { path: 'reserver/:id', component: ReservationComponent },
+      { path: 'booked', component: SuccesComponent }
     ]
   }
 ];

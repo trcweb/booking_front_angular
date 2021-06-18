@@ -1,0 +1,98 @@
+.row-color {
+    background-color: rgb(255, 255, 255);
+    margin: auto;
+    margin-bottom: 2%;
+    border-radius: 4px;
+  -webkit-box-shadow: 0px 0px 35px 6px rgba(221,221,221,0.65); 
+  box-shadow: 0px 0px 35px 6px rgba(221,221,221,0.65);
+  }
+  .main {
+    background-color: rgb(247, 247, 248);
+  }
+  
+  h2 {
+    margin-top: 12px;
+  }
+  
+  .row-icon {
+    vertical-align: middle;
+    margin-right: 5px;
+    margin-left: 5px;
+    border-radius: 3px;
+  }
+  
+  .small-style {
+    margin-left: 5px;
+    font-size: 13px;
+    font-weight: 400;
+  }
+  
+  .left {
+    margin-left: 35px;
+  }
+  
+  .paiement-form {
+    margin-left: 48px;
+    margin-top: 25px;
+  }
+  
+  .btn-reservation {
+    color: white;
+    background-color: chocolate;
+    margin-bottom: 10px;
+    margin-top: 12px;
+  }
+  
+  .bottom-left {
+    position: absolute;
+    bottom: -15px;
+    left: 15px;
+    color: rgb(250, 250, 250);
+    letter-spacing: 1px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  
+  .card-img-top {
+    display: inline-block;
+  }
+  .card-img-top::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 5%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: inline-block;
+    height: auto;
+    width: 90%;
+    margin: 1%;
+    border-radius: 6px;
+  }
+
+  .card::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: rgba(0,0,0,0.4);
+  }
+
+  .credit-logo {
+    max-width:50px;
+    max-height:20px;
+    width: auto;
+    height: auto;
+    margin-right: 5px;
+  }
+
+  .credit-logo-under {
+    max-width:40px;
+    max-height:20px;
+    width: auto;
+    height: auto;
+    margin-top: 5px;
+  }

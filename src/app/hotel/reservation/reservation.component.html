@@ -1,0 +1,346 @@
+<app-navbar></app-navbar>
+
+<div class="main">
+    <br>
+    <br>
+    <div class="container">
+
+        <div class="row ">
+            <!--col-left-->
+            <div class="col-md-9">
+                <div class="row row-color">
+                    <a routerLink="">
+                        <h2 style="color: chocolate;"> <span class="material-icons row-icon">
+                                lock
+                            </span>connectez vous pour faciliter reservation </h2>
+                    </a>
+                </div>
+                <form #f="ngForm" (ngSubmit)="f.form.valid && submit()">
+                    <!--chamber-row-->
+                    <div class="row row-color">
+                        <div class="col-md-12">
+                            <h2>                                                               
+                                <span class="material-icons row-icon">
+                                    king_bed
+                                </span>
+                                 chambre
+                                <ng-container *ngIf="hotelSearchResponse as htl">
+                                    {{htl.hotelOffers[0].offers[0].roomQuantity}} : <small> {{htl.hotelOffers[0].offers[0].guests}} adultes , lit: {{htl.hotelOffers[0].offers[0].rooms[0].bedType}}, non fumeurs</small>
+                                </ng-container>
+                                <br>
+                                <small class=" text-success left" style="font-size: 13px;">
+                                    <span class="material-icons" style="font-size: 17px;vertical-align: middle;">
+                                        done
+                                    </span>Petit-déjeuner non compris</small> <small class=" text-success small-style">
+                                    <span class="material-icons" style="font-size: 17px;vertical-align: middle;">
+                                        done
+                                    </span>Accès Wi-Fi à Internet gratuit </small>
+                                <small class=" text-success small-style"> <span class="material-icons"
+                                        style="font-size: 17px;vertical-align: middle;">
+                                        done
+                                    </span>Parking gratuit</small>
+                            </h2>
+                        </div>
+                        <div class="col-md-9">
+                            <h4 class="left" style="font-weight: 500;"> Personne a contacter : </h4>
+                        </div>
+
+                        <div class="col-md-4 left">
+
+                            <div class="form-group">
+                                <label style="font-weight: 500;">Nom :</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       [(ngModel)]="client"
+                                       #nom=ngModel
+                                       name="nom"
+                                       [ngClass]="{'is-invalid': f.submitted && nom.invalid}"
+                                       required>
+                                <div *ngIf="f.submitted && nom.invalid">
+                                    <div class="text-danger" >
+                                        veuillez indiquer le Nom 
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-4 left">
+                            <div class="form-group">
+                                <label style="font-weight: 500;">Prénom :</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       #prenom=ngModel
+                                       [(ngModel)]="lastName"
+                                       name="prenom"
+                                       [ngClass]="{'is-invalid': f.submitted && prenom.invalid}"
+                                       required>
+                                <div *ngIf="f.submitted && prenom.invalid">
+                                    <div class="text-danger">
+                                        veuillez indiquer le Prénom 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 left">
+                            <div class="form-group">
+                                <label style="font-weight: 500;">Email :</label>
+                                <input type="email" 
+                                       class="form-control" 
+                                       #mail=ngModel
+                                       [(ngModel)]="email"
+                                       name="email"
+                                       [ngClass]="{'is-invalid': f.submitted && mail.invalid}"
+                                       required>
+                                <div *ngIf="f.submitted && mail.invalid">
+                                    <div class="text-danger" >
+                                        veuillez indiquer l'email 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 left">
+                            <div class="form-group">
+                                <label style="font-weight: 500;">Téléphone :</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       [(ngModel)]="phone"
+                                       #tel=ngModel
+                                       name="tel"
+                                       [ngClass]="{'is-invalid': f.submitted && tel.invalid}"
+                                       required>
+                                <div *ngIf="f.submitted && tel.invalid">
+                                    <div class="text-danger">
+                                        veuillez indiquer le numéro téléphone
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 left">
+                            <div class="form-group">
+                                <label style="font-weight: 500;">Titre :</label>
+                                <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="title" name="title" required>
+                                    <option>MR</option>
+                                    <option>MRS</option>
+                                    <option>MS</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--chamber-row-->
+                    <!--paiement-row-->
+                    <div class="row row-color">
+                        <div class="col-md-12">
+                            <h2> <span class="material-icons row-icon">credit_card
+                                </span> Carte de paiement <br> <small class="text-success"> <span class="material-icons"
+                                        style="vertical-align: middle;margin-left:15px">
+                                        done
+                                    </span>Nous utilisons une transmission
+                                    sécurisée</small>
+
+                                <small class="text-success"> <span class="material-icons"
+                                        style="vertical-align: middle;margin-left:15px">
+                                        done
+                                    </span>Nous protégeons vos données personnelles</small>
+                            </h2>
+                        </div>
+
+                        <div class="col-md-6 paiement-form">
+                            <div class="form-group">
+                                <label  style="font-weight: 500;">Nom figurant sur la carte
+                                    :</label>
+                                <input type="text" 
+                                       class="form-control"
+                                       [(ngModel)]="cardName"
+                                       name="cardName"
+                                       #cardN=ngModel
+                                       [ngClass]="{'is-invalid': f.submitted && cardN.invalid}"
+                                       required>
+                                <div *ngIf="f.submitted && cardN.invalid">
+                                    <div class="text-danger">
+                                        veuillez indiquer le nom figurant sur la carte
+                                    </div>
+                                </div>                                
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-6 paiement-form">
+                            <div class="form-group">
+                                <label for="cc-number" style="font-weight: 500;">Numéro de carte de paiement
+                                    :
+                                
+                                </label>
+                                <div style="margin-bottom: 10px;">
+                                    <img class="credit-logo" src="/assets/card/visa.png" alt="">
+                                    <img class="credit-logo" src="/assets/card/mastercard.png" alt="">
+                                    <img class="credit-logo" src="/assets/card/dinersclub.png" alt="">
+                                    <img class="credit-logo" src="/assets/card/discover.png" alt="">
+                                    <img class="credit-logo" src="/assets/card/jcb.png" alt="">
+                                    <img class="credit-logo" src="/assets/card/maestro.png" alt="">
+                                    <img class="credit-logo" src="/assets/card/unionpay.png" alt="">
+                                </div>
+                                <input type="tel" 
+                                       class="form-control" 
+                                       id="cc-number" 
+                                       autocomplete="cc-number"
+                                       ccNumber
+                                       [(ngModel)]="cardNumber"
+                                       name="cardNumber"
+                                       #ccNumber="ccNumber"
+                                       #n=ngModel
+                                       [ngClass]="{'is-invalid': f.submitted && n.invalid}"
+                                       minlength="16"
+                                       required>
+                                <span hidden class="scheme">{{ tr(ccNumber.resolvedScheme$ ) }}</span>
+                                <img class="credit-logo-under" src="/assets/card/{{logo}}.png" alt="">
+                                <div *ngIf="f.submitted && cardNumber===''">
+                                    <div class="text-danger" >
+                                        veuillez indiquer le numéro de la carte
+                                    </div>
+                                </div>
+                                <div *ngIf="f.submitted && (cardVendor==='' || !cardVendor)">
+                                    <div class="text-danger" >
+                                        veuillez utilier une carte des marques supporté
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+                        <div class="col-md-6 paiement-form">
+
+                            <div class="form-group">
+                                <label for="exampleInputdate" style="font-weight: 500;">Date d'expiration :</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       [(ngModel)]="cardExp"
+                                       name="cardExp"
+                                       #cardX=ngModel
+                                       [ngClass]="{'is-invalid': f.submitted && cardX.invalid}"
+                                       placeholder="exp: 2025-02" 
+                                       required>
+                                <div *ngIf="f.submitted && cardX.invalid">
+                                    <div class="text-danger">
+                                        veuillez indiquer la date d'éxpiration de la carte
+                                    </div>
+                                </div>   
+                            </div>
+                        </div>                    
+                    </div>
+                    <!--paiement-row-->
+                    <!---Assurance-row-->
+                    <!-- <div class="row row-color">
+                        <div class="col-md-6">
+                            <h2> <span class="material-icons row-icon">
+                                    medical_services
+                                </span>Assurez votre voyage</h2>
+                        </div>
+                        <div class="col-md-11 border py-3 my-3" style="margin-left: 20px;">
+
+                            <p><strong>⚠ Important :</strong> l’assurance voyage peut fournir une couverture en cas de
+                                maladie liée à la COVID-19. Cependant, étant donné
+                                que la COVID-19 fait désormais partie des événements connus ou prévisibles, l’annulation
+                                d’un voyage en raison d’avis de
+                                voyage gouvernementaux ou de la crainte de voyager n’est pas couverte. Certains autres
+                                types
+                                de couvertures ne
+                                s’appliqueront pas</p>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="col-md-11" style="margin-left: 20px;">
+                            <p> <span class="material-icons" style="font-size: 12px;">
+                                    location_on
+                                </span> <strong>Important :</strong> veuillez vérifier et mettre à jour votre lieu de
+                                résidence afin de voir les produits
+                                d’assurance voyage que
+                                vous pouvez souscrire.</p>
+                        </div>
+                        <div class="col-md-6" style="margin-left: 20px;">
+                            <br>
+                            <div class="form-group">
+                                <label for="exampleInputcode" style="font-weight: 500;">Pays de residence :</label>
+                                <input type="text" class="form-control" id="exampleInputnom" required>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!---Assurance-row-->
+                    <div class="row row-color">
+                        <div class="col-md-6">
+                            <h2> <span class="material-icons row-icon">
+                                    done
+                                </span>Finaliser votre reservation </h2>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn float-lg-right btn-reservation">Reserver</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--col-left-->
+            <!-- col-right -->
+            <div class="col-md-3">
+                <div class="row row-color" style="margin-bottom: 15px;">
+                    <div class="container-fluid">
+                        <div class="card" style="max-height: 150px; object-fit: cover;">
+                            <img src="{{cover}}" class="card-img-top" style="max-height: 150px;" alt="...">
+                            <div class="bottom-left">{{hotelName}}<br>
+                                <h3>{{star.repeat(stars)}}</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <strong>{{hotelSearchResponse!.hotelOffers[0].offers[0].roomQuantity}} chambre :
+                                </strong>
+                                {{hotelSearchResponse!.hotelOffers[0].offers[0].rooms[0].bedType}}
+                            </p>
+                            <br>
+                            <strong>Arrivée : {{checkInDate}}</strong> <br>
+                            <strong>depart : {{checkOutDate}}</strong> <br>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-color">
+                    <div class="col-md-12">
+                        <h2>Details de prix</h2>
+                        <hr>
+                    </div>
+                    <div class="col-md-8">
+                        <p>1 nuit</p>
+                    </div>
+                    <div class="col-md-4">
+                        <ng-container *ngIf="hotelSearchResponse as htl">
+                            <p>{{htl.hotelOffers[0].offers[0].base! | euro: htl.hotelOffers[0].offers[0].currency:
+                                htl.dictionarie | currency:'EUR':'symbol':'1.0'}}</p>
+                        </ng-container>
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <hr>
+                        <h3><strong>Total</strong></h3>
+                    </div>
+                    <div class="col-md-7">
+                        <p>total à payer</p>
+                    </div>
+                    <div class="col-md-5 float-lg-left">
+                        <ng-container *ngIf="hotelSearchResponse as htl">
+                            <p>{{htl.hotelOffers[0].offers[0].total! | euro: htl.hotelOffers[0].offers[0].currency:
+                                htl.dictionarie: htl.commission| currency:'EUR':'symbol':'1.0'}}</p>
+                        </ng-container>
+                    </div>
+
+                    <div class="col-12" style="margin-bottom: 20px;">
+                        <hr>
+                        <small style="font-size: 10px;"><strong>⚠ Important :</strong> Les taxes et les frais dus à
+                            l’établissement sont basés sur le taux de change actuel et peuvent
+                            être réglés dans la
+                            devise locale.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--col-right-->
+
+    </div>
+</div>
